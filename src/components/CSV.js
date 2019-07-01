@@ -13,6 +13,7 @@ const CSVreader = () => {
             onFileLoaded={handleForce}
             inputId="ObiWan"
             inputStyle={{ color: "red" }}
+
         />
     );
 };
