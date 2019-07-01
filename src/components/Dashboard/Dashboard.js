@@ -107,19 +107,19 @@ const Dashboard = () => {
                 className="">
                 <Card.Header
                   className='cardHeader'>
-                  <h3 className='headerTitle'>{item.title.slice(0, 25) + "..."}</h3>
+
+                  <h3 className='headerTitle'>{item.title.length > 25 ? item.title.slice(0, 25) + "..." : item.title}</h3>
                 </Card.Header>
                 <div className='contentContainer'>
                   <Card.Description className='description'>
-                    <p className='descriptionText'>
-                      {item.description.slice(0, 150) + '...'}
+                    <p className='descriptionText'>{item.description.length > 150 ? item.description.slice(0, 150) + '...' : item.description}
                     </p>
                   </Card.Description>
                   <div>
                     <Card.Content>
-                      <ul>
+                      <ul className='targetMembersContainer'>
                         {targetArr.map((target, index) => {
-                          return <li key={index}>{target}</li>;
+                          return <li key={index} className="cardMember">{target}</li>;
                         })}
                       </ul>
                       <ul>
