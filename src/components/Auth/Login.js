@@ -12,6 +12,7 @@ import {
     Message
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import LoginAnimation from "./LoginAnimation";
 
 const Login = ({ history }) => {
     const { setUser } = useContext(UserContext);
@@ -37,13 +38,16 @@ const Login = ({ history }) => {
 
     return (
         <div className="Login">
+            <LoginAnimation />
             <Segment stacked>
                 <Header as="h2">
-                    <Icon name={appIconName} /> Login to {appName}
+                    <Icon color="red" name={appIconName} />
+                    {appName}
                 </Header>
                 <Form onSubmit={login}>
                     <Form.Input
                         icon="mail"
+                        type="email"
                         value={email}
                         iconPosition="left"
                         placeholder="E-mail address"
@@ -55,10 +59,11 @@ const Login = ({ history }) => {
                         value={password}
                         iconPosition="left"
                         placeholder="Password"
+                        type="password"
                         onChange={event => setPassword(event.target.value)}
                     />
 
-                    <Button size="large" fluid color="black" type="submit">
+                    <Button size="large" fluid color="red" type="submit">
                         Login
                     </Button>
                 </Form>
