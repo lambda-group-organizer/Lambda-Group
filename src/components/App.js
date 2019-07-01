@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import CSVreader from './CSV'
 import Dashboard from './Dashboard/Dashboard'
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <p>Lambda Group Organizer</p>
