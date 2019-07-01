@@ -1,9 +1,10 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
 import CurrentProjectContext from '../../context/CurrentProjectContext';
 import CSVReader from 'react-csv-reader';
+import ProjectModal from './ProjectModal';
 import firebase from '../../logic/firebase';
 import { Button, Card, Grid } from 'semantic-ui-react';
-import './Dashboard.css'
+import './Dashboard.css';
 
 const Dashboard = () => {
   const [currentProject, setCurrentProject] = useState(null);
@@ -91,19 +92,28 @@ const Dashboard = () => {
   };
 
   const projectsElements = (
-    <Grid columns={3}>
+    <div className='container'>
+      <ProjectModal projectsRefFirebase={projectsRefFirebase} />
       {projects &&
         projects.map((item, index) => {
           let targetArr = item.targetGroup.split(',');
           return (
-            <div style={{ width: '80%', margin: '0 auto', padding: '3%' }}>
-              <Card key={index} raised={true} fluid={true} centered={true} className="" style={{ padding: '5%' }}>
-                <Card.Header style={{ marginBottom: '2%', fontSize: '2.5rem' }}>
-                  <h3>{item.title}</h3>
+            <div className='cardContainer'>
+              <Card
+                key={index}
+                raised={true}
+                fluid={true}
+                centered={true}
+                className="">
+                <Card.Header
+                  className='cardHeader'>
+                  <h3 className='headerTitle'>{item.title.slice(0, 25) + "..."}</h3>
                 </Card.Header>
-                <div>
-                  <Card.Description style={{ fontSize: '1.2rem' }}>
-                    <p>{item.description}</p>
+                <div className='contentContainer'>
+                  <Card.Description className='description'>
+                    <p className='descriptionText'>
+                      {item.description.slice(0, 150) + '...'}
+                    </p>
                   </Card.Description>
                   <div>
                     <Card.Content>
@@ -122,15 +132,15 @@ const Dashboard = () => {
                     </Card.Content>
                   </div>
                 </div>
-                <div className="buttons">
+                {/*<div className="buttons">
                   <Button color="green">Join!</Button>
                   <Button color="google plus">Leave!</Button>
-                </div>
+                </div>*/}
               </Card>
             </div>
           );
         })}
-    </Grid>
+    </div>
   );
 
   return (
