@@ -91,19 +91,19 @@ const Dashboard = () => {
   };
 
   const projectsElements = (
-    <Grid columns={3}>
+    <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'stretch', maxHeight: '450px', minWidth: '100%'}}>
       {projects &&
         projects.map((item, index) => {
           let targetArr = item.targetGroup.split(',');
           return (
-              <div style={{width: '80%', margin: '0 auto', padding: '3%'}}>
+            <div style={{width: '100%', margin: '0 auto', padding: '3%', maxWidth: '450px', flexGrow: '1'}}>
                   <Card key={index} raised={true} fluid={true} centered={true} className="" style={{padding: '5%'}}>
             <Card.Header style={{marginBottom: '2%', fontSize: '2.5rem'}}>
                   <h3>{item.title}</h3>
                 </Card.Header>
                 <div>
-            <Card.Description style={{fontSize: '1.2rem'}}>
-                    <p>{item.description}</p>
+            <Card.Description style={{fontSize: '1.2rem' }}>
+            <p style={{overflow: 'hidden'}}>{item.description}</p>
                   </Card.Description>
                   <div>
                       <Card.Content>
@@ -130,7 +130,7 @@ const Dashboard = () => {
             </div>
           );
         })}
-    </Grid>
+    </div>
   );
 
   return (
