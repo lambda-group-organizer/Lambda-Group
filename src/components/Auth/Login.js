@@ -39,7 +39,7 @@ const Login = ({ history }) => {
         <div className="Login">
             <Segment stacked>
                 <Header as="h2">
-                    <Icon name={appIconName} /> Login to {appName}
+                    <Icon color="red" name={appIconName} />{appName}
                 </Header>
                 <Form onSubmit={login}>
                     <Form.Input
@@ -58,7 +58,7 @@ const Login = ({ history }) => {
                         onChange={event => setPassword(event.target.value)}
                     />
 
-                    <Button size="large" fluid color="black" type="submit">
+                    <Button size="large" fluid color="red" type="submit">
                         Login
                     </Button>
                 </Form>

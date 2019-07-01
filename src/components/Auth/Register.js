@@ -42,7 +42,7 @@ const Register = ({ history }) => {
         <div className="Register">
             <Segment stacked>
                 <Header as="h2">
-                    <Icon name={appIconName} /> Register to {appName}
+                    <Icon color="red" name={appIconName} />{appName}
                 </Header>
                 <Form onSubmit={register}>
                     <Form.Input
@@ -70,13 +70,13 @@ const Register = ({ history }) => {
                         onChange={event => setPassword(event.target.value)}
                     />
 
-                    <Button size="large" fluid color="black" type="submit">
+                    <Button size="large" fluid color="red" type="submit">
                         Register
                     </Button>
                 </Form>
             </Segment>
             <Message>
-                New to us? <Link to="/Register">Register</Link>
+                Already have an account? <Link to="/Login">Login</Link>
             </Message>
         </div>
     );

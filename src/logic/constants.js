@@ -1,2 +1,2 @@
 export const appName = "Lambda Group Organizer"
-export const appIconName = "wechat"
+export const appIconName = "chevron up"

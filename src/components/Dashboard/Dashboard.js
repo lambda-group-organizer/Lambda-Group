@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import CurrentProjectContext from "../../context/CurrentProjectContext";
 import CSVReader from "react-csv-reader";
-import ProjectModal from './ProjectModal'
+import ProjectModal from "./ProjectModal";
 import firebase from "../../logic/firebase";
 import { Button, Card, Grid } from "semantic-ui-react";
 import "./Dashboard.css";
@@ -22,6 +22,10 @@ const Dashboard = () => {
         // console.log(data);
         setTempProjects(data);
     };
+
+    const signOut = () => {
+      firebase.auth().signOut();
+    }
 
     const addProject = () => {
         // console.log("addProject");
@@ -190,6 +194,10 @@ const Dashboard = () => {
                 inputStyle={{ color: "red" }}
             />
             <h4>Projects</h4>
+            <button class="mini ui negative basic button" onClick={signOut} >
+            <i class="icon sign-out"></i>
+                Logout
+            </button>
             {projectsElements}
         </div>
     );
