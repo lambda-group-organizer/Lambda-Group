@@ -1,13 +1,13 @@
 import React from 'react';
 import CSVreader from './CSV'
-import Test from './Dashboard/test'
+import Dashboard from './Dashboard/Dashboard'
 
 function App() {
   return (
     <div className="App">
       <p>Lambda Group Organizer</p>
       {/* <CSVreader /> */}
-      <Test />
+      <Dashboard />
     </div>
   );
 }
