@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext, useEffect } from "react";
 import CurrentProjectContext from "../../context/CurrentProjectContext";
 import CSVReader from "react-csv-reader";
 import firebase from "../../logic/firebase";
+import ProjectModal from "./ProjectModal";
 
 const Test = () => {
     const [currentProject, setCurrentProject] = useState(null);
@@ -40,9 +41,9 @@ const Test = () => {
     const addProjectListener = () => {
         console.log("project listener is added");
         projectsRefFirebase.on("child_added", snap => {
-            console.log(snap.val());
+            // console.log(snap.val());
             let newProject = [...refTo_projectsVariable.current, snap.val()];
-            console.log(refTo_projectsVariable.current);
+            // console.log(refTo_projectsVariable.current);
             setProjects(newProject);
         });
     };
@@ -56,11 +57,11 @@ const Test = () => {
         addProjectListener();
 
         return () => removeProjectListener();
-    }, []); // --- mount \ unmount
+    }, [projects.title]); // --- mount \ unmount
 
     useEffect(() => {
         convertedProjects();
-    }, [tempProjects]); // --- mount \ unmount
+    }, []); // --- mount \ unmount
 
     const convertedProjects = () => {
         console.log("converted projects running", tempProjects);
@@ -91,12 +92,10 @@ const Test = () => {
 
     const projectsElements = (
         <ul>
-            <li>
                 {projects &&
                     projects.map((item, index) => {
                         return <p key={index}>{item.title}</p>;
                     })}
-            </li>
         </ul>
     );
 
@@ -110,6 +109,7 @@ const Test = () => {
                 inputStyle={{ color: "red" }}
             />
             <h4>Projects</h4>
+            <ProjectModal projectsRefFirebase={projectsRefFirebase} />
             {projectsElements}
         </div>
     );
