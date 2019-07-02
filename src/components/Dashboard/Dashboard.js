@@ -1,12 +1,12 @@
-import React, {useState, useRef, useContext, useEffect} from 'react';
-import CurrentProjectContext from '../../context/CurrentProjectContext';
-import CSVReader from 'react-csv-reader';
-import ProjectModal from './ProjectModal';
-import firebase from '../../logic/firebase';
-import {Button, Card, Grid, Header} from 'semantic-ui-react';
-import DisplayInfo from './DisplayInfo';
-import './Dashboard.css';
-import {FuzzySearch, fuzzySearch} from './FuzzySearch.js';
+import React, { useState, useRef, useContext, useEffect } from "react";
+import CurrentProjectContext from "../../context/CurrentProjectContext";
+import CSVReader from "react-csv-reader";
+import ProjectModal from "./ProjectModal";
+import firebase from "../../logic/firebase";
+import { db } from "../../logic/firebase";
+import { Button, Card, Grid, Header } from "semantic-ui-react";
+import DisplayInfo from "./DisplayInfo";
+import "./Dashboard.css";
 import Fuse from 'fuse.js';
 
 const Dashboard = () => {
@@ -89,35 +89,79 @@ const Dashboard = () => {
       if (index > 0) {
         const projectId = projectsRefFirebase.push().key;
         projectsRefFirebase
-          .child(projectId)
-          .set(newProject)
-          .then(project => console.log(`success : ${project}`))
-          .catch(err => console.log(`error : ${err}`));
-      }
-      return newProject;
-    });
-    newConvertedProjects.shift();
-    setProjects(newConvertedProjects);
-    setFilteredProj(newConvertedProjects);
-  };
+            .child(projectId)
+            .set(newProject)
+            .then(project => console.log(`success : ${project}`))
+            .catch(err => console.log(`error : ${err}`));
+    };
 
-  const openProject = id => {
-    console.log('Opened', id);
-  };
+    const addProjectListener = () => {
+        // console.log("project listener is added");
+        projectsRefFirebase.on("child_added", snap => {
+            // console.log(snap.val());
+            let newProject = [...refTo_projectsVariable.current, snap.val()];
+            // console.log(refTo_projectsVariable.current);
+            setProjects(newProject);
+        });
+    };
 
-  //const addUserToProject = () => {
-  //if (someting.length >= 6) {
-  //return <Spinner />
-  //} else {
-  //db.push(something)
-  //}
-  //}
-  const changeProjects = arr => {
-    console.log('arr from line 114', arr);
-    setFilteredProj(arr);
-  };
+    const removeProjectListener = () => {
+        // console.log("project listener is removed");
+        projectsRefFirebase.off();
+    };
 
-  //***************FUZZYSEARCH***************************
+    useEffect(() => {
+        addProjectListener();
+
+        return () => removeProjectListener();
+    }, []); // --- mount \ unmount
+
+    useEffect(() => {
+        convertedProjects();
+    }, [tempProjects]); // --- mount \ unmount
+
+    const convertedProjects = () => {
+        // console.log("converted projects running", tempProjects);
+        const newConvertedProjects = tempProjects.map((item, index) => {
+            const newProject = {
+                title: item[0],
+                description: item[1],
+                targetGroup: item[2],
+                teamMembers: [],
+                studentCohort: item[4],
+                dateSubmmited: item[5]
+            };
+            if (index > 0) {
+                //     const projectId = projectsRefFirebase.push().key;
+                //     newProject.uid = projectId
+                //     projectsRefFirebase
+                //         .child(projectId)
+                //         .set(newProject)
+                //         .then(project => console.log(`success : ${project}`))
+                //         .catch(err => console.log(`error : ${err}`));
+
+                let cityRef = db
+                    .collection("projects")
+                    .add({
+                        newProject
+                    })
+                    .then(ref => {
+                        console.log("Added document with ID: ", ref.id);
+                        newProject.uid = ref.id
+                        ref.set({id: ref.id}, {merge: true});
+                    });
+            }
+
+            return newProject;
+        });
+        newConvertedProjects.shift();
+        setProjects(newConvertedProjects);
+    };
+
+    const openProject = id => {
+        console.log("Opened", id);
+    };
+     //***************FUZZYSEARCH***************************
   const FuzzySearch = (arr, changeProjects) => {
     //console.log('arr :',arr)
     console.log(changeProjects);
@@ -139,8 +183,7 @@ const Dashboard = () => {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: ['description', 'studentCohort', 'targetGroup', 'title'],
-    };
+      keys: ['description', 'studentCohort', 'targetGroup', 'title'],}
     const fuse = new Fuse(list, options); // "list" is the item array
     const result = fuse.search(e.target.value);
     setFilteredProj(result);
@@ -148,6 +191,7 @@ const Dashboard = () => {
     //console.log('e.target.value', e.target.value)
     //console.log(result)
   };
+
 
   useEffect(() => {
     setFilteredProj(projects);

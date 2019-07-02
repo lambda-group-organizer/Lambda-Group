@@ -1,26 +1,43 @@
 import React, { useState } from "react";
 import { Modal, Header, Form, Button, Icon } from "semantic-ui-react";
 import "./ProjectModal.css";
-import firebase from '../../logic/firebase'
+import firebase from "../../logic/firebase";
+import { db } from "../../logic/firebase";
 
 const AddRoomModal = ({ projectsRefFirebase, item }) => {
     const [modalOpen, setmodalOpen] = useState(false);
-    const [team, setTeam] = useState([])
 
     const handleOpen = () => setmodalOpen(true);
     const handleClose = () => setmodalOpen(false);
 
     const addToTeam = () => {
         var user = firebase.auth().currentUser;
-        console.log(user)
-        setTeam(user)
-    }
+        let cityRef = db.collection("projects").doc(item.uid);
+
+        const userData = {
+            Name: user.displayName
+        };
+
+        let updateSingle = cityRef.set(
+            { teamMembers: userData },
+            { merge: true }
+        );
+    };
 
     return (
-        <div style={{ textAlign: "center"}}>
+        <div style={{ textAlign: "center" }}>
             <Modal
                 // trigger={<span onClick={handleOpen}>+</span>}
-                trigger={<Button inverted color="red"  style={{ marginBottom: "20px" }} onClick={handleOpen}>More Details</Button>}
+                trigger={
+                    <Button
+                        inverted
+                        color="red"
+                        style={{ marginBottom: "20px" }}
+                        onClick={handleOpen}
+                    >
+                        More Details
+                    </Button>
+                }
                 open={modalOpen}
                 onClose={handleClose}
                 basic
@@ -35,6 +52,7 @@ const AddRoomModal = ({ projectsRefFirebase, item }) => {
                         </Form.Field>
                     </Form> */}
                     <p>{item.description}</p>
+                    <p>{item.uid}</p>
                 </Modal.Content>
                 <Modal.Actions>
                     <Button basic color="red" inverted onClick={handleClose}>
