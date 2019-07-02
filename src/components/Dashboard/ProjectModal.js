@@ -5,7 +5,6 @@ import firebase from '../../logic/firebase'
 
 const AddRoomModal = ({ projectsRefFirebase, item }) => {
     const [modalOpen, setmodalOpen] = useState(false);
-    const [team, setTeam] = useState([])
 
     const handleOpen = () => setmodalOpen(true);
     const handleClose = () => setmodalOpen(false);
@@ -13,7 +12,7 @@ const AddRoomModal = ({ projectsRefFirebase, item }) => {
     const addToTeam = () => {
         var user = firebase.auth().currentUser;
         console.log(user)
-        setTeam(user)
+        projectsRefFirebase.child(item.uid).update({'TeamMembers': user.displayName})
     }
 
     return (
@@ -35,6 +34,7 @@ const AddRoomModal = ({ projectsRefFirebase, item }) => {
                         </Form.Field>
                     </Form> */}
                     <p>{item.description}</p>
+                    <p>{item.uid}</p>
                 </Modal.Content>
                 <Modal.Actions>
                     <Button basic color="red" inverted onClick={handleClose}>
