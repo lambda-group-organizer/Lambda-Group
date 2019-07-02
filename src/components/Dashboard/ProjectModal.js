@@ -10,18 +10,42 @@ const AddRoomModal = ({ projectsRefFirebase, item }) => {
     const handleOpen = () => setmodalOpen(true);
     const handleClose = () => setmodalOpen(false);
 
+    const [team, setTeam] = useState([]);
+
     const addToTeam = () => {
+        console.log("ADDTOTEAM")
         var user = firebase.auth().currentUser;
-        let cityRef = db.collection("projects").doc(item.uid);
+        let projectRef = db.collection("projects").doc(item.uid);
+        let getDoc = projectRef.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    console.log('Document data:', doc.data());
+                    console.log('Document data:', doc.data().newProject.teamMembers);
+                    const tempTeamMember = doc.data().newProject.teamMembers;
+                    setTeam(tempTeamMember);
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+            });
+        // console.log(getDoc)
 
-        const userData = {
-            Name: user.displayName
-        };
+        console.log("Hook team: ", team)
 
-        let updateSingle = cityRef.set(
-            { teamMembers: userData },
-            { merge: true }
-        );
+        // const userData = {
+        //     Name: user.displayName
+        // };
+
+        console.log("projectRef: ", projectRef);
+
+        if (!team.includes(user.displayName) && team.length < 6) {
+            let updateSingle = projectRef.set(
+                { newProject: { teamMembers: [...team, user.displayName] } },
+                { merge: true }
+            );
+        }
     };
 
     return (
@@ -51,8 +75,23 @@ const AddRoomModal = ({ projectsRefFirebase, item }) => {
                             <input placeholder="Insert name" onChange={event => setRoomName(event.target.value)} />
                         </Form.Field>
                     </Form> */}
+
+
+
+
+
+
                     <p>{item.description}</p>
-                    <p>{item.uid}</p>
+                    {Object.values(item.teamMembers).map(member => {
+                        return <p>{member}</p>
+                    })}
+
+
+
+
+
+
+
                 </Modal.Content>
                 <Modal.Actions>
                     <Button basic color="red" inverted onClick={handleClose}>
