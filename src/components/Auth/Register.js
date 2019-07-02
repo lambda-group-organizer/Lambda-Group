@@ -12,6 +12,7 @@ import {
 import { appName, appIconName } from "../../logic/constants";
 import "./Register.css";
 import { Link } from "react-router-dom";
+import LoginAnimation from "./LoginAnimation";
 
 const Register = ({ history }) => {
     const { setUser } = useContext(UserContext);
@@ -40,9 +41,11 @@ const Register = ({ history }) => {
 
     return (
         <div className="Register">
+            <LoginAnimation />
             <Segment stacked>
                 <Header as="h2">
-                    <Icon name={appIconName} /> Register to {appName}
+                    <Icon color="red" name={appIconName} />
+                    {appName}
                 </Header>
                 <Form onSubmit={register}>
                     <Form.Input
@@ -57,6 +60,7 @@ const Register = ({ history }) => {
                     <Form.Input
                         icon="mail"
                         value={email}
+                        type="email"
                         iconPosition="left"
                         placeholder="E-mail address"
                         onChange={event => setEmail(event.target.value)}
@@ -67,16 +71,17 @@ const Register = ({ history }) => {
                         value={password}
                         iconPosition="left"
                         placeholder="Password"
+                        type="password"
                         onChange={event => setPassword(event.target.value)}
                     />
 
-                    <Button size="large" fluid color="black" type="submit">
+                    <Button size="large" fluid color="red" type="submit">
                         Register
                     </Button>
                 </Form>
             </Segment>
             <Message>
-                New to us? <Link to="/Register">Register</Link>
+                Already have an account? <Link to="/Login">Login</Link>
             </Message>
         </div>
     );

@@ -11,9 +11,9 @@ const Dashboard = () => {
   // const { setCurrentProject } = useContext(CurrentProjectContext);
   const [projects, setProjects] = useState([]);
   const [tempProjects, setTempProjects] = useState([]);
-  const [projectName, setProjectName] = useState('');
-  const [projectDescription, setProjectDescription] = useState('');
-  const projectsRefFirebase = firebase.database().ref('projects');
+  const [projectName, setProjectName] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+  const projectsRefFirebase = firebase.database().ref("projects");
 
   const refTo_projectsVariable = useRef();
   refTo_projectsVariable.current = projects;
@@ -23,6 +23,10 @@ const Dashboard = () => {
     setTempProjects(data);
   };
 
+  const signOut = () => {
+    firebase.auth().signOut();
+  }
+
   const addProject = () => {
     // console.log("addProject");
     const projectId = projectsRefFirebase.push().key;
@@ -30,7 +34,7 @@ const Dashboard = () => {
     const newProject = {
       id: projectId,
       name: projectName,
-      description: projectDescription,
+      description: projectDescription
     };
 
     projectsRefFirebase
@@ -42,7 +46,7 @@ const Dashboard = () => {
 
   const addProjectListener = () => {
     // console.log("project listener is added");
-    projectsRefFirebase.on('child_added', snap => {
+    projectsRefFirebase.on("child_added", snap => {
       // console.log(snap.val());
       let newProject = [...refTo_projectsVariable.current, snap.val()];
       // console.log(refTo_projectsVariable.current);
@@ -74,7 +78,7 @@ const Dashboard = () => {
         targetGroup: item[2],
         teamMembers: [],
         studentCohort: item[4],
-        dateSubmmited: item[5],
+        dateSubmmited: item[5]
       };
 
       if (index > 0) {
@@ -138,9 +142,13 @@ const Dashboard = () => {
         label="Select CSV with projects"
         onFileLoaded={handleForce}
         inputId="ObiWan"
-        inputStyle={{ color: 'red' }}
+        inputStyle={{ color: "red" }}
       />
       <h4>Projects</h4>
+      <button class="mini ui negative basic button" onClick={signOut} >
+        <i class="icon sign-out"></i>
+        Logout
+            </button>
       {projectsElements}
     </div>
   );
