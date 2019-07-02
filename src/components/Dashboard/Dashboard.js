@@ -7,7 +7,6 @@ import { db } from "../../logic/firebase";
 import { Button, Card, Grid, Header } from "semantic-ui-react";
 import DisplayInfo from "./DisplayInfo";
 import "./Dashboard.css";
-import { FuzzySearch, fuzzySearch } from "./FuzzySearch.js";
 import Fuse from "fuse.js";
 
 const Dashboard = () => {
