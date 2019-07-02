@@ -4,6 +4,7 @@ import CSVReader from "react-csv-reader";
 import ProjectModal from "./ProjectModal";
 import firebase from "../../logic/firebase";
 import { Button, Card, Grid } from "semantic-ui-react";
+import DisplayInfo from "./DisplayInfo";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -132,13 +133,11 @@ const Dashboard = () => {
                                         </p>
                                     </Card.Description>
                                 </div>
-                                        <ProjectModal
-                                            item={item}
-                                            openProject={openProject}
-                                            projectsRefFirebase={
-                                                projectsRefFirebase
-                                            }
-                                        />
+                                <ProjectModal
+                                    item={item}
+                                    openProject={openProject}
+                                    projectsRefFirebase={projectsRefFirebase}
+                                />
                                 <div className="cardFooter">
                                     {/* <Card.Content> */}
                                     <ul className="targetMembersContainer">
@@ -168,6 +167,7 @@ const Dashboard = () => {
 
     return (
         <div>
+            <DisplayInfo />
             <CSVReader
                 cssClass="csv-reader-input"
                 label="Select CSV with projects"
