@@ -1,13 +1,10 @@
 import React, { useContext } from 'react';
 import Fuse from 'fuse.js'
 
-export function FuzzySearch(arr, changeProjects) {
+export function FuzzySearch(projects, e) {
   //console.log('arr :',arr)
-  console.log(changeProjects)
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
-    <input type="text" onChange={(e) => fuzzySearch(arr.arr,e)} />
-    </form>
+    <input type="text" onChange={(e) => fuzzySearch(projects, e)} />
   );
 }
 

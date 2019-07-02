@@ -117,7 +117,7 @@ const Dashboard = () => {
     setFilteredProj(arr);
   };
 
-    //***************FUZZYSEARCH***************************
+  //***************FUZZYSEARCH***************************
   const FuzzySearch = (arr, changeProjects) => {
     //console.log('arr :',arr)
     console.log(changeProjects);
@@ -152,13 +152,15 @@ const Dashboard = () => {
   useEffect(() => {
     setFilteredProj(projects);
   }, [projects]);
-    // ***************** END FUZZY SEARCH ************************
+
+  // ***************** END FUZZY SEARCH ************************
 
   const projectsElements = (
+      <>
+    {projects && (
+      <input className='filter' type="text" onChange={e => fuzzySearch(projects, e)} />
+    )}
     <div className="container">
-      {projects && (
-        <input type="text" onChange={e => fuzzySearch(projects, e)} />
-      )}
       {projects &&
         filteredProj.map((item, index) => {
           let targetArr = item.targetGroup.split(',');
@@ -214,6 +216,7 @@ const Dashboard = () => {
           );
         })}
     </div>
+      </>
   );
 
   return (
