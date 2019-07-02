@@ -3,7 +3,7 @@ import CurrentProjectContext from "../../context/CurrentProjectContext";
 import CSVReader from "react-csv-reader";
 import ProjectModal from "./ProjectModal";
 import firebase from "../../logic/firebase";
-import { Button, Card, Grid } from "semantic-ui-react";
+import { Button, Card, Grid, Header } from "semantic-ui-react";
 import DisplayInfo from "./DisplayInfo";
 import "./Dashboard.css";
 
@@ -175,11 +175,11 @@ const Dashboard = () => {
                 inputId="ObiWan"
                 inputStyle={{ color: "red" }}
             />
-            <h4>Projects</h4>
             <button className="mini ui negative basic button" onClick={signOut}>
                 <i className="icon sign-out" />
                 Logout
             </button>
+            <Header as="h2">Projects</Header>
             {projectsElements}
         </div>
     );

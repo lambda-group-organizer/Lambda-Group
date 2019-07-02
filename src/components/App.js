@@ -5,7 +5,7 @@ import { Header, Icon } from "semantic-ui-react";
 
 const App = () => {
     return (
-        <div className="App">
+        <div style={{textAlign: "center", marginTop: "20px"}}>
             <Header as="h1"><Icon color="red" name='chevron up' />Lambda Group Organizer</Header>
             <Dashboard />
         </div>
