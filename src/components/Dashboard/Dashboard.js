@@ -1,22 +1,23 @@
-import React, {useState, useRef, useContext, useEffect} from 'react';
-import CurrentProjectContext from '../../context/CurrentProjectContext';
-import CSVReader from 'react-csv-reader';
-import ProjectModal from './ProjectModal';
-import firebase from '../../logic/firebase';
-import {Button, Card, Grid, Header} from 'semantic-ui-react';
-import DisplayInfo from './DisplayInfo';
-import './Dashboard.css';
-import {FuzzySearch, fuzzySearch} from './FuzzySearch.js';
-import Fuse from 'fuse.js';
+import React, { useState, useRef, useContext, useEffect } from "react";
+import CurrentProjectContext from "../../context/CurrentProjectContext";
+import CSVReader from "react-csv-reader";
+import ProjectModal from "./ProjectModal";
+import firebase from "../../logic/firebase";
+import { db } from "../../logic/firebase";
+import { Button, Card, Grid, Header } from "semantic-ui-react";
+import DisplayInfo from "./DisplayInfo";
+import "./Dashboard.css";
+import { FuzzySearch, fuzzySearch } from "./FuzzySearch.js";
+import Fuse from "fuse.js";
 
 const Dashboard = () => {
   const [currentProject, setCurrentProject] = useState(null);
   // const { setCurrentProject } = useContext(CurrentProjectContext);
   const [projects, setProjects] = useState([]);
   const [tempProjects, setTempProjects] = useState([]);
-  const [projectName, setProjectName] = useState('');
-  const [projectDescription, setProjectDescription] = useState('');
-  const projectsRefFirebase = firebase.database().ref('projects');
+  const [projectName, setProjectName] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+  const projectsRefFirebase = firebase.database().ref("projects");
   const [filteredProj, setFilteredProj] = useState([]);
 
   const refTo_projectsVariable = useRef();
@@ -38,7 +39,7 @@ const Dashboard = () => {
     const newProject = {
       id: projectId,
       name: projectName,
-      description: projectDescription,
+      description: projectDescription
     };
 
     projectsRefFirebase
@@ -50,7 +51,7 @@ const Dashboard = () => {
 
   const addProjectListener = () => {
     // console.log("project listener is added");
-    projectsRefFirebase.on('child_added', snap => {
+    projectsRefFirebase.on("child_added", snap => {
       // console.log(snap.val());
       let newProject = [...refTo_projectsVariable.current, snap.val()];
       // console.log(refTo_projectsVariable.current);
@@ -82,27 +83,37 @@ const Dashboard = () => {
         targetGroup: item[2],
         teamMembers: [],
         studentCohort: item[4],
-        dateSubmmited: item[5],
-        id: index,
+        dateSubmmited: item[5]
       };
-
       if (index > 0) {
-        const projectId = projectsRefFirebase.push().key;
-        projectsRefFirebase
-          .child(projectId)
-          .set(newProject)
-          .then(project => console.log(`success : ${project}`))
-          .catch(err => console.log(`error : ${err}`));
+        //     const projectId = projectsRefFirebase.push().key;
+        //     newProject.uid = projectId
+        //     projectsRefFirebase
+        //         .child(projectId)
+        //         .set(newProject)
+        //         .then(project => console.log(`success : ${project}`))
+        //         .catch(err => console.log(`error : ${err}`));
+
+        let cityRef = db
+          .collection("projects")
+          .add({
+            newProject
+          })
+          .then(ref => {
+            console.log("Added document with ID: ", ref.id);
+            newProject.uid = ref.id;
+            ref.set({ id: ref.id }, { merge: true });
+          });
       }
+
       return newProject;
     });
     newConvertedProjects.shift();
     setProjects(newConvertedProjects);
-    setFilteredProj(newConvertedProjects);
   };
 
   const openProject = id => {
-    console.log('Opened', id);
+    console.log("Opened", id);
   };
 
   //const addUserToProject = () => {
@@ -113,11 +124,11 @@ const Dashboard = () => {
   //}
   //}
   const changeProjects = arr => {
-    console.log('arr from line 114', arr);
+    console.log("arr from line 114", arr);
     setFilteredProj(arr);
   };
 
-    //***************FUZZYSEARCH***************************
+  //***************FUZZYSEARCH***************************
   const FuzzySearch = (arr, changeProjects) => {
     //console.log('arr :',arr)
     console.log(changeProjects);
@@ -139,12 +150,12 @@ const Dashboard = () => {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: ['description', 'studentCohort', 'targetGroup', 'title'],
+      keys: ["description", "studentCohort", "targetGroup", "title"]
     };
     const fuse = new Fuse(list, options); // "list" is the item array
     const result = fuse.search(e.target.value);
     setFilteredProj(result);
-    console.log('filteredProj', filteredProj);
+    console.log("filteredProj", filteredProj);
     //console.log('e.target.value', e.target.value)
     //console.log(result)
   };
@@ -152,28 +163,33 @@ const Dashboard = () => {
   useEffect(() => {
     setFilteredProj(projects);
   }, [projects]);
-    // ***************** END FUZZY SEARCH ************************
+  // ***************** END FUZZY SEARCH ************************
 
-    const projectsElements = (
-        <>
+  const projectsElements = (
+    <>
       {projects && (
-        <input className='filter' type="text" onChange={e => fuzzySearch(projects, e)} />
+        <input
+          className="filter"
+          type="text"
+          onChange={e => fuzzySearch(projects, e)}
+        />
       )}
       <div className="container">
         {projects &&
           filteredProj.map((item, index) => {
-            let targetArr = item.targetGroup.split(',');
+            let targetArr = item.targetGroup.split(",");
 
             return (
               <div
                 key={index}
                 className="cardContainer"
-                onClick={id => openProject(item.id)}>
+                onClick={id => openProject(item.id)}
+              >
                 <Card raised={true} fluid={true} centered={true}>
                   <Card.Header className="cardHeader">
                     <h3 className="headerTitle">
                       {item.title.length > 25
-                        ? item.title.slice(0, 25) + '...'
+                        ? item.title.slice(0, 25) + "..."
                         : item.title}
                     </h3>
                   </Card.Header>
@@ -181,7 +197,7 @@ const Dashboard = () => {
                     <Card.Description className="description">
                       <p className="descriptionText">
                         {item.description.length > 200
-                          ? item.description.slice(0, 200) + '...'
+                          ? item.description.slice(0, 200) + "..."
                           : item.description}
                       </p>
                     </Card.Description>
@@ -215,9 +231,8 @@ const Dashboard = () => {
             );
           })}
       </div>
-        </>
-    );
-
+    </>
+  );
 
   return (
     <div>
@@ -227,7 +242,7 @@ const Dashboard = () => {
         label="Select CSV with projects"
         onFileLoaded={handleForce}
         inputId="ObiWan"
-        inputStyle={{color: 'red'}}
+        inputStyle={{ color: "red" }}
       />
       <button className="mini ui negative basic button" onClick={signOut}>
         <i className="icon sign-out" />
