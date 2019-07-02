@@ -3,6 +3,7 @@ import CurrentProjectContext from '../../context/CurrentProjectContext';
 import CSVReader from 'react-csv-reader';
 import ProjectModal from './ProjectModal';
 import firebase from '../../logic/firebase';
+import { db } from "../../logic/firebase";
 import {Button, Card, Grid, Header} from 'semantic-ui-react';
 import DisplayInfo from './DisplayInfo';
 import './Dashboard.css';
@@ -76,30 +77,40 @@ const Dashboard = () => {
   const convertedProjects = () => {
     // console.log("converted projects running", tempProjects);
     const newConvertedProjects = tempProjects.map((item, index) => {
-      const newProject = {
-        title: item[0],
-        description: item[1],
-        targetGroup: item[2],
-        teamMembers: [],
-        studentCohort: item[4],
-        dateSubmmited: item[5],
-        id: index,
-      };
+        const newProject = {
+            title: item[0],
+            description: item[1],
+            targetGroup: item[2],
+            teamMembers: [],
+            studentCohort: item[4],
+            dateSubmmited: item[5]
+        };
+        if (index > 0) {
+            //     const projectId = projectsRefFirebase.push().key;
+            //     newProject.uid = projectId
+            //     projectsRefFirebase
+            //         .child(projectId)
+            //         .set(newProject)
+            //         .then(project => console.log(`success : ${project}`))
+            //         .catch(err => console.log(`error : ${err}`));
 
-      if (index > 0) {
-        const projectId = projectsRefFirebase.push().key;
-        projectsRefFirebase
-          .child(projectId)
-          .set(newProject)
-          .then(project => console.log(`success : ${project}`))
-          .catch(err => console.log(`error : ${err}`));
-      }
-      return newProject;
+            let cityRef = db
+                .collection("projects")
+                .add({
+                    newProject
+                })
+                .then(ref => {
+                    console.log("Added document with ID: ", ref.id);
+                    newProject.uid = ref.id
+                    ref.set({id: ref.id}, {merge: true});
+                });
+        }
+
+        return newProject;
     });
     newConvertedProjects.shift();
     setProjects(newConvertedProjects);
-    setFilteredProj(newConvertedProjects);
-  };
+};
 
   const openProject = id => {
     console.log('Opened', id);
