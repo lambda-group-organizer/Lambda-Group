@@ -200,7 +200,7 @@ const Dashboard = () => {
                                         <h3 className="headerTitle">
                                             {item.title.length > 25
                                                 ? item.title.slice(0, 25) +
-                                                  "..."
+                                                "..."
                                                 : item.title}
                                         </h3>
                                     </Card.Header>
@@ -209,9 +209,9 @@ const Dashboard = () => {
                                             <p className="descriptionText">
                                                 {item.description.length > 200
                                                     ? item.description.slice(
-                                                          0,
-                                                          200
-                                                      ) + "..."
+                                                        0,
+                                                        200
+                                                    ) + "..."
                                                     : item.description}
                                             </p>
                                         </Card.Description>
@@ -222,8 +222,8 @@ const Dashboard = () => {
                                         projectsRefFirebase={
                                             projectsRefFirebase
                                         }
-                                        //id={item.id}
-                                        //onClick={() => {addUserToProject()}}
+                                    //id={item.id}
+                                    //onClick={() => {addUserToProject()}}
                                     />
                                     <div className="cardFooter">
                                         {/* <Card.Content> */}
