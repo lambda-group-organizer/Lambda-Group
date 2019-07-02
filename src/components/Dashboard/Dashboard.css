@@ -20,7 +20,7 @@ body {
 
 .cardContainer {
   width: 100%;
-  padding: 3%;
+  padding: 2.5% 1%;
   max-width: 400px;
   flex-grow: 1;
 }
@@ -32,7 +32,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #212121;
+  background: #ba112e;
   color: #efefef;
   opacity: .7;
   padding: 5%;
@@ -40,6 +40,8 @@ body {
 
 .headerTitle {
 text-align: center;
+font-weight: bold;
+text-transform: capitalize;
 }
 
 .contentContainer {
@@ -53,6 +55,22 @@ min-height: 115px;
 
 .descriptionText {
   width: 100%;
+}
+
+.cardFooter {
+  background-color: #eee;
+  color: #212121;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-weight: bolder;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .targetMembersContainer {

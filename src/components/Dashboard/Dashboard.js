@@ -112,30 +112,18 @@ const Dashboard = () => {
                 </Card.Header>
                 <div className='contentContainer'>
                   <Card.Description className='description'>
-                    <p className='descriptionText'>{item.description.length > 150 ? item.description.slice(0, 150) + '...' : item.description}
+                    <p className='descriptionText'>{item.description.length > 200 ? item.description.slice(0, 200) + '...' : item.description}
                     </p>
                   </Card.Description>
-                  <div>
-                    <Card.Content>
-                      <ul className='targetMembersContainer'>
-                        {targetArr.map((target, index) => {
-                          return <li key={index} className="cardMember">{target}</li>;
-                        })}
-                      </ul>
-                      <ul>
-                        {item.teamMembers &&
-                          item.teamMembers.map((member, index) => {
-                            return <li key={index}>{member}</li>;
-                          })}
-                      </ul>
-                      {/* <p>Current group size: {item.teamMembers.length}</p> */}
-                    </Card.Content>
-                  </div>
                 </div>
-                {/*<div className="buttons">
-                  <Button color="green">Join!</Button>
-                  <Button color="google plus">Leave!</Button>
-                </div>*/}
+                <div className="cardFooter">
+                  {/* <Card.Content> */}
+                  <ul className='targetMembersContainer'>
+                    {targetArr.map((target, index) => {
+                      return <li key={index} className="cardMember">{target}</li>;
+                    })}
+                  </ul>
+                </div>
               </Card>
             </div>
           );
