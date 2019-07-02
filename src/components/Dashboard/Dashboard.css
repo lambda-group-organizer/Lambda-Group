@@ -1,3 +1,6 @@
+body {
+  min-width: 100%;
+}
 .background {
   color: #424242;
 }
@@ -17,7 +20,7 @@
 
 .cardContainer {
   width: 100%;
-  padding: 3%;
+  padding: 2.5% 1%;
   max-width: 400px;
   flex-grow: 1;
 }
@@ -29,24 +32,64 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #212121;
+  background: #ba112e;
   color: #efefef;
   opacity: .7;
   padding: 5%;
 }
 
 .headerTitle {
-text-align: center
+text-align: center;
+font-weight: bold;
+text-transform: capitalize;
 }
 
 .contentContainer {
-padding: 5%
+padding: 5%;
 }
 
 .description {
-font-size: 1.2rem
+font-size: 1.2rem;
+min-height: 115px;
 }
 
 .descriptionText {
   width: 100%;
+}
+
+.cardFooter {
+  background-color: #eee;
+  color: #212121;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-weight: bolder;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.targetMembersContainer {
+  /* reset */
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 0px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+}
+
+.cardMember {
+  display: inline-block;
+  padding: 5px;
+  font-size: .9rem;
 }
