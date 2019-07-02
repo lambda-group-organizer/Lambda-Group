@@ -19,7 +19,7 @@ const AddRoomModal = ({ projectsRefFirebase, item }) => {
         };
 
         let updateSingle = projectRef.set(
-            { teamMembers: userData },
+            { newProject: { teamMembers: userData } },
             { merge: true }
         );
     };
@@ -51,8 +51,23 @@ const AddRoomModal = ({ projectsRefFirebase, item }) => {
                             <input placeholder="Insert name" onChange={event => setRoomName(event.target.value)} />
                         </Form.Field>
                     </Form> */}
+
+
+
+
+
+
                     <p>{item.description}</p>
-                    <p>{item.uid}</p>
+                    {Object.values(item.teamMembers).map(member => {
+                        return <p>{member}</p>
+                    })}
+
+
+
+
+
+
+
                 </Modal.Content>
                 <Modal.Actions>
                     <Button basic color="red" inverted onClick={handleClose}>
