@@ -1,30 +1,40 @@
 import React, { useState } from "react";
 import { Modal, Header, Form, Button, Icon } from "semantic-ui-react";
 import "./ProjectModal.css";
+import firebase from '../../logic/firebase'
 
-const AddRoomModal = ({ projectsRefFirebase }) => {
+const AddRoomModal = ({ projectsRefFirebase, item }) => {
     const [modalOpen, setmodalOpen] = useState(false);
+    const [team, setTeam] = useState([])
 
     const handleOpen = () => setmodalOpen(true);
     const handleClose = () => setmodalOpen(false);
 
+    const addToTeam = () => {
+        var user = firebase.auth().currentUser;
+        console.log(user)
+        setTeam(user)
+    }
+
     return (
-        <div>
+        <div style={{ textAlign: "center"}}>
             <Modal
-                trigger={<span onClick={handleOpen}>+</span>}
+                // trigger={<span onClick={handleOpen}>+</span>}
+                trigger={<Button inverted color="red"  style={{ marginBottom: "20px" }} onClick={handleOpen}>More Details</Button>}
                 open={modalOpen}
                 onClose={handleClose}
                 basic
                 size="small"
+                centered
             >
-                <Header content="Project" />
+                <Header content={item.title} />
                 <Modal.Content>
                     {/* <Form onSubmit={}>
                         <Form.Field>
                             <input placeholder="Insert name" onChange={event => setRoomName(event.target.value)} />
                         </Form.Field>
                     </Form> */}
-                    <div>Hello</div>
+                    <p>{item.description}</p>
                 </Modal.Content>
                 <Modal.Actions>
                     <Button basic color="red" inverted onClick={handleClose}>
@@ -35,6 +45,7 @@ const AddRoomModal = ({ projectsRefFirebase }) => {
                         color="green"
                         inverted
                         onClick={() => {
+                            addToTeam();
                             handleClose();
                         }}
                     >
