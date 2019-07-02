@@ -8,7 +8,7 @@ class Scene extends Component {
   }
 
   componentDidMount() {
-    const width = 250;
+    const width = 400;
     const height = width;
 
     const scene = new THREE.Scene();
@@ -22,7 +22,7 @@ class Scene extends Component {
     dom.appendChild(renderer.domElement);
 
     const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000);
-    camera.position.z = 4;
+    camera.position.z = 5;
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enabled = true;

@@ -18,7 +18,7 @@ const Register = ({ history }) => {
     const { setUser } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [displayName, setDisplayName] = useState("");
+    const [name, setName] = useState("");
 
     const register = event => {
         event.preventDefault();
@@ -27,10 +27,10 @@ const Register = ({ history }) => {
             .createUserWithEmailAndPassword(email, password)
             .then(createdUser => {
                 console.log(`createdUser : ${createdUser}`);
-                createdUser.user.updateProfile({ displayName }).then(() => {
+                createdUser.user.updateProfile({ name }).then(() => {
                     console.log(createdUser.user);
                     setUser({
-                        displayName,
+                        name,
                         uid: createdUser.user.uid
                     });
                     history.push("/");
@@ -50,11 +50,11 @@ const Register = ({ history }) => {
                 <Form onSubmit={register}>
                     <Form.Input
                         icon="user"
-                        value={displayName}
+                        value={name}
                         iconPosition="left"
                         placeholder="Display Name"
                         type="text"
-                        onChange={event => setDisplayName(event.target.value)}
+                        onChange={event => setName(event.target.value)}
                     />
 
                     <Form.Input
