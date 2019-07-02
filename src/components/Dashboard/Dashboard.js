@@ -6,12 +6,10 @@ import firebase from '../../logic/firebase';
 import {Button, Card, Grid, Header} from 'semantic-ui-react';
 import DisplayInfo from './DisplayInfo';
 import './Dashboard.css';
-import {FuzzySearch, fuzzySearch} from './FuzzySearch.js';
 import Fuse from 'fuse.js';
 
 const Dashboard = () => {
   const [currentProject, setCurrentProject] = useState(null);
-  // const { setCurrentProject } = useContext(CurrentProjectContext);
   const [projects, setProjects] = useState([]);
   const [tempProjects, setTempProjects] = useState([]);
   const [projectName, setProjectName] = useState('');
@@ -23,7 +21,6 @@ const Dashboard = () => {
   refTo_projectsVariable.current = projects;
 
   const handleForce = data => {
-    // console.log(data);
     setTempProjects(data);
   };
 
@@ -31,8 +28,8 @@ const Dashboard = () => {
     firebase.auth().signOut();
   };
 
+  // Convert to firestore
   const addProject = () => {
-    // console.log("addProject");
     const projectId = projectsRefFirebase.push().key;
 
     const newProject = {
@@ -47,9 +44,9 @@ const Dashboard = () => {
       .then(project => console.log(`success : ${project}`))
       .catch(err => console.log(`error : ${err}`));
   };
-
+  
+  // Convert to firestore
   const addProjectListener = () => {
-    // console.log("project listener is added");
     projectsRefFirebase.on('child_added', snap => {
       // console.log(snap.val());
       let newProject = [...refTo_projectsVariable.current, snap.val()];
@@ -59,7 +56,7 @@ const Dashboard = () => {
   };
 
   const removeProjectListener = () => {
-    // console.log("project listener is removed");
+    console.log("project listener is removed");
     projectsRefFirebase.off();
   };
 
@@ -71,89 +68,49 @@ const Dashboard = () => {
 
   useEffect(() => {
     convertedProjects();
-  }, [tempProjects]); // --- mount \ unmount
+  }, [tempProjects]);
 
   const convertedProjects = () => {
-    // console.log("converted projects running", tempProjects);
-    const newConvertedProjects = tempProjects.map((item, index) => {
-      const newProject = {
-        title: item[0],
-        description: item[1],
-        targetGroup: item[2],
-        teamMembers: [],
-        studentCohort: item[4],
-        dateSubmmited: item[5],
-        id: index,
-      };
+        // console.log("converted projects running", tempProjects);
+        const newConvertedProjects = tempProjects.map((item, index) => {
+            const newProject = {
+                title: item[0],
+                description: item[1],
+                targetGroup: item[2],
+                teamMembers: [],
+                studentCohort: item[4],
+                dateSubmmited: item[5]
+            };
+            if (index > 0) {
+                //     const projectId = projectsRefFirebase.push().key;
+                //     newProject.uid = projectId
+                //     projectsRefFirebase
+                //         .child(projectId)
+                //         .set(newProject)
+                //         .then(project => console.log(`success : ${project}`))
+                //         .catch(err => console.log(`error : ${err}`));
 
-      if (index > 0) {
-        const projectId = projectsRefFirebase.push().key;
-        projectsRefFirebase
-          .child(projectId)
-          .set(newProject)
-          .then(project => console.log(`success : ${project}`))
-          .catch(err => console.log(`error : ${err}`));
-      }
-      return newProject;
-    });
-    newConvertedProjects.shift();
-    setProjects(newConvertedProjects);
-    setFilteredProj(newConvertedProjects);
-  };
+                let cityRef = db
+                    .collection("projects")
+                    .add({
+                        newProject
+                    })
+                    .then(ref => {
+                        console.log("Added document with ID: ", ref.id);
+                        newProject.uid = ref.id
+                        ref.set({id: ref.id}, {merge: true});
+                    });
+            }
 
-  const openProject = id => {
-    console.log('Opened', id);
-  };
-
-  //const addUserToProject = () => {
-  //if (someting.length >= 6) {
-  //return <Spinner />
-  //} else {
-  //db.push(something)
-  //}
-  //}
-  const changeProjects = arr => {
-    console.log('arr from line 114', arr);
-    setFilteredProj(arr);
-  };
-
-  //***************FUZZYSEARCH***************************
-  const FuzzySearch = (arr, changeProjects) => {
-    //console.log('arr :',arr)
-    console.log(changeProjects);
-    return (
-      <form onSubmit={e => e.preventDefault()}>
-        <input type="text" onChange={e => fuzzySearch(arr.arr, e)} />
-      </form>
-    );
-  };
-
-  const fuzzySearch = (list, e) => {
-    e.preventDefault();
-    //console.log(list.arr, 'list.arr')
-    //console.log('list', list)
-    let options = {
-      findAllMatches: true,
-      threshold: 0.6,
-      location: 0,
-      distance: 100,
-      maxPatternLength: 32,
-      minMatchCharLength: 1,
-      keys: ['description', 'studentCohort', 'targetGroup', 'title'],
+            return newProject;
+        });
+        newConvertedProjects.shift();
+        setProjects(newConvertedProjects);
     };
-    const fuse = new Fuse(list, options); // "list" is the item array
-    const result = fuse.search(e.target.value);
-    setFilteredProj(result);
-    console.log('filteredProj', filteredProj);
-    //console.log('e.target.value', e.target.value)
-    //console.log(result)
-  };
-
-  useEffect(() => {
-    setFilteredProj(projects);
-  }, [projects]);
-
-  // ***************** END FUZZY SEARCH ************************
+  
+    const openProject = id => {
+        console.log("Opened", id);
+    };
 
   const projectsElements = (
       <>
@@ -207,11 +164,6 @@ const Dashboard = () => {
                   </ul>
                 </div>
               </Card>
-              {/* <ProjectModal
-                                item={item}
-                                openProject={openProject}
-                                projectsRefFirebase={projectsRefFirebase}
-                            /> */}
             </div>
           );
         })}
