@@ -12,13 +12,13 @@ const AddRoomModal = ({ projectsRefFirebase, item }) => {
 
     const addToTeam = () => {
         var user = firebase.auth().currentUser;
-        let cityRef = db.collection("projects").doc(item.uid);
+        let projectRef = db.collection("projects").doc(item.uid);
 
         const userData = {
             Name: user.displayName
         };
 
-        let updateSingle = cityRef.set(
+        let updateSingle = projectRef.set(
             { teamMembers: userData },
             { merge: true }
         );
