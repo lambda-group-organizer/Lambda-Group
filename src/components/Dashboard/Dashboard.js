@@ -85,6 +85,7 @@ const Dashboard = () => {
 
             if (index > 0) {
                 const projectId = projectsRefFirebase.push().key;
+                newProject.uid = projectId
                 projectsRefFirebase
                     .child(projectId)
                     .set(newProject)
@@ -99,6 +100,14 @@ const Dashboard = () => {
 
     const openProject = id => {
         console.log("Opened", id);
+    };
+
+    const getData = () => {
+        firebase.database().ref('/projects').on('value', function(snapshot) {
+            console.log(snapshot.val());
+            const projectData = snapshot.val()
+            console.log()
+        });
     };
 
     const projectsElements = (
@@ -180,6 +189,7 @@ const Dashboard = () => {
                 Logout
             </button>
             <Header as="h2">Projects</Header>
+            <Button onClick={getData}>click</Button>
             {projectsElements}
         </div>
     );
