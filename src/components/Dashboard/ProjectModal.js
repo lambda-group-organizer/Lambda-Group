@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Header, Form, Button, Icon } from "semantic-ui-react";
 import "./ProjectModal.css";
-import firebase from '../../logic/firebase'
+import firebase from "../../logic/firebase";
+import { db } from "../../logic/firebase";
 
 const AddRoomModal = ({ projectsRefFirebase, item }) => {
     const [modalOpen, setmodalOpen] = useState(false);
@@ -11,15 +12,32 @@ const AddRoomModal = ({ projectsRefFirebase, item }) => {
 
     const addToTeam = () => {
         var user = firebase.auth().currentUser;
-        console.log(user)
-        projectsRefFirebase.child(item.uid).update({'TeamMembers': user.displayName})
-    }
+        let cityRef = db.collection("projects").doc(item.uid);
+
+        const userData = {
+            Name: user.displayName
+        };
+
+        let updateSingle = cityRef.set(
+            { teamMembers: userData },
+            { merge: true }
+        );
+    };
 
     return (
-        <div style={{ textAlign: "center"}}>
+        <div style={{ textAlign: "center" }}>
             <Modal
                 // trigger={<span onClick={handleOpen}>+</span>}
-                trigger={<Button inverted color="red"  style={{ marginBottom: "20px" }} onClick={handleOpen}>More Details</Button>}
+                trigger={
+                    <Button
+                        inverted
+                        color="red"
+                        style={{ marginBottom: "20px" }}
+                        onClick={handleOpen}
+                    >
+                        More Details
+                    </Button>
+                }
                 open={modalOpen}
                 onClose={handleClose}
                 basic

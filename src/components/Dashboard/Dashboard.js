@@ -3,6 +3,7 @@ import CurrentProjectContext from "../../context/CurrentProjectContext";
 import CSVReader from "react-csv-reader";
 import ProjectModal from "./ProjectModal";
 import firebase from "../../logic/firebase";
+import { db } from "../../logic/firebase";
 import { Button, Card, Grid, Header } from "semantic-ui-react";
 import DisplayInfo from "./DisplayInfo";
 import "./Dashboard.css";
@@ -79,19 +80,29 @@ const Dashboard = () => {
                 targetGroup: item[2],
                 teamMembers: [],
                 studentCohort: item[4],
-                dateSubmmited: item[5],
-                id: index
+                dateSubmmited: item[5]
             };
-
             if (index > 0) {
-                const projectId = projectsRefFirebase.push().key;
-                newProject.uid = projectId
-                projectsRefFirebase
-                    .child(projectId)
-                    .set(newProject)
-                    .then(project => console.log(`success : ${project}`))
-                    .catch(err => console.log(`error : ${err}`));
+                //     const projectId = projectsRefFirebase.push().key;
+                //     newProject.uid = projectId
+                //     projectsRefFirebase
+                //         .child(projectId)
+                //         .set(newProject)
+                //         .then(project => console.log(`success : ${project}`))
+                //         .catch(err => console.log(`error : ${err}`));
+
+                let cityRef = db
+                    .collection("projects")
+                    .add({
+                        newProject
+                    })
+                    .then(ref => {
+                        console.log("Added document with ID: ", ref.id);
+                        newProject.uid = ref.id
+                        ref.set({id: ref.id}, {merge: true});
+                    });
             }
+
             return newProject;
         });
         newConvertedProjects.shift();
@@ -100,14 +111,6 @@ const Dashboard = () => {
 
     const openProject = id => {
         console.log("Opened", id);
-    };
-
-    const getData = () => {
-        firebase.database().ref('/projects').on('value', function(snapshot) {
-            console.log(snapshot.val());
-            const projectData = snapshot.val()
-            console.log()
-        });
     };
 
     const projectsElements = (
@@ -189,7 +192,6 @@ const Dashboard = () => {
                 Logout
             </button>
             <Header as="h2">Projects</Header>
-            <Button onClick={getData}>click</Button>
             {projectsElements}
         </div>
     );
