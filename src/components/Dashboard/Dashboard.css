@@ -93,3 +93,9 @@ min-height: 115px;
   padding: 5px;
   font-size: .9rem;
 }
+
+.filter {
+  border: 2px solid #ba112e;
+  box-shadow: 2px 2px 12px 1px;
+  font-size: 2rem;
+}
