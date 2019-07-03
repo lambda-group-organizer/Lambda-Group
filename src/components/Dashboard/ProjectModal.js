@@ -9,52 +9,63 @@ const AddRoomModal = ({ projects, item }) => {
 
     useEffect(() => {
         if (item.uid !== undefined) {
-        let projectRef = db.collection("projects").doc(item.uid);
-        let getDoc = projectRef.get()
-            .then(doc => {
-                if (!doc.exists) {
-                    console.log('No such document!');
-                } else {
-                    console.log('Document data:', doc.data());
-                    console.log('Document data:', doc.data().newProject.teamMembers);
-                    const tempTeamMember = doc.data().newProject.teamMembers;
-                    setTeam(tempTeamMember);
-                }
-            })
-            .catch(err => {
-                console.log('Error getting document', err);
-            });
+
+            let projectRef = db.collection("projects").doc(item.uid);
+            let getDoc = projectRef
+                .get()
+                .then(doc => {
+                    if (!doc.exists) {
+                        console.log("No such document!");
+                    } else {
+                        console.log("Document data:", doc.data());
+                        console.log(
+                            "Document data:",
+                            doc.data().newProject.teamMembers
+                        );
+                        const tempTeamMember = doc.data().newProject
+                            .teamMembers;
+                        setTeam(tempTeamMember);
+                    }
+                })
+                .catch(err => {
+                    console.log("Error getting document", err);
+                });
         }
-        return () => { "Funky" }
-    }, [item.uid])
+        return () => {
+            "Funky";
+        };
+    }, [item.uid]);
 
     const [modalOpen, setmodalOpen] = useState(false);
 
     const handleOpen = () => setmodalOpen(true);
     const handleClose = () => setmodalOpen(false);
 
-
     const addToTeam = async () => {
-        console.log("ADDTOTEAM")
+        console.log("ADDTOTEAM");
         var user = firebase.auth().currentUser;
         let projectRef = db.collection("projects").doc(item.uid);
-        let getDoc = await projectRef.get()
+        let getDoc = await projectRef
+            .get()
             .then(doc => {
                 if (!doc.exists) {
-                    console.log('No such document!');
+                    console.log("No such document!");
                 } else {
-                    console.log('Document data:', doc.data());
-                    console.log('Document data:', doc.data().newProject.teamMembers);
+                    console.log("Document data:", doc.data());
+                    console.log(
+                        "Document data:",
+                        doc.data().newProject.teamMembers
+                    );
                     const tempTeamMember = doc.data().newProject.teamMembers;
                     setTeam(tempTeamMember);
                 }
             })
             .catch(err => {
-                console.log('Error getting document', err);
+                console.log("Error getting document", err);
             });
         // console.log(getDoc)
 
-        console.log("Hook team: ", team)
+        console.log("Hook team: ", team);
         console.log("displayName: ", user.displayName);
         // const userData = {
         //     Name: user.displayName
@@ -66,13 +77,12 @@ const AddRoomModal = ({ projects, item }) => {
         newTeam.push(user.displayName);
         console.log("USER: ", user);
 
-        // if (!team.includes(user.displayName) && team.length < 6) {
-        console.log("IMPORTANT INSIDE IF")
-        let updateSingle = projectRef.set(
-            { newProject: { teamMembers: team } },
-            { merge: true }
-        );
-        // }
+        if (team.length <= 6) {
+            let updateSingle = projectRef.set(
+                { newProject: { teamMembers: team } },
+                { merge: true }
+            );
+        }
     };
 
     return (
@@ -97,28 +107,10 @@ const AddRoomModal = ({ projects, item }) => {
             >
                 <Header content={item.title} />
                 <Modal.Content>
-                    {/* <Form onSubmit={}>
-                        <Form.Field>
-                            <input placeholder="Insert name" onChange={event => setRoomName(event.target.value)} />
-                        </Form.Field>
-                    </Form> */}
-
-
-
-
-
-
                     <p>{item.description}</p>
                     {Object.values(item.teamMembers).map(member => {
-                        return <p>{member}</p>
+                        return <p>{member}</p>;
                     })}
-
-
-
-
-
-
-
                 </Modal.Content>
                 <Modal.Actions>
                     <Button basic color="red" inverted onClick={handleClose}>
