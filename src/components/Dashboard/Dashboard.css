@@ -34,7 +34,7 @@ body {
   align-items: center;
   background: #ba112e;
   color: #efefef;
-  opacity: .7;
+  /* opacity: .7; */
   padding: 5%;
 }
 
@@ -95,9 +95,10 @@ min-height: 115px;
 }
 
 .filter {
-  border: 2px solid #ba112e;
-  box-shadow: 2px 2px 12px 1px;
-  font-size: 2rem;
+  /* border: 2px solid #ba112e; */
+  /* box-shadow: 2px 2px 12px 1px; */
+  /* font-size: 2rem; */
+  color: red;
 }
 
 .displayContainer {
@@ -105,9 +106,9 @@ min-height: 115px;
   display: flex;
   /*flex-direction: column;*/
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
-  margin: 2% auto;
+  /* margin: 2% auto; */
 }
 
 .csv-reader-input {
@@ -120,7 +121,7 @@ min-height: 115px;
   align-items: space-between;
   justify-content: space-between;
   flex-direction: column;
-  width: 200px;
+  width: 215px;
 }
 
 .csv-reader-input > label {
@@ -131,10 +132,11 @@ min-height: 115px;
 
 .csv-input {
   text-align: center;
-  border: 2px solid #ba112e;
-  align-self: center;
+  /* border: 2px solid #ba112e; */
+  margin-top: 5px;
+  /* align-self: center; */
   padding: 1%;
-  box-shadow: 1px 2px 5px 1px #1d1d1d;
+  /* box-shadow: 1px 2px 5px 1px #1d1d1d; */
 }
 
 .logoutButton {
