@@ -8,7 +8,7 @@ class Scene extends Component {
   }
 
   componentDidMount() {
-    const width = 250;
+    const width = 200;
     const height = width;
 
     const scene = new THREE.Scene();
@@ -29,7 +29,7 @@ class Scene extends Component {
     controls.maxDistance = 1500;
     controls.minDistance = 0;
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const geometry = new THREE.OctahedronGeometry(1, 0);
     const material = new THREE.MeshLambertMaterial({
       color: "red"
     });
@@ -37,9 +37,8 @@ class Scene extends Component {
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
-    const light_p = new THREE.PointLight(0xffffff);
-    light_p.position.set(100, 100, 100);
-    scene.add(light_p);
+    var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+    scene.add( light );
 
     const light_a = new THREE.AmbientLight(0x333333);
     scene.add(light_a);

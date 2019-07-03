@@ -1,15 +1,29 @@
-import React from "react";
-import { Statistic,  Segment} from "semantic-ui-react";
-import './DisplayInfo.css'
+import React, { useState, useContext } from "react";
+import { Statistic, Segment } from "semantic-ui-react";
+import "./DisplayInfo.css";
+import CSVReader from "react-csv-reader";
 
-const StatisticExampleValueShorthand = () => (
-  <Segment style={{marginBottom: "25px", width: "210px", marginLeft: "10px", marginTop: '2%'}}>
-        <h3 style={{textAlign: "center"}}>Project Data</h3>
-        <Statistic.Group size="mini">
-            <Statistic label="Projects" value="50" />
-            <Statistic label="Signups" value="200" />
-        </Statistic.Group>
-    </Segment>
-);
+const StatisticExampleValueShorthand = ({handleForce, projects}) => {
+    const [tempProjects, setTempProjects] = useState([]);
+
+    return (
+        <div>
+            <Segment className="DisplayInfo">
+                <h3>Project Data</h3>
+                <Statistic.Group tex size="small">
+                    <Statistic label="Projects" value={projects.length} />
+                    <Statistic label="Students" value="600" />
+                </Statistic.Group>
+            </Segment>
+            <CSVReader
+                cssClass="csv-reader-input"
+                label="Select CSV with projects"
+                onFileLoaded={handleForce}
+                inputId="ObiWan"
+                inputStyle={{ color: "red" }}
+            />
+        </div>
+    );
+};
 
 export default StatisticExampleValueShorthand;
