@@ -9,6 +9,7 @@ const AddRoomModal = ({ projects, item }) => {
 
     useEffect(() => {
         if (item.uid !== undefined) {
+
             let projectRef = db.collection("projects").doc(item.uid);
             let getDoc = projectRef
                 .get()
