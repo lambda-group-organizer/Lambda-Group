@@ -8,7 +8,7 @@ class Scene extends Component {
   }
 
   componentDidMount() {
-    const width = 400;
+    const width = 250;
     const height = width;
 
     const scene = new THREE.Scene();

@@ -4,10 +4,11 @@ import "./ProjectModal.css";
 import firebase from "../../logic/firebase";
 import { db } from "../../logic/firebase";
 
-const AddRoomModal = ({ projectsRefFirebase, item }) => {
+const AddRoomModal = ({ projects, item }) => {
     const [team, setTeam] = useState([]);
 
     useEffect(() => {
+        if (item.uid !== undefined) {
         let projectRef = db.collection("projects").doc(item.uid);
         let getDoc = projectRef.get()
             .then(doc => {
@@ -23,8 +24,9 @@ const AddRoomModal = ({ projectsRefFirebase, item }) => {
             .catch(err => {
                 console.log('Error getting document', err);
             });
+        }
         return () => { "Funky" }
-    }, [])
+    }, [item.uid])
 
     const [modalOpen, setmodalOpen] = useState(false);
 
