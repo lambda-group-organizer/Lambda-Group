@@ -1,27 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Header, Form, Button, Icon } from "semantic-ui-react";
 import "./ProjectModal.css";
 import firebase from "../../logic/firebase";
 import { db } from "../../logic/firebase";
 
 const AddRoomModal = ({ projectsRefFirebase, item }) => {
+    const [team, setTeam] = useState([]);
+
+    useEffect(() => {
+        let projectRef = db.collection("projects").doc(item.uid);
+        let getDoc = projectRef.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    console.log('Document data:', doc.data());
+                    console.log('Document data:', doc.data().newProject.teamMembers);
+                    const tempTeamMember = doc.data().newProject.teamMembers;
+                    setTeam(tempTeamMember);
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+            });
+        return () => { "Funky" }
+    }, [])
+
     const [modalOpen, setmodalOpen] = useState(false);
 
     const handleOpen = () => setmodalOpen(true);
     const handleClose = () => setmodalOpen(false);
 
-    const addToTeam = () => {
+
+    const addToTeam = async () => {
+        console.log("ADDTOTEAM")
         var user = firebase.auth().currentUser;
         let projectRef = db.collection("projects").doc(item.uid);
+        let getDoc = await projectRef.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    console.log('Document data:', doc.data());
+                    console.log('Document data:', doc.data().newProject.teamMembers);
+                    const tempTeamMember = doc.data().newProject.teamMembers;
+                    setTeam(tempTeamMember);
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+            });
+        // console.log(getDoc)
 
-        const userData = {
-            Name: user.displayName
-        };
+        console.log("Hook team: ", team)
+        console.log("displayName: ", user.displayName);
+        // const userData = {
+        //     Name: user.displayName
+        // };
 
+        console.log("projectRef: ", projectRef);
+
+        let newTeam = team;
+        newTeam.push(user.displayName);
+        console.log("USER: ", user);
+
+        // if (!team.includes(user.displayName) && team.length < 6) {
+        console.log("IMPORTANT INSIDE IF")
         let updateSingle = projectRef.set(
-            { newProject: { teamMembers: userData } },
+            { newProject: { teamMembers: team } },
             { merge: true }
         );
+        // }
     };
 
     return (
