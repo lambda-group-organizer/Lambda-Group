@@ -1,13 +1,12 @@
-import React from 'react';
-import CSVreader from './CSV'
+import React, { useContext } from "react";
+import Dashboard from "./Dashboard/Dashboard";
 
-function App() {
-  return (
-    <div className="App">
-      <p>Lambda Group Organizer</p>
-      <CSVreader />
-    </div>
-  );
-}
+const App = () => {
+    return (
+        <div style={{textAlign: "center"}}>
+            <Dashboard />
+        </div>
+    );
+};
 
 export default App;
