@@ -17,11 +17,11 @@ const AddRoomModal = ({ projects, item }) => {
                     if (!doc.exists) {
                         console.log("No such document!");
                     } else {
-                        console.log("Document data:", doc.data());
-                        console.log(
-                            "Document data:",
-                            doc.data().newProject.teamMembers
-                        );
+                        // console.log("Document data:", doc.data());
+                        // console.log(
+                        //     "Document data:",
+                        //     doc.data().newProject.teamMembers
+                        // );
                         const tempTeamMember = doc.data().newProject
                             .teamMembers;
                         setTeam(tempTeamMember);
@@ -51,11 +51,11 @@ const AddRoomModal = ({ projects, item }) => {
                 if (!doc.exists) {
                     console.log("No such document!");
                 } else {
-                    console.log("Document data:", doc.data());
-                    console.log(
-                        "Document data:",
-                        doc.data().newProject.teamMembers
-                    );
+                    // console.log("Document data:", doc.data());
+                    // console.log(
+                    //     "Document data:",
+                    //     doc.data().newProject.teamMembers
+                    // );
                     const tempTeamMember = doc.data().newProject.teamMembers;
                     setTeam(tempTeamMember);
                 }
@@ -65,17 +65,17 @@ const AddRoomModal = ({ projects, item }) => {
             });
         // console.log(getDoc)
 
-        console.log("Hook team: ", team);
-        console.log("displayName: ", user.displayName);
+        // console.log("Hook team: ", team);
+        // console.log("displayName: ", user.displayName);
         // const userData = {
         //     Name: user.displayName
         // };
 
-        console.log("projectRef: ", projectRef);
+        // console.log("projectRef: ", projectRef);
 
         let newTeam = team;
         newTeam.push(user.displayName);
-        console.log("USER: ", user);
+        // console.log("USER: ", user);
 
         if (team.length <= 6) {
             let updateSingle = projectRef.set(

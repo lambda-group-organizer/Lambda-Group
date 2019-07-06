@@ -1,5 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import CurrentProjectContext from "../../context/CurrentProjectContext";
+import UserContext from "../../context/UserContext";
 import ProjectModal from "./ProjectModal";
 import firebase from "../../logic/firebase";
 import { db } from "../../logic/firebase";
@@ -18,6 +19,7 @@ import Fuse from "fuse.js";
 import LoginAnimation from "../Auth/LoginAnimation.js";
 
 const Dashboard = () => {
+    const { user, setUser } = useContext(UserContext);
     const [currentProject, setCurrentProject] = useState(null);
     const [projects, setProjects] = useState([]);
     const [tempProjects, setTempProjects] = useState([]);
@@ -28,6 +30,39 @@ const Dashboard = () => {
 
     const refTo_projectsVariable = useRef();
     refTo_projectsVariable.current = projects;
+
+    const getRole = () => {
+        firebase.auth().onAuthStateChanged(function(user) {
+            let currentUser = firebase.auth().currentUser;
+            if (user) {
+                // User is signed in.
+                let userRef = db.collection("users").doc(currentUser.uid);
+                let getDoc = userRef
+                    .get()
+                    .then(doc => {
+                        if (!doc.exists) {
+                            console.log("No such document!");
+                        } else {
+                            // console.log("Document data:", doc.data());
+                           const adminUserData = doc.data().role
+                            setUser({
+                                role: adminUserData
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log("Error getting document", err);
+                    });
+            } else {
+                return;
+                // No user is signed in.
+            }
+        });
+    };
+
+    useEffect(() => {
+        getRole();
+    }, []);
 
     const handleForce = data => {
         // console.log(data);
@@ -126,14 +161,14 @@ const Dashboard = () => {
     };
 
     const changeProjects = arr => {
-        console.log("arr from line 114", arr);
+        // console.log("arr from line 114", arr);
         setFilteredProj(arr);
     };
 
     //***************FUZZYSEARCH***************************
     const FuzzySearch = (arr, changeProjects) => {
         //console.log('arr :',arr)
-        console.log(changeProjects);
+        // console.log(changeProjects);
         return (
             <form onSubmit={e => e.preventDefault()}>
                 <input type="text" onChange={e => fuzzySearch(arr.arr, e)} />
@@ -157,13 +192,13 @@ const Dashboard = () => {
         const fuse = new Fuse(list, options); // "list" is the item array
         const result = fuse.search(e.target.value);
         setFilteredProj(result);
-        console.log("filteredProj", filteredProj);
+        // console.log("filteredProj", filteredProj);
         //console.log('e.target.value', e.target.value)
         //console.log(result)
     };
 
     useEffect(() => {
-        console.log(projects, "useEffect");
+        // console.log(projects, "useEffect");
         setFilteredProj(projects);
     }, [projects]);
     // ***************** END FUZZY SEARCH ************************
@@ -183,9 +218,9 @@ const Dashboard = () => {
                 {projects &&
                     filteredProj &&
                     filteredProj.map((item, index) => {
-                        console.log(item, "From map");
-                        let targetArr = item.targetGroup.split(",");
+                        // console.log(item, "From map");
 
+                        let targetArr = item.targetGroup.split(",");
                         return (
                             <div
                                 key={index}
@@ -250,10 +285,18 @@ const Dashboard = () => {
         );
     }
 
+    // console.log(user);
     return (
         <div>
-            <div style={{ display: "flex", justifyContent: "center", backgroundColor: "#ba112e", marginBottom: "40px" }}>
-                <Header as="h1" inverted style={{ marginTop: "25px", }}>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    backgroundColor: "#ba112e",
+                    marginBottom: "40px"
+                }}
+            >
+                <Header as="h1" inverted style={{ marginTop: "25px" }}>
                     <Icon color="white" name="chevron up" />
                     Lambda Group Organizer
                 </Header>
@@ -270,7 +313,11 @@ const Dashboard = () => {
                 </Button>
             </div>
             <div className="displayContainer">
-                <DisplayInfo projects={projects} handleForce={handleForce} />
+                <DisplayInfo
+                    projects={projects}
+                    handleForce={handleForce}
+                    user={user}
+                />
                 <LoginAnimation />
             </div>
             {projectsElements}

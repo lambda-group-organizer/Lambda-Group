@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import LoginAnimation from "./LoginAnimation";
 
 const Login = ({ history }) => {
-    const { setUser } = useContext(UserContext);
+    const { setUser, user } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -29,8 +29,10 @@ const Login = ({ history }) => {
                 console.log(loggedInuser.user);
                 setUser({
                     displayName: loggedInuser.user.displayName,
-                    uid: loggedInuser.user.uid
+                    uid: loggedInuser.user.uid,
+                    role: user
                 });
+                console.log(user, "from user role");
                 history.push("/");
             })
             .catch(err => console.log(err));
