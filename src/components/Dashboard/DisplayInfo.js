@@ -1,13 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Statistic, Segment, Button } from "semantic-ui-react";
 import UserContext from "../../context/UserContext";
+import CurrentProjectContext from "../../context/CurrentProjectContext";
 import { db } from "../../logic/firebase";
 import "./DisplayInfo.css";
 import CSVReader from "react-csv-reader";
 
-const StatisticExampleValueShorthand = ({ handleForce, projects }) => {
-    const { user } = useContext(UserContext);
-    const [tempProjects, setTempProjects] = useState([]);
+const StatisticExampleValueShorthand = ({ handleForce, user }) => {
+    const { tempProjects } = useContext(UserContext);
+    const [projects, setProjects] = useState([]);
     const [tempUsers, setTempUsers] = useState([]);
 
     const deleteCollection = () => {
@@ -15,8 +16,8 @@ const StatisticExampleValueShorthand = ({ handleForce, projects }) => {
         let allProjects = projectRef
             .get()
             .then(snapshot => {
-                const tempProjects = projects;
-                let count = 1
+                const tempProject = projects;
+                let count = 1;
                 snapshot.forEach(doc => {
                     // console.log(doc.data().newProject.uid);
                     console.log(doc, `count: ${count++}`);
@@ -28,6 +29,7 @@ const StatisticExampleValueShorthand = ({ handleForce, projects }) => {
             .catch(err => {
                 console.log("Error getting documents", err);
             });
+        setProjects([]);
     };
 
     const getUsers = () => {
@@ -53,9 +55,36 @@ const StatisticExampleValueShorthand = ({ handleForce, projects }) => {
         setTempUsers(tempUserData);
     };
 
+    const getProjects = () => {
+        const tempProjectData = [];
+        let citiesRef = db.collection("projects");
+        let query = citiesRef
+            .get()
+            .then(snapshot => {
+                if (snapshot.empty) {
+                    console.log("No matching documents.");
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    // console.log(doc.id, '=>', doc.data());
+                    tempProjectData.push(doc.data());
+                });
+                //   console.log(tempUserData, "from snap");
+            })
+            .catch(err => {
+                console.log("Error getting documents", err);
+            });
+        setProjects(tempProjectData);
+    };
+
     useEffect(() => {
         getUsers();
-    }, []);
+    }, [user]);
+
+    useEffect(() => {
+        getProjects();
+    }, [tempProjects]);
 
     return (
         <div>

@@ -31,26 +31,30 @@ const Dashboard = () => {
     const refTo_projectsVariable = useRef();
     refTo_projectsVariable.current = projects;
 
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //     if (user) {
-    //         // User is signed in.
-    //         const user = firebase.auth().currentUser;
+    // --------------------------
+    // adding a user after students is deleted because authentication still persists
+    // --------------------------
 
-    //         let addUser = db
-    //             .collection("students")
-    //             .doc(user.uid)
-    //             .set({
-    //                 name: user.displayName,
-    //                 uid: user.uid,
-    //                 role: "student"
-    //             })
-    //             .then(ref => {
-    //                 // console.log('Added document with ID: ', ref.uid);
-    //             });
-    //     } else {
-    //         // No user is signed in.
-    //     }
-    // });
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            const user = firebase.auth().currentUser;
+
+            let addUser = db
+                .collection("students")
+                .doc(user.uid)
+                .set({
+                    name: user.displayName,
+                    uid: user.uid,
+                    role: "student"
+                })
+                .then(ref => {
+                    // console.log('Added document with ID: ', ref.uid);
+                });
+        } else {
+            // No user is signed in.
+        }
+    });
 
     const getRole = () => {
         firebase.auth().onAuthStateChanged(function(user) {
