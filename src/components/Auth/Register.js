@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../../context/UserContext";
 import firebase from "../../logic/firebase";
-import {db} from "../../logic/firebase";
+import { db } from "../../logic/firebase";
 import {
     Header,
     Button,
@@ -23,6 +23,7 @@ const Register = ({ history }) => {
     const [password, setPassword] = useState("");
     const [adminPassword, setAdminPassword] = useState("");
     const [displayName, setName] = useState("");
+    const [adminName, setAdminName] = useState("");
     const [admin, setAdmin] = useState(false);
 
     const register = event => {
@@ -41,13 +42,17 @@ const Register = ({ history }) => {
                         role: "student"
                     });
 
-                    let addUser = db.collection('users').doc(createdUser.user.uid).set({
-                        name: displayName,
-                        uid: createdUser.user.uid,
-                        role: "student"
-                      }).then(ref => {
-                        // console.log('Added document with ID: ', ref.uid);
-                      });
+                    let addUser = db
+                        .collection("students")
+                        .doc(createdUser.user.uid)
+                        .set({
+                            name: displayName,
+                            uid: createdUser.user.uid,
+                            role: "student"
+                        })
+                        .then(ref => {
+                            // console.log('Added document with ID: ', ref.uid);
+                        });
 
                     history.push("/");
                 });
@@ -63,19 +68,25 @@ const Register = ({ history }) => {
             .createUserWithEmailAndPassword(adminEmail, adminPassword)
             .then(createdUser => {
                 console.log(`createdUser : ${createdUser}`);
-                createdUser.user.updateProfile({displayName}).then(() => {
+                createdUser.user.updateProfile({ adminName }).then(() => {
                     console.log(createdUser.user);
                     setUser({
+                        adminName,
                         uid: createdUser.user.uid,
                         role: "admin"
                     });
 
-                    let addadmin = db.collection('users').doc(createdUser.user.uid).set({
-                        uid: createdUser.user.uid,
-                        role: "admin"
-                      }).then(ref => {
-                        // console.log('Added document with ID: ', ref.uid);
-                      });
+                    let addadmin = db
+                        .collection("admin")
+                        .doc(createdUser.user.uid)
+                        .set({
+                            name: adminName,
+                            uid: createdUser.user.uid,
+                            role: "admin"
+                        })
+                        .then(ref => {
+                            // console.log('Added document with ID: ', ref.uid);
+                        });
 
                     history.push("/");
                 });
@@ -84,10 +95,12 @@ const Register = ({ history }) => {
     };
 
     const registerView = (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
             <Button
                 style={{ alignSelf: "center" }}
                 basic
+                color="blue"
+                size="small"
                 onClick={() => setAdmin(!admin)}
             >
                 Register as a group organizer
@@ -104,7 +117,9 @@ const Register = ({ history }) => {
                 {!admin ? (
                     <div>
                         {!displayName ? (
-                            <Label pointing="below">Enter your full name</Label>
+                            <Label color="red" pointing="below">
+                                Enter your full name
+                            </Label>
                         ) : (
                             ""
                         )}
@@ -117,7 +132,7 @@ const Register = ({ history }) => {
                             onChange={event => setName(event.target.value)}
                         />
                         {!email ? (
-                            <Label pointing="below">
+                            <Label color="red" pointing="below">
                                 Enter your email address
                             </Label>
                         ) : (
@@ -132,7 +147,9 @@ const Register = ({ history }) => {
                             onChange={event => setEmail(event.target.value)}
                         />
                         {!password ? (
-                            <Label pointing="below">Enter a password</Label>
+                            <Label color="red" pointing="below">
+                                Enter a password
+                            </Label>
                         ) : (
                             ""
                         )}
@@ -151,7 +168,9 @@ const Register = ({ history }) => {
                 ) : (
                     <div>
                         {!adminEmail ? (
-                            <Label pointing="below">Enter your email</Label>
+                            <Label color="red" pointing="below">
+                                Enter your email
+                            </Label>
                         ) : (
                             ""
                         )}
@@ -166,7 +185,9 @@ const Register = ({ history }) => {
                             }
                         />
                         {!adminPassword ? (
-                            <Label pointing="below">Enter your password</Label>
+                            <Label color="red" pointing="below">
+                                Enter your password
+                            </Label>
                         ) : (
                             ""
                         )}
@@ -190,10 +211,12 @@ const Register = ({ history }) => {
     );
 
     const registerAdminView = (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
             <Button
                 style={{ alignSelf: "center" }}
                 basic
+                color="blue"
+                size="small"
                 onClick={() => setAdmin(!admin)}
             >
                 Back to registering a participant
@@ -206,8 +229,26 @@ const Register = ({ history }) => {
                         marginBottom: "25px"
                     }}
                 />
+
+                {!adminName ? (
+                    <Label color="red" pointing="below">
+                        Enter your full name
+                    </Label>
+                ) : (
+                    ""
+                )}
+                <Form.Input
+                    icon="user"
+                    value={adminName}
+                    iconPosition="left"
+                    placeholder="Full Name"
+                    type="text"
+                    onChange={event => setAdminName(event.target.value)}
+                />
                 {!adminEmail ? (
-                    <Label pointing="below">Enter your email</Label>
+                    <Label color="red" pointing="below">
+                        Enter your email
+                    </Label>
                 ) : (
                     ""
                 )}
@@ -220,7 +261,9 @@ const Register = ({ history }) => {
                     onChange={event => setAdminEmail(event.target.value)}
                 />
                 {!adminPassword ? (
-                    <Label pointing="below">Enter your password</Label>
+                    <Label color="red" pointing="below">
+                        Enter your password
+                    </Label>
                 ) : (
                     ""
                 )}

@@ -31,6 +31,27 @@ const Dashboard = () => {
     const refTo_projectsVariable = useRef();
     refTo_projectsVariable.current = projects;
 
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //     if (user) {
+    //         // User is signed in.
+    //         const user = firebase.auth().currentUser;
+
+    //         let addUser = db
+    //             .collection("students")
+    //             .doc(user.uid)
+    //             .set({
+    //                 name: user.displayName,
+    //                 uid: user.uid,
+    //                 role: "student"
+    //             })
+    //             .then(ref => {
+    //                 // console.log('Added document with ID: ', ref.uid);
+    //             });
+    //     } else {
+    //         // No user is signed in.
+    //     }
+    // });
+
     const getRole = () => {
         firebase.auth().onAuthStateChanged(function(user) {
             let currentUser = firebase.auth().currentUser;
@@ -44,7 +65,7 @@ const Dashboard = () => {
                             console.log("No such document!");
                         } else {
                             // console.log("Document data:", doc.data());
-                           const adminUserData = doc.data().role
+                            const adminUserData = doc.data().role;
                             setUser({
                                 role: adminUserData
                             });
@@ -141,7 +162,7 @@ const Dashboard = () => {
                         newProject
                     })
                     .then(ref => {
-                        console.log("Added document with ID: ", ref.id);
+                        // console.log("Added document with ID: ", ref.id);
                         newProject.uid = ref.id;
                         ref.set(
                             { newProject: { ...ref.newProject, uid: ref.id } },
