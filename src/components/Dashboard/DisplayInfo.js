@@ -102,6 +102,20 @@ const StatisticExampleValueShorthand = ({ handleForce, user }) => {
                                 value={tempUsers.length}
                             />
                         </Statistic.Group>
+                        <Button
+                            color="black"
+                            size="mini"
+                            basic
+                            onClick={deleteCollection}
+                            style={{
+                                marginLeft: "1%",
+                                alignSelf: "center",
+                                marginTop: "5px"
+                            }}
+                        >
+                            <i className="icon delete" />
+                            Clear out Projects
+                        </Button>
                     </Segment>
 
                     <CSVReader
@@ -111,16 +125,6 @@ const StatisticExampleValueShorthand = ({ handleForce, user }) => {
                         inputId="ObiWan"
                         inputStyle={{ color: "red" }}
                     />
-                    <Button
-                        color="black"
-                        size="mini"
-                        // className="mini ui negative basic button logoutButton"
-                        onClick={deleteCollection}
-                        style={{ marginLeft: "1%", alignSelf: "center" }}
-                    >
-                        <i className="icon sign-out" />
-                        Delete All Projects
-                    </Button>
                 </div>
             ) : (
                 <h1>Student View</h1>
