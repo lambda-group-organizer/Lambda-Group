@@ -9,7 +9,8 @@ import {
     Icon,
     Header,
     Segment,
-    Message
+    Message,
+    Label
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import LoginAnimation from "./LoginAnimation";
@@ -47,6 +48,9 @@ const Login = ({ history }) => {
                     {appName}
                 </Header>
                 <Form onSubmit={login}>
+                    {/* <Label color="red" pointing="below">
+                        Enter your email
+                    </Label> */}
                     <Form.Input
                         icon="mail"
                         type="email"
@@ -55,7 +59,7 @@ const Login = ({ history }) => {
                         placeholder="E-mail address"
                         onChange={event => setEmail(event.target.value)}
                     />
-
+                    {/* <Label color='red' pointing="below">Enter your password</Label> */}
                     <Form.Input
                         icon="lock"
                         value={password}
