@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import App from "../components/App";
-import Login from "../components/Auth/Login";
+import AdminLogin from "../components/Auth/AdminLogin";
 import Register from "../components/Auth/Register";
 import UserContext from "../context/UserContext";
 import firebase from "../logic/firebase";
 import {withRouter} from 'react-router-dom'
+// import jwt_decode from 'jwt-decode';
 
 const Root = ({ history }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
+            let token = user.h.b;
+            // const decoded = jwt_decode(token);
+            // console.log(decoded)
+            // console.log(token)
+            localStorage.setItem("token", token)
             if (user) {
-                const { displayName, uid, photoURL } = user;
-                setUser({ displayName, uid, photoURL });
+                const { displayName, uid, photoURL, email } = user;
+                // console.log(email)
+                setUser({ displayName, uid, photoURL, email });
                 history.push("/");
             } else {
-                history.push("/Login");
+                history.push("/admin/AdminLogin");
             }
         });
     }, []);
@@ -26,7 +33,12 @@ const Root = ({ history }) => {
         <UserContext.Provider value={{ user, setUser }}>
             <Switch>
                 <Route exact path="/" component={App} />
-                <Route exact path="/Login" component={Login} />
+                {/* Admin Login */}
+                <Route exact path="/admin/AdminLogin" component={AdminLogin} />
+                <Route exact path="/admin/Dashboard" component={AdminLogin} />
+
+                {/* Student Login */}
+                {/* <Route exact path="/Login" component={Login} /> */}
                 <Route exact path="/Register" component={Register} />
             </Switch>
         </UserContext.Provider>
@@ -34,3 +46,58 @@ const Root = ({ history }) => {
 };
 
 export default withRouter(Root);
+
+
+// // PROOF OF CONCEPT
+
+// class Enumeration {
+
+//     constructor(obj) {
+
+//         for (const key in obj) {
+
+//             this[key] = obj[key]
+
+//         }
+
+//         return Object.freeze(this)
+
+//     }
+
+//     has = (key) => {
+
+//         return this.hasOwnProperty(key)
+
+//     }
+
+// }
+
+// const privileges = new Enumeration({
+
+//     //student: 'STUDENT',
+
+//     admin: 'ADMIN',
+
+//     //overloard: 'OVERLOARD'
+
+// })
+
+// // console.log(privileges.admin)
+
+// // privileges.student = 'admin'
+
+// // console.log(privileges.student)
+
+// // privileges.new = "TEST"
+
+// // console.log(privileges.new)
+
+// localStorage.setItem("privileges", privileges.admin)
+
+// let test = localStorage.getItem('privileges')
+// console.log(test)
+// localStorage.setItem('privileges', 'Student')
+
+// // module.exports = privileges;
+
+// //PROOF OF CONCEPT

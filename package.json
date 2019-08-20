@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "firebase": "^6.2.4",
+    "firebase-tools": "^7.2.3",
     "fuse.js": "^3.4.5",
+    "jwt-decode": "^2.2.0",
     "orbit-controls-es6": "^2.0.0",
     "react": "^16.8.6",
     "react-csv-reader": "^1.2.2",

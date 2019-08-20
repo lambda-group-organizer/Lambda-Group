@@ -1,66 +1,54 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../../context/UserContext";
 import firebase from "../../logic/firebase";
+import "./Login.css";
+import { appName, appIconName } from "../../logic/constants";
 import {
-    Header,
+    Form,
     Button,
     Icon,
-    Form,
+    Header,
     Segment,
     Message
 } from "semantic-ui-react";
-import { appName, appIconName } from "../../logic/constants";
-import "./Register.css";
 import { Link } from "react-router-dom";
 import LoginAnimation from "./LoginAnimation";
 
-const Register = ({ history }) => {
+const AdminLogin = ({ history }) => {
     const { setUser } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [displayName, setName] = useState("");
 
-    const register = event => {
+    const login = event => {
         event.preventDefault();
+
         firebase
             .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(createdUser => {
-                console.log(`createdUser : ${createdUser}`);
-                createdUser.user.updateProfile({ displayName }).then(() => {
-                    console.log(createdUser.user);
-                    setUser({
-                        displayName,
-                        uid: createdUser.user.uid,
-                    });
-                    history.push("/");
+            .signInWithEmailAndPassword(email, password)
+            .then(loggedInuser => {
+                console.log(loggedInuser.user);
+                setUser({
+                    displayName: loggedInuser.user.displayName,
+                    uid: loggedInuser.user.uid
                 });
+                history.push("/");
             })
-            .catch(err => console.log(`error : ${err}`));
+            .catch(err => console.log(err));
     };
 
     return (
-        <div className="Register">
+        <div className="Login">
             <LoginAnimation />
             <Segment stacked>
                 <Header as="h2">
                     <Icon color="red" name={appIconName} />
                     {appName}
                 </Header>
-                <Form onSubmit={register}>
-                    <Form.Input
-                        icon="user"
-                        value={displayName}
-                        iconPosition="left"
-                        placeholder="Display Name"
-                        type="text"
-                        onChange={event => setName(event.target.value)}
-                    />
-
+                <Form onSubmit={login}>
                     <Form.Input
                         icon="mail"
-                        value={email}
                         type="email"
+                        value={email}
                         iconPosition="left"
                         placeholder="E-mail address"
                         onChange={event => setEmail(event.target.value)}
@@ -76,15 +64,15 @@ const Register = ({ history }) => {
                     />
 
                     <Button size="large" fluid color="red" type="submit">
-                        Register
+                        Login
                     </Button>
                 </Form>
             </Segment>
             <Message>
-                Already have an account? <Link to="/Login">Login</Link>
+                New to us? <Link to="/Register">Register</Link>
             </Message>
         </div>
     );
 };
 
-export default Register;
+export default AdminLogin;
