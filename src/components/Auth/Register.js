@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../../context/UserContext";
 import firebase from "../../logic/firebase";
+import {db} from '../../logic/firebase.js';
 import {
     Header,
     Button,
@@ -33,6 +34,14 @@ const Register = ({ history }) => {
                         displayName,
                         uid: createdUser.user.uid,
                     });
+                    db.collection('users').add({
+                        email,
+                        displayName,
+                    }).then((docRef) => {
+                        console.log('Document written with id:', docRef.id)
+                    }).catch((err) => {
+                        console.log(`error: ${err}`)
+                    })
                     history.push("/");
                 });
             })
