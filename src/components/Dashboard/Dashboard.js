@@ -2,7 +2,7 @@ import React, {useState, useRef, useContext, useEffect} from 'react';
 import CurrentProjectContext from '../../context/CurrentProjectContext';
 import ProjectModal from './ProjectModal';
 import AddMinion from '../../components/Auth/AddMinion.js';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import firebase from '../../logic/firebase';
 import {db} from '../../logic/firebase';
 import {Button, Card, Grid, Header, Form, Input, Icon} from 'semantic-ui-react';
@@ -259,7 +259,7 @@ const Dashboard = () => {
       <div className="displayContainer">
         <DisplayInfo projects={projects} handleForce={handleForce} />
         <LoginAnimation />
-    <Link to='/admin/addMinion'>Add New Admin</Link>
+        <Link to="/admin/addMinion">Add New Admin</Link>
       </div>
       {projectsElements}
     </div>

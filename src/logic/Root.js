@@ -14,9 +14,9 @@ const Root = ({history}) => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async user => {
-      const token = await user.ra;
-      const decoded = jwt_decode(token);
-      console.log(decoded.email);
+      //const token = await user.ra;
+      //const decoded = jwt_decode(token);
+      //console.log(decoded.email);
       if (user) {
         const {displayName, uid, photoURL} = user;
         // console.log(email)
