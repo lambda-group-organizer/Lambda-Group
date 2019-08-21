@@ -19,7 +19,7 @@ const AdminLogin = ({history}) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(loggedInuser => {
-        console.log(loggedInuser.user);
+        console.log("USER: ", loggedInuser.user);
         setUser({
           displayName: loggedInuser.user.displayName,
           uid: loggedInuser.user.uid,

@@ -33,10 +33,12 @@ const Register = ({ history }) => {
                     setUser({
                         displayName,
                         uid: createdUser.user.uid,
+                        email: createdUser.user.email,
                     });
                     db.collection('users').add({
                         email,
                         displayName,
+                        uid: createdUser.user.uid,
                     }).then((docRef) => {
                         console.log('Document written with id:', docRef.id)
                     }).catch((err) => {

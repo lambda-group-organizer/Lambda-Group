@@ -100,7 +100,7 @@ const Dashboard = () => {
             newProject,
           })
           .then(ref => {
-            console.log('Added document with ID: ', ref.id);
+            // console.log('Added document with ID: ', ref.id);
             newProject.uid = ref.id;
             ref.set(
               {newProject: {...ref.newProject, uid: ref.id}},
@@ -116,18 +116,18 @@ const Dashboard = () => {
   };
 
   const openProject = id => {
-    console.log('Opened', id);
+    // console.log('Opened', id);
   };
 
   const changeProjects = arr => {
-    console.log('arr from line 114', arr);
+    // console.log('arr from line 114', arr);
     setFilteredProj(arr);
   };
 
   //***************FUZZYSEARCH***************************
   const FuzzySearch = (arr, changeProjects) => {
     //console.log('arr :',arr)
-    console.log(changeProjects);
+    // console.log(changeProjects);
     return (
       <form onSubmit={e => e.preventDefault()}>
         <input type="text" onChange={e => fuzzySearch(arr.arr, e)} />
@@ -157,7 +157,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log(projects, 'useEffect');
+    // console.log('useEffect', projects);
     setFilteredProj(projects);
   }, [projects]);
   // ***************** END FUZZY SEARCH ************************
@@ -177,7 +177,7 @@ const Dashboard = () => {
         {projects &&
           filteredProj &&
           filteredProj.map((item, index) => {
-            console.log(item, 'From map');
+            // console.log('From map', item);
             let targetArr = item.targetGroup.split(',');
 
             return (
@@ -226,11 +226,11 @@ const Dashboard = () => {
     </div>
   );
 
-  if (projects == []) {
-    projectsElements = (
-      <h2>No projects are loaded. Please upload a CSV file.</h2>
-    );
-  }
+  // if (projects == []) {
+  //   projectsElements = (
+  //     <h2>No projects are loaded. Please upload a CSV file.</h2>
+  //   );
+  // }
 
   return (
     <div>

@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react';
 //import firebase from '../../logic/firebase';
 import {db} from '../../logic/firebase';
 import Fuse from 'fuse.js';
-import FuzzySearch from '../../components/Dashboard/FuzzySearch.js';
+import {Button, Card, Grid, Header, Form, Input, Icon} from 'semantic-ui-react';
+
 
 const AddMinion = props => {
-  const [students, setStudents] = useState([]);
-  const [filteredStudent, setFilteredStudent] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const fetchStudents = async () => {
     let studentArr = [];
@@ -23,7 +24,8 @@ const AddMinion = props => {
           console.log(studentData);
           return studentArr;
         });
-        setStudents(studentArr);
+        setUsers(studentArr);
+        setFilteredUsers(studentArr);
       });
   };
 
@@ -31,21 +33,7 @@ const AddMinion = props => {
     fetchStudents();
   }, []);
 
-  const FuzzySearch = (students, e) => {
-    //console.log('arr :',arr)
-    console.log(students);
-    return (
-      <form onSubmit={e => e.preventDefault(e)}>
-        <input type="text" value={filteredStudent} onChange={e => fuzzySearch(students, e)} />
-      </form>
-    );
-  };
-
-  let select;
-  const fuzzySearch = ({students}, e) => {
-    e.preventDefault();
-    //console.log(list.arr, 'list.arr')
-    console.log('students', students);
+  const searchUsers = (usersArr, e) => {
     let options = {
       findAllMatches: true,
       threshold: 0.6,
@@ -53,38 +41,32 @@ const AddMinion = props => {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: ['email', 'name'],
-    };
-    const fuse = new Fuse(students, options);
+      keys: ['name', 'email'],
+    }
+    const fuse = new Fuse(usersArr, options);
     const result = fuse.search(e.target.value);
-    console.log('result: ', result);
-    //console.log('select: ', select);
-    setFilteredStudent(result)
-  };
-  //const selectMinion = (e,result) => {
-    //e.preventDefault();
-    //setFilteredStudent(result);
-    //console.log('filteredStudent', filteredStudent);
-  //};
+    if(e.target.value === "") {
+      setFilteredUsers(users);
+    } else  {
+      setFilteredUsers(result);
+    }
+  }
 
-  useEffect(() => {
-    setFilteredStudent(select);
-  },[filteredStudent])
 
   return (
     <div>
       <p>Add Minion</p>
-      <FuzzySearch students={students} filteredStudent={filteredStudent} />
-      {students &&
-        students.map(student => {
-          {console.log("student", student.email)}
-          return <p key={student.email}>{student.name}</p>
-        })}
-      {filteredStudent &&
-        filteredStudent.map(filtStud => {
-          {console.log("filtStudent", filtStud)}
-          return <p key={filtStud.email}>{filtStud.name}</p>;
-        })}
+      <Form.Input 
+        size="big"
+        focus icon="filter"
+        iconPosition="left" 
+        placeholder="Fuzzy Search Users"
+        type="text"
+        onChange={(e) => searchUsers(users, e)}
+        />
+      {filteredUsers && filteredUsers.map(student => {
+        return (<p>{student.name} | {student.email}</p>)
+      })}
     </div>
   );
 };
