@@ -24,7 +24,7 @@ const Dashboard = () => {
   refTo_projectsVariable.current = projects;
 
   const handleForce = data => {
-     console.log(data);
+    //  console.log(data);
     setTempProjects(data);
   };
 
@@ -33,7 +33,7 @@ const Dashboard = () => {
   };
 
   const addProject = () => {
-     console.log("addProject");
+    //  console.log("addProject");
     const projectId = projectsRefFirebase.push().key;
 
     const newProject = {
@@ -50,7 +50,7 @@ const Dashboard = () => {
   };
 
   const addProjectListener = async () => {
-    console.log('project listener is added');
+    // console.log('project listener is added');
     let projectRef = await db.collection('projects');
     let allProjects = projectRef
       .get()
@@ -82,7 +82,7 @@ const Dashboard = () => {
   }, [tempProjects]); // --- mount \ unmount
 
   const convertedProjects = () => {
-     console.log("converted projects running", tempProjects);
+    //  console.log("converted projects running", tempProjects);
     const newConvertedProjects = tempProjects.map((item, index) => {
       const newProject = {
         title: item[0],
@@ -101,7 +101,9 @@ const Dashboard = () => {
         teamMembers: [],
 
       };
-      if (index > 0) {
+      console.log("newProject.title: ", newProject)
+      console.log("NewProject.description: ", newProject.description)
+      if (index > 0 && newProject.title !== '') {
         let projectRef = db
           .collection('projects')
           .add({
@@ -115,10 +117,13 @@ const Dashboard = () => {
             console.log(Object.assign({}, { ...newProject }, {uid: ref.id}))
             //ref.set(Object.assign({}, {...newProject}, {uid: ref.id}), {merge: true});
             ref.set({newProject: {...ref.newProject, uid: ref.id}}, {merge: true})
-          }).catch(err => console.log("err:", err));
+          })
       }
-
-      return newProject;
+      if(newProject.title !== '') {
+        console.log("NEWPROJECT.TITLE: ", newProject)
+        console.log("NEWPROJECT.DESCRIPTION: ", newProject.description)
+        return newProject;
+      }
     });
     newConvertedProjects.shift();
     setProjects(newConvertedProjects);
@@ -160,7 +165,7 @@ const Dashboard = () => {
     const fuse = new Fuse(list, options); // "list" is the item array
     const result = fuse.search(e.target.value);
     setFilteredProj(result);
-    console.log('filteredProj', filteredProj);
+    // console.log('filteredProj', filteredProj);
     //console.log('e.target.value', e.target.value)
     //console.log(result)
   };
@@ -186,50 +191,52 @@ const Dashboard = () => {
         {projects &&
           filteredProj &&
           filteredProj.map((item, index) => {
-             console.log('From map', item);
-            let targetArr = item.productType.split(',');
-
-            return (
-              <div
-                key={index}
-                className="cardContainer"
-                onClick={id => openProject(item.id)}>
-                <Card raised={true} fluid={true} centered={true}>
-                  <Card.Header className="cardHeader">
-                    <h3 className="headerTitle">
-                      {item.title.length > 25
-                        ? item.title.slice(0, 25) + '...'
-                        : item.title}
-                    </h3>
-                  </Card.Header>
-                  <div className="contentContainer">
-                    <Card.Description className="description">
-                      <p className="descriptionText">
-                        {item.description.length > 200
-                          ? item.description.slice(0, 200) + '...'
-                          : item.description}
-                      </p>
-                    </Card.Description>
-                  </div>
-                  <ProjectModal
-                    item={item}
-                    openProject={openProject}
-                    projects={projects}
-                  />
-                  <div className="cardFooter">
-                    <ul className="targetMembersContainer">
-                      {targetArr.map((target, index) => {
-                        return (
-                          <li key={index} className="cardMember">
-                            {target}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                </Card>
-              </div>
-            );
+            if(item) {
+              //  console.log('From map', item);
+              let targetArr = item.productType.split(',');
+  
+              return (
+                <div
+                  key={index}
+                  className="cardContainer"
+                  onClick={id => openProject(item.id)}>
+                  <Card raised={true} fluid={true} centered={true}>
+                    <Card.Header className="cardHeader">
+                      <h3 className="headerTitle">
+                        {item.title.length > 25
+                          ? item.title.slice(0, 25) + '...'
+                          : item.title}
+                      </h3>
+                    </Card.Header>
+                    <div className="contentContainer">
+                      <Card.Description className="description">
+                        <p className="descriptionText">
+                          {item.description.length > 200
+                            ? item.description.slice(0, 200) + '...'
+                            : item.description}
+                        </p>
+                      </Card.Description>
+                    </div>
+                    <ProjectModal
+                      item={item}
+                      openProject={openProject}
+                      projects={projects}
+                    />
+                    <div className="cardFooter">
+                      <ul className="targetMembersContainer">
+                        {targetArr.map((target, index) => {
+                          return (
+                            <li key={index} className="cardMember">
+                              {target}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </Card>
+                </div>
+              );
+            }
           })}
       </div>
     </div>

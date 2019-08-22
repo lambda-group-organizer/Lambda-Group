@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "dotenv": "^8.1.0",
     "firebase": "^6.2.4",
     "firebase-tools": "^7.2.3",
     "fuse.js": "^3.4.5",
