@@ -24,7 +24,7 @@ const Dashboard = () => {
   refTo_projectsVariable.current = projects;
 
   const handleForce = data => {
-    // console.log(data);
+     console.log(data);
     setTempProjects(data);
   };
 
@@ -33,7 +33,7 @@ const Dashboard = () => {
   };
 
   const addProject = () => {
-    // console.log("addProject");
+     console.log("addProject");
     const projectId = projectsRefFirebase.push().key;
 
     const newProject = {
@@ -41,7 +41,7 @@ const Dashboard = () => {
       name: projectName,
       description: projectDescription,
     };
-
+    console.log("newProject from addProject", newProject)
     projectsRefFirebase
       .child(projectId)
       .set(newProject)
@@ -51,7 +51,7 @@ const Dashboard = () => {
 
   const addProjectListener = async () => {
     console.log('project listener is added');
-    let projectRef = db.collection('projects');
+    let projectRef = await db.collection('projects');
     let allProjects = projectRef
       .get()
       .then(snapshot => {
@@ -83,15 +83,24 @@ const Dashboard = () => {
   }, [tempProjects]); // --- mount \ unmount
 
   const convertedProjects = () => {
-    // console.log("converted projects running", tempProjects);
+     console.log("converted projects running", tempProjects);
     const newConvertedProjects = tempProjects.map((item, index) => {
       const newProject = {
         title: item[0],
         description: item[1],
-        targetGroup: item[2],
+        designLinks_dataSets: item[2],
+        productType: item[3],
+        webUiDeveloper: item[4],
+        frontEndDeveloper: item[5],
+        frontEndFrameWorkDeveloper: item[6],
+        webBackEndDeveloper: item[7],
+        uXDesigner: item[8],
+        projectLead: item[9],
+        androidDeveloper: item[10],
+        dataEngineer: item[11],
+        machineLearningEngineer: item[12],
         teamMembers: [],
-        studentCohort: item[4],
-        dateSubmmited: item[5],
+
       };
       if (index > 0) {
         let projectRef = db
@@ -101,12 +110,13 @@ const Dashboard = () => {
           })
           .then(ref => {
             // console.log('Added document with ID: ', ref.id);
+            console.log('ref:', ref)
             newProject.uid = ref.id;
-            ref.set(
-              {newProject: {...ref.newProject, uid: ref.id}},
-              {merge: true},
-            );
-          });
+            console.log("ref.newProject: ", newProject)
+            console.log(Object.assign({}, { ...newProject }, {uid: ref.id}))
+            //ref.set(Object.assign({}, {...newProject}, {uid: ref.id}), {merge: true});
+            ref.set({newProject: {...ref.newProject, uid: ref.id}}, {merge: true})
+          }).catch(err => console.log("err:", err));
       }
 
       return newProject;
@@ -146,7 +156,7 @@ const Dashboard = () => {
       distance: 100,
       maxPatternLength: 32,
       minMatchCharLength: 1,
-      keys: ['description', 'studentCohort', 'targetGroup', 'title'],
+      keys: ['description', 'studentCohort', 'productType', 'title'],
     };
     const fuse = new Fuse(list, options); // "list" is the item array
     const result = fuse.search(e.target.value);
@@ -177,8 +187,8 @@ const Dashboard = () => {
         {projects &&
           filteredProj &&
           filteredProj.map((item, index) => {
-            // console.log('From map', item);
-            let targetArr = item.targetGroup.split(',');
+             console.log('From map', item);
+            let targetArr = item.productType.split(',');
 
             return (
               <div
