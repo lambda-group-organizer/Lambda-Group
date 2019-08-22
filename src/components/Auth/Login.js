@@ -9,13 +9,14 @@ import {
     Icon,
     Header,
     Segment,
-    Message
+    Message,
+    Label
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import LoginAnimation from "./LoginAnimation";
 
 const Login = ({ history }) => {
-    const { setUser } = useContext(UserContext);
+    const { setUser, user } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -29,8 +30,10 @@ const Login = ({ history }) => {
                 console.log(loggedInuser.user);
                 setUser({
                     displayName: loggedInuser.user.displayName,
-                    uid: loggedInuser.user.uid
+                    uid: loggedInuser.user.uid,
+                    role: user
                 });
+                console.log(user, "from user role");
                 history.push("/");
             })
             .catch(err => console.log(err));
@@ -45,6 +48,9 @@ const Login = ({ history }) => {
                     {appName}
                 </Header>
                 <Form onSubmit={login}>
+                    {/* <Label color="red" pointing="below">
+                        Enter your email
+                    </Label> */}
                     <Form.Input
                         icon="mail"
                         type="email"
@@ -53,7 +59,7 @@ const Login = ({ history }) => {
                         placeholder="E-mail address"
                         onChange={event => setEmail(event.target.value)}
                     />
-
+                    {/* <Label color='red' pointing="below">Enter your password</Label> */}
                     <Form.Input
                         icon="lock"
                         value={password}
