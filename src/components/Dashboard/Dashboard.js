@@ -74,7 +74,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     addProjectListener();
-
     return () => removeProjectListener();
   }, []); // --- mount \ unmount
 
