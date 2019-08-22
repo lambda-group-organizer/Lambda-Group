@@ -22,7 +22,7 @@ export function fuzzySearch(list, e) {
     keys: [
       "description",
       "studentCohort",
-      "targetGroup",
+      "productType",
       "title"
     ]
   };

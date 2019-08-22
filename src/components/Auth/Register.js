@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../../context/UserContext";
 import firebase from "../../logic/firebase";
-import { db } from "../../logic/firebase";
+import {db} from '../../logic/firebase.js';
 import {
     Header,
     Button,
@@ -39,21 +39,17 @@ const Register = ({ history }) => {
                     setUser({
                         displayName,
                         uid: createdUser.user.uid,
-                        role: "student"
+                        email: createdUser.user.email,
                     });
-
-                    let addUser = db
-                        .collection("students")
-                        .doc(createdUser.user.uid)
-                        .set({
-                            name: displayName,
-                            uid: createdUser.user.uid,
-                            role: "student"
-                        })
-                        .then(ref => {
-                            // console.log('Added document with ID: ', ref.uid);
-                        });
-
+                    db.collection('users').add({
+                        email,
+                        displayName,
+                        uid: createdUser.user.uid,
+                    }).then((docRef) => {
+                        console.log('Document written with id:', docRef.id)
+                    }).catch((err) => {
+                        console.log(`error: ${err}`)
+                    })
                     history.push("/");
                 });
             })
