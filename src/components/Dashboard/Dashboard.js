@@ -1,22 +1,22 @@
-import React, {useState, useRef, useContext, useEffect} from 'react';
-import CurrentProjectContext from '../../context/CurrentProjectContext';
+import React, {useState, useRef, useEffect} from 'react';
+// import CurrentProjectContext from '../../context/CurrentProjectContext';
 import ProjectModal from './ProjectModal';
-import AddMinion from '../../components/Auth/AddMinion.js';
+// import AddMinion from '../../components/Auth/AddMinion.js';
 import {Link} from 'react-router-dom';
 import firebase from '../../logic/firebase';
 import {db} from '../../logic/firebase';
-import {Button, Card, Grid, Header, Form, Input, Icon} from 'semantic-ui-react';
+import {Button, Card, Header, Form, Icon} from 'semantic-ui-react';
 import DisplayInfo from './DisplayInfo';
 import './Dashboard.css';
 import Fuse from 'fuse.js';
 import LoginAnimation from '../Auth/LoginAnimation.js';
 
 const Dashboard = () => {
-  const [currentProject, setCurrentProject] = useState(null);
+  // const [currentProject, setCurrentProject] = useState(null);
   const [projects, setProjects] = useState([]);
   const [tempProjects, setTempProjects] = useState([]);
-  const [projectName, setProjectName] = useState('');
-  const [projectDescription, setProjectDescription] = useState('');
+  // const [projectName, setProjectName] = useState('');
+  // const [projectDescription, setProjectDescription] = useState('');
   const projectsRefFirebase = firebase.database().ref('projects');
   const [filteredProj, setFilteredProj] = useState([]);
 
@@ -32,50 +32,52 @@ const Dashboard = () => {
     firebase.auth().signOut();
   };
 
-  const addProject = () => {
-    //  console.log("addProject");
-    const projectId = projectsRefFirebase.push().key;
+  // const addProject = () => {                           // TODO: check and see if this is really never called
+  //   //  console.log("addProject");
+  //   const projectId = projectsRefFirebase.push().key;
 
-    const newProject = {
-      id: projectId,
-      name: projectName,
-      description: projectDescription,
-    };
-    console.log("newProject from addProject", newProject)
-    projectsRefFirebase
-      .child(projectId)
-      .set(newProject)
-      .then(project => console.log(`success : ${project}`))
-      .catch(err => console.log(`error : ${err}`));
-  };
-
-  const addProjectListener = async () => {
-    // console.log('project listener is added');
-    let projectRef = await db.collection('projects');
-    let allProjects = projectRef
-      .get()
-      .then(snapshot => {
-        const tempProjects = projects;
-        snapshot.forEach(doc => {
-          const projectData = doc.data().newProject;
-          tempProjects.push(projectData);
-        });
-        setProjects(tempProjects);
-      })
-      .catch(err => {
-        console.log('Error getting documents', err);
-      });
-  };
-
-  const removeProjectListener = () => {
-    // console.log("project listener is removed");
-    projectsRefFirebase.off();
-  };
+  //   const newProject = {
+  //     id: projectId,
+  //     name: projectName,
+  //     description: projectDescription,
+  //   };
+  //   console.log("newProject from addProject", newProject)
+  //   projectsRefFirebase
+  //     .child(projectId)
+  //     .set(newProject)
+  //     .then(project => console.log(`success : ${project}`))
+  //     .catch(err => console.log(`error : ${err}`));
+  // };
 
   useEffect(() => {
+    const addProjectListener = async () => {
+      console.log('project listener is added');
+      let projectRef = await db.collection('projects');    // TODO: Make all of this function async await or .then.catch
+      projectRef.get().then(snapshot => {
+          const tempProjects = projects;
+          snapshot.forEach(doc => {
+            const projectData = doc.data().newProject;
+            tempProjects.push(projectData);
+          });
+          setProjects(tempProjects);
+        })
+        .catch(err => {
+          console.log('Error getting documents', err);
+        });
+    };
+  
+    const removeProjectListener = () => {
+      // console.log("project listener is removed");
+      projectsRefFirebase.off();
+    };
     addProjectListener();
     return () => removeProjectListener();
-  }, []); // --- mount \ unmount
+  }, [])
+  
+  // useEffect(() => {
+    // addProjectListener();
+    // return () => removeProjectListener();
+  // }, []); // --- mount \ unmount
 
   useEffect(() => {
     convertedProjects();
@@ -104,11 +106,7 @@ const Dashboard = () => {
       console.log("newProject.title: ", newProject)
       console.log("NewProject.description: ", newProject.description)
       if (index > 0 && newProject.title !== '') {
-        let projectRef = db
-          .collection('projects')
-          .add({
-            newProject,
-          })
+        db.collection('projects').add({newProject,})
           .then(ref => {
             // console.log('Added document with ID: ', ref.id);
             console.log('ref:', ref)
@@ -123,6 +121,8 @@ const Dashboard = () => {
         console.log("NEWPROJECT.TITLE: ", newProject)
         console.log("NEWPROJECT.DESCRIPTION: ", newProject.description)
         return newProject;
+      } else {
+        return null;
       }
     });
     newConvertedProjects.shift();
@@ -133,21 +133,7 @@ const Dashboard = () => {
     // console.log('Opened', id);
   };
 
-  const changeProjects = arr => {
-    // console.log('arr from line 114', arr);
-    setFilteredProj(arr);
-  };
-
   //***************FUZZYSEARCH***************************
-  const FuzzySearch = (arr, changeProjects) => {
-    //console.log('arr :',arr)
-    // console.log(changeProjects);
-    return (
-      <form onSubmit={e => e.preventDefault()}>
-        <input type="text" onChange={e => fuzzySearch(arr.arr, e)} />
-      </form>
-    );
-  };
 
   const fuzzySearch = (list, e) => {
     e.preventDefault();
@@ -164,10 +150,11 @@ const Dashboard = () => {
     };
     const fuse = new Fuse(list, options); // "list" is the item array
     const result = fuse.search(e.target.value);
-    setFilteredProj(result);
-    // console.log('filteredProj', filteredProj);
-    //console.log('e.target.value', e.target.value)
-    //console.log(result)
+    if(e.target.value === '') {
+      setFilteredProj(projects)
+    } else {
+      setFilteredProj(result);
+    }
   };
 
   useEffect(() => {
@@ -236,7 +223,7 @@ const Dashboard = () => {
                   </Card>
                 </div>
               );
-            }
+            } else {return null}
           })}
       </div>
     </div>
@@ -258,16 +245,17 @@ const Dashboard = () => {
           marginBottom: '40px',
         }}>
         <Header as="h1" inverted style={{marginTop: '25px'}}>
-          <Icon color="white" name="chevron up" />
+          {/* <Icon color="white" name="chevron up"/> */}
+          <Icon name="chevron up" style={{color: "white"}}/>
           Lambda Group Organizer
         </Header>
         <Button
           inverted
-          color="white"
+          // color="white"
           size="mini"
           // className="mini ui negative basic button logoutButton"
           onClick={signOut}
-          style={{marginLeft: '1%', alignSelf: 'center'}}>
+          style={{marginLeft: '1%', alignSelf: 'center', color: 'white'}}>
           <i className="icon sign-out" />
           Logout
         </Button>

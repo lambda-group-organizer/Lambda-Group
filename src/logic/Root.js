@@ -7,9 +7,10 @@ import AddMinion from '../components/Auth/AddMinion.js';
 import UserContext from '../context/UserContext';
 import firebase from '../logic/firebase';
 import {withRouter} from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 
 const Root = ({history}) => {
+  
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const Root = ({history}) => {
         history.push('/admin/AdminLogin');
       }
     });
-  }, []);
+  }, [history]);
 
   return (
     <UserContext.Provider value={{user, setUser}}>

@@ -32,7 +32,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Statistic, Segment, Button } from "semantic-ui-react";
 import UserContext from "../../context/UserContext";
-import CurrentProjectContext from "../../context/CurrentProjectContext";
+// import CurrentProjectContext from "../../context/CurrentProjectContext";
 import { db } from "../../logic/firebase";
 import "./DisplayInfo.css";
 import CSVReader from "react-csv-reader";
@@ -47,14 +47,7 @@ const StatisticExampleValueShorthand = ({ handleForce, user }) => {
 
         let projectRef = db.collection("projects");
 
-        let allProjects = projectRef
-
-            .get()
-
-            .then(snapshot => {
-
-                const tempProject = projects;
-
+        projectRef.get().then(snapshot => {
                 let count = 1;
 
                 snapshot.forEach(doc => {
@@ -89,11 +82,7 @@ const StatisticExampleValueShorthand = ({ handleForce, user }) => {
 
         let citiesRef = db.collection("students");
 
-        let query = citiesRef
-
-            .get()
-
-            .then(snapshot => {
+        citiesRef.get().then(snapshot => {
 
                 if (snapshot.empty) {
 
@@ -131,11 +120,7 @@ const StatisticExampleValueShorthand = ({ handleForce, user }) => {
 
         let citiesRef = db.collection("projects");
 
-        let query = citiesRef
-
-            .get()
-
-            .then(snapshot => {
+        citiesRef.get().then(snapshot => {
 
                 if (snapshot.empty) {
 
@@ -191,7 +176,8 @@ const StatisticExampleValueShorthand = ({ handleForce, user }) => {
 
                         <h3>Project Data</h3>
 
-                        <Statistic.Group tex size="small">
+                        <Statistic.Group size="small">
+                        {/* <Statistic.Group tex size="small"> */}
 
                             <Statistic
 

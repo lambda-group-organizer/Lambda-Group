@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 //import firebase from '../../logic/firebase';
 import {db} from '../../logic/firebase';
 import Fuse from 'fuse.js';
-import {Button, Card, Grid, Header, Form, Input, Icon} from 'semantic-ui-react';
+import {Form} from 'semantic-ui-react';
 
 
 const AddMinion = props => {

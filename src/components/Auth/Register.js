@@ -72,8 +72,7 @@ const Register = ({ history }) => {
                         role: "admin"
                     });
 
-                    let addadmin = db
-                        .collection("admin")
+                    db.collection("admin")
                         .doc(createdUser.user.uid)
                         .set({
                             name: adminName,
