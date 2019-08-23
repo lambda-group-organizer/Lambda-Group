@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Switch, Route} from 'react-router-dom';
-import App from '../components/App';
+import Dashboard from '../Dashboard/Dashboard'
 import AdminLogin from '../components/Auth/AdminLogin';
 import Register from '../components/Auth/Register';
 import AddMinion from '../components/Auth/AddMinion.js';
@@ -32,11 +32,14 @@ const Root = ({history}) => {
   return (
     <UserContext.Provider value={{user, setUser}}>
       <Switch>
-        <Route exact path="/" component={App} />
+        <Route exact path="/" component={Dashboard} />
+
         {/* Admin Login */}
         <Route exact path="/admin/AdminLogin" component={AdminLogin} />
         <Route exact path="/admin/Dashboard" component={AdminLogin} />
         <Route exact path="/admin/addMinion" component={AddMinion} />
+
+        {/* If checks for student role from firebase */}
 
         {/* Student Login */}
         {/* <Route exact path="/Login" component={Login} /> */}

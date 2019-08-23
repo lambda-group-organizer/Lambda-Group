@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Header, Button, Icon } from "semantic-ui-react";
 import "./ProjectModal.css";
-import firebase from "../../logic/firebase";
-import { db } from "../../logic/firebase";
+import firebase from "../logic/firebase";
+import { db } from "../logic/firebase";
 
 const AddRoomModal = ({ projects, item }) => {
     const [team, setTeam] = useState([]);

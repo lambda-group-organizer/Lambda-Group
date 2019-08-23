@@ -31,9 +31,9 @@
 
 import React, { useState, useContext, useEffect } from "react";
 import { Statistic, Segment, Button } from "semantic-ui-react";
-import UserContext from "../../context/UserContext";
+import UserContext from "../context/UserContext";
 // import CurrentProjectContext from "../../context/CurrentProjectContext";
-import { db } from "../../logic/firebase";
+import { db } from "../logic/firebase";
 import "./DisplayInfo.css";
 import CSVReader from "react-csv-reader";
 

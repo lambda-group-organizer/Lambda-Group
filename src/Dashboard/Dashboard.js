@@ -3,13 +3,13 @@ import React, {useState, useRef, useEffect} from 'react';
 import ProjectModal from './ProjectModal';
 // import AddMinion from '../../components/Auth/AddMinion.js';
 import {Link} from 'react-router-dom';
-import firebase from '../../logic/firebase';
-import {db} from '../../logic/firebase';
+import firebase from '../logic/firebase';
+import {db} from '../logic/firebase';
 import {Button, Card, Header, Form, Icon} from 'semantic-ui-react';
 import DisplayInfo from './DisplayInfo';
 import './Dashboard.css';
 import Fuse from 'fuse.js';
-import LoginAnimation from '../Auth/LoginAnimation.js';
+import LoginAnimation from '../components/Auth/LoginAnimation.js';
 
 const Dashboard = () => {
   // const [currentProject, setCurrentProject] = useState(null);
@@ -236,7 +236,7 @@ const Dashboard = () => {
   // }
 
   return (
-    <div>
+    <div style={{textAlign: "center"}}>
       <div
         style={{
           display: 'flex',
