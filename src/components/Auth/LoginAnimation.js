@@ -60,7 +60,8 @@ class Scene extends Component {
     return false;
   }
 
-  componentWillReceiveProps(nextProps) {
+  // componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     if (this.props.color !== nextProps.color) {
       this.cube.material.color.setHex(nextProps.color);
     }

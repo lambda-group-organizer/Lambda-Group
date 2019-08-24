@@ -6,11 +6,38 @@ import {appName, appIconName} from '../../logic/constants';
 import {Form, Button, Icon, Header, Segment, Message} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import LoginAnimation from './LoginAnimation';
+import {db} from '../../logic/firebase.js';
 
 const AdminLogin = ({history}) => {
   const {setUser} = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // CHECK IF USER IS ADMIN
+  const overloardFunc = async userEmail => {
+    let adminEmails = [];
+    await db
+      .collection('admin')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          adminEmails.push(doc.data().email);
+        });
+        let isAdmin = false;
+        adminEmails.forEach(theAdmin => {
+          if (theAdmin === userEmail) {
+            isAdmin = true;
+            return;
+          }
+        });
+        if (isAdmin) {
+          history.push('admin/addMinion');
+        } else {
+          alert('still not passing');
+          history.push('/');
+        }
+      });
+  };
 
   const login = event => {
     event.preventDefault();
@@ -19,12 +46,11 @@ const AdminLogin = ({history}) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(loggedInuser => {
-        console.log("USER: ", loggedInuser.user);
         setUser({
           displayName: loggedInuser.user.displayName,
           uid: loggedInuser.user.uid,
         });
-        history.push('/');
+        overloardFunc(loggedInuser.user.email);
       })
       .catch(err => console.log(err));
   };
