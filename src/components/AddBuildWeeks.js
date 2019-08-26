@@ -4,6 +4,7 @@ import firebase, { db } from '../logic/firebase.js';
 
 const AddBuildWeek = props => {
     const [buildWeekName, SetBuildWeekName] = useState("")
+    const [error, setError] = useState(null)
     const handleChange = (e) => {
         SetBuildWeekName(e.target.value)
     }
@@ -12,21 +13,24 @@ const AddBuildWeek = props => {
       e.preventDefault();
       const check = db.collection('build_weeks').doc(`${buildWeekName}`)
       const giveMe = await check.get()
-      const isUndefined = giveMe.data()
+      const exist = giveMe.data()
       //console.log('check: ', check);
       console.log('giveMe: ', giveMe.data());
-    if (!isUndefined) {
+    if (!exist) {
         db.collection('build_weeks').doc(`${buildWeekName}`).set({
             buildWeekName
         }).then(async ()  => {
             const buildWeek = db.collection('build_weeks').doc(`${buildWeekName}`)
             const response = await buildWeek.get()
             response.data();
+            SetBuildWeekName("")
+            setError(null)
         }).catch(err => {
             console.log(err)
+            setError(err)
       })
     } else {
-        alert('STOP IT')
+        setError("That name is Already in the database!")
     }
 
       //db.collection('build_weeks').add({buildWeekName}).then(ref => {
@@ -44,6 +48,7 @@ const AddBuildWeek = props => {
         <Button type="submit" color="green">
           test
         </Button>
+      {error && <p>{error}</p>}
       </Form>
   );
 };
