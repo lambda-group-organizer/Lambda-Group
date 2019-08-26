@@ -8,11 +8,33 @@ const AddBuildWeek = props => {
         SetBuildWeekName(e.target.value)
     }
 
-  const addBuildWeek = e => {
-    e.preventDefault();
-      db.collection('build_weeks').add({buildWeekName}).then(ref => {
-          console.log(ref)
+  const addBuildWeek = async ( e ) => {
+      e.preventDefault();
+      const check = db.collection('build_weeks').doc(`${buildWeekName}`)
+      const giveMe = await check.get()
+      const isUndefined = giveMe.data()
+      //console.log('check: ', check);
+      console.log('giveMe: ', giveMe.data());
+    if (!isUndefined) {
+        db.collection('build_weeks').doc(`${buildWeekName}`).set({
+            buildWeekName
+        }).then(async ()  => {
+            const buildWeek = db.collection('build_weeks').doc(`${buildWeekName}`)
+            const response = await buildWeek.get()
+            response.data();
+        }).catch(err => {
+            console.log(err)
       })
+    } else {
+        alert('STOP IT')
+    }
+
+      //db.collection('build_weeks').add({buildWeekName}).then(ref => {
+          //buildWeekName.uid = ref._key.path.segment[1]
+          //ref.set({
+              //buildWeekName: {...ref.buildWeekName, uid: ref._key.path.segment[1]}
+          //})
+      //})
   };
   return (
       <Form onSubmit={e => addBuildWeek(e)}>
