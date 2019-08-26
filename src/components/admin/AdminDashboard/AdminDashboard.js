@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 // import CurrentProjectContext from '../../context/CurrentProjectContext';
 import ProjectModal from './ProjectModal';
+import DashBoardHeader from '../components/globalComponents/DashBoardHeader.js';
 // import AddMinion from '../../components/Auth/AddMinion.js';
 import {Link} from 'react-router-dom';
 import firebase from '../logic/firebase';
@@ -52,8 +53,10 @@ const Dashboard = () => {
   useEffect(() => {
     const addProjectListener = async () => {
       console.log('project listener is added');
-      let projectRef = await db.collection('projects');    // TODO: Make all of this function async await or .then.catch
-      projectRef.get().then(snapshot => {
+      let projectRef = await db.collection('projects'); // TODO: Make all of this function async await or .then.catch
+      projectRef
+        .get()
+        .then(snapshot => {
           const tempProjects = projects;
           snapshot.forEach(doc => {
             const projectData = doc.data().newProject;
@@ -65,18 +68,18 @@ const Dashboard = () => {
           console.log('Error getting documents', err);
         });
     };
-  
+
     const removeProjectListener = () => {
       // console.log("project listener is removed");
       projectsRefFirebase.off();
     };
     addProjectListener();
     return () => removeProjectListener();
-  }, [])
-  
+  }, []);
+
   // useEffect(() => {
-    // addProjectListener();
-    // return () => removeProjectListener();
+  // addProjectListener();
+  // return () => removeProjectListener();
   // }, []); // --- mount \ unmount
 
   useEffect(() => {
@@ -101,25 +104,28 @@ const Dashboard = () => {
         dataEngineer: item[11],
         machineLearningEngineer: item[12],
         teamMembers: [],
-
       };
-      console.log("newProject.title: ", newProject)
-      console.log("NewProject.description: ", newProject.description)
+      console.log('newProject.title: ', newProject);
+      console.log('NewProject.description: ', newProject.description);
       if (index > 0 && newProject.title !== '') {
-        db.collection('projects').add({newProject,})
+        db.collection('projects')
+          .add({newProject})
           .then(ref => {
             // console.log('Added document with ID: ', ref.id);
-            console.log('ref:', ref)
+            console.log('ref:', ref);
             newProject.uid = ref.id;
-            console.log("ref.newProject: ", newProject)
-            console.log(Object.assign({}, { ...newProject }, {uid: ref.id}))
+            console.log('ref.newProject: ', newProject);
+            console.log(Object.assign({}, {...newProject}, {uid: ref.id}));
             //ref.set(Object.assign({}, {...newProject}, {uid: ref.id}), {merge: true});
-            ref.set({newProject: {...ref.newProject, uid: ref.id}}, {merge: true})
-          })
+            ref.set(
+              {newProject: {...ref.newProject, uid: ref.id}},
+              {merge: true},
+            );
+          });
       }
-      if(newProject.title !== '') {
-        console.log("NEWPROJECT.TITLE: ", newProject)
-        console.log("NEWPROJECT.DESCRIPTION: ", newProject.description)
+      if (newProject.title !== '') {
+        console.log('NEWPROJECT.TITLE: ', newProject);
+        console.log('NEWPROJECT.DESCRIPTION: ', newProject.description);
         return newProject;
       } else {
         return null;
@@ -150,8 +156,8 @@ const Dashboard = () => {
     };
     const fuse = new Fuse(list, options); // "list" is the item array
     const result = fuse.search(e.target.value);
-    if(e.target.value === '') {
-      setFilteredProj(projects)
+    if (e.target.value === '') {
+      setFilteredProj(projects);
     } else {
       setFilteredProj(result);
     }
@@ -178,10 +184,10 @@ const Dashboard = () => {
         {projects &&
           filteredProj &&
           filteredProj.map((item, index) => {
-            if(item) {
+            if (item) {
               //  console.log('From map', item);
               let targetArr = item.productType.split(',');
-  
+
               return (
                 <div
                   key={index}
@@ -223,7 +229,9 @@ const Dashboard = () => {
                   </Card>
                 </div>
               );
-            } else {return null}
+            } else {
+              return null;
+            }
           })}
       </div>
     </div>
@@ -236,30 +244,8 @@ const Dashboard = () => {
   // }
 
   return (
-    <div style={{textAlign: "center"}}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          backgroundColor: '#ba112e',
-          marginBottom: '40px',
-        }}>
-        <Header as="h1" inverted style={{marginTop: '25px'}}>
-          {/* <Icon color="white" name="chevron up"/> */}
-          <Icon name="chevron up" style={{color: "white"}}/>
-          Lambda Group Organizer
-        </Header>
-        <Button
-          inverted
-          // color="white"
-          size="mini"
-          // className="mini ui negative basic button logoutButton"
-          onClick={signOut}
-          style={{marginLeft: '1%', alignSelf: 'center', color: 'white'}}>
-          <i className="icon sign-out" />
-          Logout
-        </Button>
-      </div>
+    <div style={{textAlign: 'center'}}>
+    <DashBoardHeader />
       <div className="displayContainer">
         <DisplayInfo projects={projects} handleForce={handleForce} />
         <LoginAnimation />

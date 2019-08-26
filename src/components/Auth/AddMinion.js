@@ -56,16 +56,16 @@ const AddMinion = props => {
   return (
     <div>
       <p>Add Minion</p>
-      <Form.Input 
+      <Form.Input
         size="big"
         focus icon="filter"
-        iconPosition="left" 
+        iconPosition="left"
         placeholder="Fuzzy Search Users"
         type="text"
         onChange={(e) => searchUsers(users, e)}
         />
       {filteredUsers && filteredUsers.map(student => {
-        return (<p>{student.name} | {student.email}</p>)
+        return (<p key={student.email}>{student.name} | {student.email}</p>)
       })}
     </div>
   );
