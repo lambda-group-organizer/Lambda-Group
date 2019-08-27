@@ -1,3 +1,11 @@
 .ProjectModal , span:hover {
     cursor: pointer;
 }
+
+.modal {
+    border: 1px solid gold;
+    overflow: auto;
+    height: 70vh;
+    width: 40vw;
+}
+

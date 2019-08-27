@@ -107,7 +107,9 @@ const AddRoomModal = ({ projects, item }) => {
             >
                 <Header as="h1" content={item.title} />
                 <Modal.Content>
-                    <p style={{fontSize: 20}}>{item.description}</p>
+                    <p className="modal"style={{fontSize: 20}}>
+                      {item.description}
+                    </p>
                     <h1>Team Members</h1>
                     {Object.values(item.teamMembers).map((member, index) => {
                         return <h3>{index+1} - {member}</h3>;
