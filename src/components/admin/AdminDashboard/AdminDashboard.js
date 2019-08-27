@@ -1,16 +1,15 @@
 import React, {useState, useRef, useEffect} from 'react';
 // import CurrentProjectContext from '../../context/CurrentProjectContext';
-import ProjectModal from './ProjectModal';
-import DashBoardHeader from '../components/globalComponents/DashBoardHeader.js';
+import ProjectModal from '../../../Dashboard/ProjectModal';
+import DashBoardHeader from '../../globalComponents/DashBoardHeader';
 // import AddMinion from '../../components/Auth/AddMinion.js';
 import {Link} from 'react-router-dom';
-import firebase from '../logic/firebase';
-import {db} from '../logic/firebase';
+import firebase, {db} from '../../../logic/firebase.js';
 import {Button, Card, Header, Form, Icon} from 'semantic-ui-react';
-import DisplayInfo from './DisplayInfo';
-import './Dashboard.css';
+import DisplayInfo from '../../../Dashboard/DisplayInfo';
+import '../../../Dashboard/Dashboard.css';
 import Fuse from 'fuse.js';
-import LoginAnimation from '../../components/Auth/LoginAnimation.js';
+import LoginAnimation from '../../Auth/LoginAnimation';
 
 const Dashboard = () => {
   // const [currentProject, setCurrentProject] = useState(null);
@@ -21,7 +20,7 @@ const Dashboard = () => {
 
   // const [projectName, setProjectName] = useState('');
   // const [projectDescription, setProjectDescription] = useState('');
-  // const projectsRefFirebase = firebase.database().ref('projects');
+  const projectsRefFirebase = firebase.database().ref('projects');
   const [filteredProj, setFilteredProj] = useState([]);
 
   const refTo_projectsVariable = useRef();
