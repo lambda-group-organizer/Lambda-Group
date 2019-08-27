@@ -39,7 +39,7 @@ const Root = ({history}) => {
 
         {/* Admin Login */}
         <Route exact path="/admin/AdminLogin" component={AdminLogin} />
-        <Route exact path="/admin/:BuildWeek/Dashboard" component={AdminDashboard} />
+        <Route exact path="/admin/:BuildWeek" component={AdminDashboard} />
         <Route exact path="/admin/addMinion" component={AddMinion} />
 
         {/* If checks for student role from firebase */}
@@ -47,7 +47,7 @@ const Root = ({history}) => {
         {/* Student Login */}
         {/* <Route exact path="/Login" component={Login} /> */}
         <Route exact path="/Register" component={Register} />
-        <Route exact path="/:BuildWeek/Dashboard" component={AdminDashboard} />
+        <Route exact path="/:BuildWeek" component={AdminDashboard} />
       </Switch>
     </UserContext.Provider>
   );

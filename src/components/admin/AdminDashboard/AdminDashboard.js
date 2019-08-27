@@ -10,8 +10,9 @@ import DisplayInfo from '../../../Dashboard/DisplayInfo';
 import '../../../Dashboard/Dashboard.css';
 import Fuse from 'fuse.js';
 import LoginAnimation from '../../Auth/LoginAnimation';
+import { withRouter } from 'react-router-dom';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   // const [currentProject, setCurrentProject] = useState(null);
 
   // **************** Testing ************************ //
@@ -26,13 +27,11 @@ const Dashboard = () => {
   const refTo_projectsVariable = useRef();
   refTo_projectsVariable.current = projects;
 
-
   // **************** Testing ************************ //
   const handleForce = data => {
     //  console.log(data);
     setTempProjects(data);
   };
-
 
   const signOut = () => {
     firebase.auth().signOut();
@@ -58,7 +57,7 @@ const Dashboard = () => {
   useEffect(() => {
     const addProjectListener = async () => {
       console.log('project listener is added');
-      let projectRef = await db.collection('projects'); // TODO: Make all of this function async await or .then.catch
+      let projectRef = await db.collection('build_weeks').doc(); // TODO: Make all of this function async await or .then.catch
       projectRef
         .get()
         .then(snapshot => {
@@ -87,12 +86,10 @@ const Dashboard = () => {
   // return () => removeProjectListener();
   // }, []); // --- mount \ unmount
 
-  
   // **************** Testing ************************ //
   useEffect(() => {
     convertedProjects();
   }, [tempProjects]); // --- mount \ unmount
-
 
   // **************** Testing ************************ //
   const convertedProjects = () => {
@@ -252,9 +249,10 @@ const Dashboard = () => {
   //   );
   // }
 
+  console.log(props)
   return (
     <div style={{textAlign: 'center'}}>
-    <DashBoardHeader />
+      <DashBoardHeader />
       <div className="displayContainer">
         <DisplayInfo projects={projects} handleForce={handleForce} />
         <LoginAnimation />
@@ -265,4 +263,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withRouter(Dashboard);
