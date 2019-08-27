@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
+import {withRouter} from 'react-router-dom';
 import {db} from '../../../logic/firebase';
 import { Card, Button } from 'semantic-ui-react';
 
 const BuildWeeksList = props => {
     const [listOfBuildWeeks, setListOfBuildWeeks] = useState([])
 
+    //  ===================================== Populates list of build weeks ===================================== //
     // needs to run each time a build week is created
     const fetchBuildWeeks = async () => {
       let buildWeeksCollection = await db.collection('build_weeks').get()
@@ -16,13 +18,21 @@ const BuildWeeksList = props => {
     useEffect(() => {
       fetchBuildWeeks()
     }, []);
+    
+    //  ===================================== Push to Individual Build Week View ===================================== //
+
+    function BuildWeekView(buildWeek) {
+      console.log(props)
+      props.history.push(`/Admin/${buildWeek}/Dashboard`)
+    }
+
 
   return (
     <div>
       <Card.Group>
         {listOfBuildWeeks && listOfBuildWeeks.map(buildWeek => (
           <Card key={`${buildWeek}`}>
-            <Card.Content>
+            <Card.Content onClick={() => BuildWeekView(buildWeek)}>
               <Card.Header>{buildWeek}</Card.Header>
             </Card.Content>
             <Card.Content extra>
@@ -37,4 +47,4 @@ const BuildWeeksList = props => {
   )
 }
 
-export default BuildWeeksList;
+export default withRouter(BuildWeeksList);
