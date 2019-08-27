@@ -14,20 +14,26 @@ import LoginAnimation from '../../components/Auth/LoginAnimation.js';
 
 const Dashboard = () => {
   // const [currentProject, setCurrentProject] = useState(null);
+
+  // **************** Testing ************************ //
   const [projects, setProjects] = useState([]);
   const [tempProjects, setTempProjects] = useState([]);
+
   // const [projectName, setProjectName] = useState('');
   // const [projectDescription, setProjectDescription] = useState('');
-  const projectsRefFirebase = firebase.database().ref('projects');
+  // const projectsRefFirebase = firebase.database().ref('projects');
   const [filteredProj, setFilteredProj] = useState([]);
 
   const refTo_projectsVariable = useRef();
   refTo_projectsVariable.current = projects;
 
+
+  // **************** Testing ************************ //
   const handleForce = data => {
     //  console.log(data);
     setTempProjects(data);
   };
+
 
   const signOut = () => {
     firebase.auth().signOut();
@@ -82,10 +88,14 @@ const Dashboard = () => {
   // return () => removeProjectListener();
   // }, []); // --- mount \ unmount
 
+  
+  // **************** Testing ************************ //
   useEffect(() => {
     convertedProjects();
   }, [tempProjects]); // --- mount \ unmount
 
+
+  // **************** Testing ************************ //
   const convertedProjects = () => {
     //  console.log("converted projects running", tempProjects);
     const newConvertedProjects = tempProjects.map((item, index) => {

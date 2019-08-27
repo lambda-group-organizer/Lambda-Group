@@ -9,12 +9,15 @@ const AddBuildWeek = props => {
 
     const [buildWeekName, SetBuildWeekName] = useState("")
     const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
+
     const handleChange = (e) => {
         SetBuildWeekName(e.target.value)
     }
 
   const addBuildWeek = async ( e ) => {
       e.preventDefault();
+      setLoading(true)
       const check = db.collection('build_weeks').doc(`${buildWeekName}`)
       const giveMe = await check.get()
       const exist = giveMe.data()
@@ -80,6 +83,7 @@ const AddBuildWeek = props => {
         return null;
       }
     });
+    setLoading(false)
   };
 
   return (
@@ -94,8 +98,8 @@ const AddBuildWeek = props => {
           inputId="ObiWan"
           inputStyle={{color: 'red'}}
         /> 
-        <Button type="submit" color="green">
-          test
+        <Button type="submit" loading={loading ? loading : null } color="green" disabled={loading}>
+          Creat{loading ? 'ing' : 'e'} Build Week
         </Button>
       {error && <p>{error}</p>}
       </Form>
