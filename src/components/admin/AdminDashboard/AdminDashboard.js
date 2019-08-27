@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 // import CurrentProjectContext from '../../context/CurrentProjectContext';
 import ProjectModal from '../../../Dashboard/ProjectModal';
 import DashBoardHeader from '../../globalComponents/DashBoardHeader';
+import AdminProjectView from './AdminProjectView';
 // import AddMinion from '../../components/Auth/AddMinion.js';
 import {Link} from 'react-router-dom';
 import firebase, {db} from '../../../logic/firebase.js';
@@ -17,21 +18,21 @@ const Dashboard = (props) => {
 
   // **************** Testing ************************ //
   const [projects, setProjects] = useState([]);
-  const [tempProjects, setTempProjects] = useState([]);
+  //const [tempProjects, setTempProjects] = useState([]);
 
   // const [projectName, setProjectName] = useState('');
   // const [projectDescription, setProjectDescription] = useState('');
   const projectsRefFirebase = firebase.database().ref('projects');
   const [filteredProj, setFilteredProj] = useState([]);
 
-  const refTo_projectsVariable = useRef();
-  refTo_projectsVariable.current = projects;
+  //const refTo_projectsVariable = useRef();
+  //refTo_projectsVariable.current = projects;
 
   // **************** Testing ************************ //
-  const handleForce = data => {
-    //  console.log(data);
-    setTempProjects(data);
-  };
+  //const handleForce = data => {
+    ////  console.log(data);
+    //setTempProjects(data);
+  //};
 
   const signOut = () => {
     firebase.auth().signOut();
@@ -54,31 +55,41 @@ const Dashboard = (props) => {
   //     .catch(err => console.log(`error : ${err}`));
   // };
 
+  const fetchProjects = async () => {
+    let tempProjects = [];
+    const { BuildWeek } = props.match.params;
+    let projectsCollection = await db.collection('build_weeks').doc(`${BuildWeek}`).collection('projects').get()
+    projectsCollection.forEach(function(doc) {
+      tempProjects.push(doc.data())
+      console.log(tempProjects)
+    })
+    setProjects(tempProjects)
+  }
   useEffect(() => {
-    const addProjectListener = async () => {
-      console.log('project listener is added');
-      let projectRef = await db.collection('build_weeks').doc(); // TODO: Make all of this function async await or .then.catch
-      projectRef
-        .get()
-        .then(snapshot => {
-          const tempProjects = projects;
-          snapshot.forEach(doc => {
-            const projectData = doc.data().newProject;
-            tempProjects.push(projectData);
-          });
-          setProjects(tempProjects);
-        })
-        .catch(err => {
-          console.log('Error getting documents', err);
-        });
-    };
+    fetchProjects()
+    //const addProjectListener = async () => {
+      //let projectRef = await db.collection('build_weeks').doc(BuildWeek).collection('projects');
+      //projectRef
+        //.get()
+        //.then(snapshot => {
+          //const tempProjects = projects;
+          //snapshot.forEach(doc => {
+            //const projectData = doc.data().newProject;
+            //console.log('doc?', doc)
+            //tempProjects.push(projectData);
+          //});
+          //setProjects(tempProjects);
+        //})
+        //.catch(err => {
+          //console.log('Error getting documents', err);
+        //});
+    //};
 
-    const removeProjectListener = () => {
-      // console.log("project listener is removed");
-      projectsRefFirebase.off();
-    };
-    addProjectListener();
-    return () => removeProjectListener();
+    //const removeProjectListener = () => {
+      //projectsRefFirebase.off();
+    //};
+    //addProjectListener();
+    //return () => removeProjectListener();
   }, []);
 
   // useEffect(() => {
@@ -87,63 +98,63 @@ const Dashboard = (props) => {
   // }, []); // --- mount \ unmount
 
   // **************** Testing ************************ //
-  useEffect(() => {
-    convertedProjects();
-  }, [tempProjects]); // --- mount \ unmount
+  //useEffect(() => {
+    //convertedProjects();
+  //}, [tempProjects]); // --- mount \ unmount
 
   // **************** Testing ************************ //
-  const convertedProjects = () => {
-    //  console.log("converted projects running", tempProjects);
-    const newConvertedProjects = tempProjects.map((item, index) => {
-      const newProject = {
-        title: item[0],
-        description: item[1],
-        designLinks_dataSets: item[2],
-        productType: item[3],
-        webUiDeveloper: item[4],
-        frontEndDeveloper: item[5],
-        frontEndFrameWorkDeveloper: item[6],
-        webBackEndDeveloper: item[7],
-        uXDesigner: item[8],
-        projectLead: item[9],
-        androidDeveloper: item[10],
-        dataEngineer: item[11],
-        machineLearningEngineer: item[12],
-        teamMembers: [],
-      };
-      console.log('newProject.title: ', newProject);
-      console.log('NewProject.description: ', newProject.description);
-      if (index > 0 && newProject.title !== '') {
-        db.collection('projects')
-          .add({newProject})
-          .then(ref => {
-            // console.log('Added document with ID: ', ref.id);
-            console.log('ref:', ref);
-            newProject.uid = ref.id;
-            console.log('ref.newProject: ', newProject);
-            console.log(Object.assign({}, {...newProject}, {uid: ref.id}));
-            //ref.set(Object.assign({}, {...newProject}, {uid: ref.id}), {merge: true});
-            ref.set(
-              {newProject: {...ref.newProject, uid: ref.id}},
-              {merge: true},
-            );
-          });
-      }
-      if (newProject.title !== '') {
-        console.log('NEWPROJECT.TITLE: ', newProject);
-        console.log('NEWPROJECT.DESCRIPTION: ', newProject.description);
-        return newProject;
-      } else {
-        return null;
-      }
-    });
-    newConvertedProjects.shift();
-    setProjects(newConvertedProjects);
-  };
+  //const convertedProjects = () => {
+    ////  console.log("converted projects running", tempProjects);
+    //const newConvertedProjects = tempProjects.map((item, index) => {
+      //const newProject = {
+        //title: item[0],
+        //description: item[1],
+        //designLinks_dataSets: item[2],
+        //productType: item[3],
+        //webUiDeveloper: item[4],
+        //frontEndDeveloper: item[5],
+        //frontEndFrameWorkDeveloper: item[6],
+        //webBackEndDeveloper: item[7],
+        //uXDesigner: item[8],
+        //projectLead: item[9],
+        //androidDeveloper: item[10],
+        //dataEngineer: item[11],
+        //machineLearningEngineer: item[12],
+        //teamMembers: [],
+      //};
+      //console.log('newProject.title: ', newProject);
+      //console.log('NewProject.description: ', newProject.description);
+      //if (index > 0 && newProject.title !== '') {
+        //db.collection('projects')
+          //.add({newProject})
+          //.then(ref => {
+            //// console.log('Added document with ID: ', ref.id);
+            //console.log('ref:', ref);
+            //newProject.uid = ref.id;
+            //console.log('ref.newProject: ', newProject);
+            //console.log(Object.assign({}, {...newProject}, {uid: ref.id}));
+            ////ref.set(Object.assign({}, {...newProject}, {uid: ref.id}), {merge: true});
+            //ref.set(
+              //{newProject: {...ref.newProject, uid: ref.id}},
+              //{merge: true},
+            //);
+          //});
+      //}
+      //if (newProject.title !== '') {
+        //console.log('NEWPROJECT.TITLE: ', newProject);
+        //console.log('NEWPROJECT.DESCRIPTION: ', newProject.description);
+        //return newProject;
+      //} else {
+        //return null;
+      //}
+    //});
+    //newConvertedProjects.shift();
+    //setProjects(newConvertedProjects);
+  //};
 
-  const openProject = id => {
-    // console.log('Opened', id);
-  };
+  //const openProject = id => {
+     //console.log('Opened', id);
+  //};
 
   //***************FUZZYSEARCH***************************
 
@@ -169,79 +180,78 @@ const Dashboard = (props) => {
     }
   };
 
-  useEffect(() => {
-    // console.log('useEffect', projects);
-    setFilteredProj(projects);
-  }, [projects]);
+  //useEffect(() => {
+    //// console.log('useEffect', projects);
+    //setFilteredProj(projects);
+  //}, [projects]);
   // ***************** END FUZZY SEARCH ************************
 
-  let projectsElements = (
-    <div>
-      <Form.Input
-        size="big"
-        focus
-        icon="filter"
-        iconPosition="left"
-        placeholder="Fuzzy Search Projects"
-        type="text"
-        onChange={e => fuzzySearch(projects, e)}
-      />
-      <div className="container">
-        {projects &&
-          filteredProj &&
-          filteredProj.map((item, index) => {
-            if (item) {
-              //  console.log('From map', item);
-              let targetArr = item.productType.split(',');
+  //let projectsElements = (
+    //<div>
+      //<Form.Input
+        //size="big"
+        //focus
+        //icon="filter"
+        //iconPosition="left"
+        //placeholder="Fuzzy Search Projects"
+        //type="text"
+        //onChange={e => fuzzySearch(projects, e)}
+      ///>
+      //<div className="container">
+        //{projects &&
+          //filteredProj &&
+          //filteredProj.map((item, index) => {
+            //if (item) {
+              ////  console.log('From map', item);
+              //let targetArr = item.productType.split(',');
 
-              return (
-                <div
-                  key={index}
-                  className="cardContainer"
-                  onClick={id => openProject(item.id)}>
-                  <Card raised={true} fluid={true} centered={true}>
-                    <Card.Header className="cardHeader">
-                      <h3 className="headerTitle">
-                        {item.title.length > 25
-                          ? item.title.slice(0, 25) + '...'
-                          : item.title}
-                      </h3>
-                    </Card.Header>
-                    <div className="contentContainer">
-                      <Card.Description className="description">
-                        <p className="descriptionText">
-                          {item.description.length > 200
-                            ? item.description.slice(0, 200) + '...'
-                            : item.description}
-                        </p>
-                      </Card.Description>
-                    </div>
-                    <ProjectModal
-                      item={item}
-                      openProject={openProject}
-                      projects={projects}
-                    />
-                    <div className="cardFooter">
-                      <ul className="targetMembersContainer">
-                        {targetArr.map((target, index) => {
-                          return (
-                            <li key={index} className="cardMember">
-                              {target}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  </Card>
-                </div>
-              );
-            } else {
-              return null;
-            }
-          })}
-      </div>
-    </div>
-  );
+              //return (
+                //<div
+                  //key={index}
+                  //className="cardContainer"
+                  //>
+                  //<Card raised={true} fluid={true} centered={true}>
+                    //<Card.Header className="cardHeader">
+                      //<h3 className="headerTitle">
+                        //{item.title.length > 25
+                          //? item.title.slice(0, 25) + '...'
+                          //: item.title}
+                      //</h3>
+                    //</Card.Header>
+                    //<div className="contentContainer">
+                      //<Card.Description className="description">
+                        //<p className="descriptionText">
+                          //{item.description.length > 200
+                            //? item.description.slice(0, 200) + '...'
+                            //: item.description}
+                        //</p>
+                      //</Card.Description>
+                    //</div>
+                    //<ProjectModal
+                      //item={item}
+                      //projects={projects}
+                    ///>
+                    //<div className="cardFooter">
+                      //<ul className="targetMembersContainer">
+                        //{targetArr.map((target, index) => {
+                          //return (
+                            //<li key={index} className="cardMember">
+                              //{target}
+                            //</li>
+                          //);
+                        //})}
+                      //</ul>
+                    //</div>
+                  //</Card>
+                //</div>
+              //);
+            //} else {
+              //return null;
+            //}
+          //})}
+      //</div>
+    //</div>
+  //);
 
   // if (projects == []) {
   //   projectsElements = (
@@ -249,16 +259,19 @@ const Dashboard = (props) => {
   //   );
   // }
 
-  console.log(props)
   return (
     <div style={{textAlign: 'center'}}>
       <DashBoardHeader />
       <div className="displayContainer">
-        <DisplayInfo projects={projects} handleForce={handleForce} />
         <LoginAnimation />
-        <Link to="/admin/addMinion">Add New Admin</Link>
       </div>
-      {projectsElements}
+    {projects && projects.map(project => {
+      return (
+        <div key={project.project.uid}>
+        <AdminProjectView project={project}/>
+        </div>
+      )
+    })}
     </div>
   );
 };

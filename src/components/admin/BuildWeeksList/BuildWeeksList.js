@@ -14,7 +14,7 @@ const BuildWeeksList = props => {
       setListOfBuildWeeks(prevSetOfBuildWeeks => {
         return [...prevSetOfBuildWeeks, `${doc.id}`];
       });
-      console.log(doc.id, '=>', doc.data());
+      //console.log(doc.id, '=>', doc.data());
     });
   };
   useEffect(() => {
@@ -24,7 +24,7 @@ const BuildWeeksList = props => {
   //  ===================================== Push to Individual Build Week View ===================================== //
 
   function BuildWeekView(buildWeek) {
-    console.log("route?", props.match.params.BuildWeek);
+    console.log(props);
     props.history.push(`/Admin/${buildWeek}`);
   }
 

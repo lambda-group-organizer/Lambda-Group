@@ -80,7 +80,7 @@ const StatisticExampleValueShorthand = ({handleForce, user}) => {
       .get()
       .then(snapshot => {
         if (snapshot.empty) {
-          console.log('No matching documents.');
+          //console.log('No matching documents.');
 
           return;
         }
