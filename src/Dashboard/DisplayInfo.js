@@ -28,231 +28,162 @@
 
 // export default StatisticExampleValueShorthand;
 
-
-import React, { useState, useContext, useEffect } from "react";
-import { Statistic, Segment, Button } from "semantic-ui-react";
-import UserContext from "../context/UserContext";
+import React, {useState, useContext, useEffect} from 'react';
+import {Statistic, Segment, Button} from 'semantic-ui-react';
+import UserContext from '../context/UserContext';
 // import CurrentProjectContext from "../../context/CurrentProjectContext";
-import { db } from "../logic/firebase";
-import "./DisplayInfo.css";
-import CSVReader from "react-csv-reader";
+import {db} from '../logic/firebase';
+import './DisplayInfo.css';
+import CSVReader from 'react-csv-reader';
 
-const StatisticExampleValueShorthand = ({ handleForce, user }) => {
-    const { tempProjects } = useContext(UserContext);
-    const [projects, setProjects] = useState([]);
+const StatisticExampleValueShorthand = ({handleForce, user}) => {
+  const {tempProjects} = useContext(UserContext);
+  const [projects, setProjects] = useState([]);
 
-    const [tempUsers, setTempUsers] = useState([]);
+  const [tempUsers, setTempUsers] = useState([]);
 
-    const deleteCollection = () => {
+  const deleteCollection = () => {
+    let projectRef = db.collection('projects');
 
-        let projectRef = db.collection("projects");
+    projectRef
+      .get()
+      .then(snapshot => {
+        let count = 1;
 
-        projectRef.get().then(snapshot => {
-                let count = 1;
+        snapshot.forEach(doc => {
+          // console.log(doc.data().newProject.uid);
 
-                snapshot.forEach(doc => {
+          console.log(doc, `count: ${count++}`);
+            console.log(doc.data().newProject, `count: ${count++}`);
 
-                    // console.log(doc.data().newProject.uid);
+          db.collection('projects')
 
-                    console.log(doc, `count: ${count++}`);
+            .doc(doc.data().newProject.uid)
 
-                    db.collection("projects")
+            .delete();
+        });
+      })
 
-                        .doc(doc.data().newProject.uid)
+      .catch(err => {
+        console.log('Error getting documents', err);
+      });
 
-                        .delete();
+    setProjects([]);
+  };
 
-                });
+  const getUsers = () => {
+    const tempUserData = [];
 
-            })
+    let citiesRef = db.collection('students');
 
-            .catch(err => {
+    citiesRef
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          console.log('No matching documents.');
 
-                console.log("Error getting documents", err);
+          return;
+        }
 
-            });
+        snapshot.forEach(doc => {
+          // console.log(doc.id, '=>', doc.data());
 
-        setProjects([]);
+          tempUserData.push(doc.data());
+        });
 
-    };
+        //   console.log(tempUserData, "from snap");
+      })
 
-    const getUsers = () => {
+      .catch(err => {
+        console.log('Error getting documents', err);
+      });
 
-        const tempUserData = [];
+    setTempUsers(tempUserData);
+  };
 
-        let citiesRef = db.collection("students");
+  const getProjects = () => {
+    const tempProjectData = [];
 
-        citiesRef.get().then(snapshot => {
+    let citiesRef = db.collection('projects');
 
-                if (snapshot.empty) {
+    citiesRef
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          console.log('No matching documents.');
 
-                    console.log("No matching documents.");
+          return;
+        }
 
-                    return;
+        snapshot.forEach(doc => {
+          // console.log(doc.id, '=>', doc.data());
 
-                }
+          tempProjectData.push(doc.data());
+        });
 
-                snapshot.forEach(doc => {
+        //   console.log(tempUserData, "from snap");
+      })
 
-                    // console.log(doc.id, '=>', doc.data());
+      .catch(err => {
+        console.log('Error getting documents', err);
+      });
 
-                    tempUserData.push(doc.data());
+    setProjects(tempProjectData);
+  };
 
-                });
-
-                //   console.log(tempUserData, "from snap");
-
-            })
-
-            .catch(err => {
-
-                console.log("Error getting documents", err);
-
-            });
-
-        setTempUsers(tempUserData);
-
-    };
-
-    const getProjects = () => {
-
-        const tempProjectData = [];
-
-        let citiesRef = db.collection("projects");
-
-        citiesRef.get().then(snapshot => {
-
-                if (snapshot.empty) {
-
-                    console.log("No matching documents.");
-
-                    return;
-
-                }
-
-                snapshot.forEach(doc => {
-
-                    // console.log(doc.id, '=>', doc.data());
-
-                    tempProjectData.push(doc.data());
-
-                });
-
-                //   console.log(tempUserData, "from snap");
-
-            })
-
-            .catch(err => {
-
-                console.log("Error getting documents", err);
-
-            });
-
-        setProjects(tempProjectData);
-
-    };
-
-    useEffect(() => {
-
-        getUsers();
-
-    }, [user]);
-
-    useEffect(() => {
-
-        getProjects();
-
-    }, [tempProjects]);
-
-    return (
-
+  useEffect(() => {
+    getUsers();
+  }, [user]);
+
+  useEffect(() => {
+    getProjects();
+  }, [tempProjects]);
+
+  return (
+    <div>
+      {!user && tempUsers ? (
         <div>
+          <Segment className="DisplayInfo">
+            <h3>Project Data</h3>
 
-            {!user && tempUsers ? (
+            <Statistic.Group size="small">
+              {/* <Statistic.Group tex size="small"> */}
 
-                <div>
+              <Statistic label="Projects" value={projects.length} />
 
-                    <Segment className="DisplayInfo">
+              <Statistic label="Students" value={tempUsers.length} />
+            </Statistic.Group>
 
-                        <h3>Project Data</h3>
+            <Button
+              color="black"
+              size="mini"
+              basic
+              onClick={deleteCollection}
+              style={{
+                marginLeft: '1%',
 
-                        <Statistic.Group size="small">
-                        {/* <Statistic.Group tex size="small"> */}
+                alignSelf: 'center',
 
-                            <Statistic
+                marginTop: '5px',
+              }}>
+              <i className="icon delete" />
+              Clear out Projects
+            </Button>
+          </Segment>
 
-                                label="Projects"
-
-                                value={projects.length}
-
-                            />
-
-                            <Statistic
-
-                                label="Students"
-
-                                value={tempUsers.length}
-
-                            />
-
-                        </Statistic.Group>
-
-                        <Button
-
-                            color="black"
-
-                            size="mini"
-
-                            basic
-
-                            onClick={deleteCollection}
-
-                            style={{
-
-                                marginLeft: "1%",
-
-                                alignSelf: "center",
-
-                                marginTop: "5px"
-
-                            }}
-
-                        >
-
-                            <i className="icon delete" />
-
-                            Clear out Projects
-
-                        </Button>
-
-                    </Segment>
-
-                    <CSVReader
-
-                        cssClass="csv-reader-input"
-
-                        label="Select CSV with projects"
-
-                        onFileLoaded={handleForce}
-
-                        inputId="ObiWan"
-
-                        inputStyle={{ color: "red" }}
-
-                    />
-
-                </div>
-
-            ) : (
-
-                <h1>Student View</h1>
-
-            )}
-
+          <CSVReader
+            cssClass="csv-reader-input"
+            label="Select CSV with projects"
+            onFileLoaded={handleForce}
+            inputId="ObiWan"
+            inputStyle={{color: 'red'}}
+          />
         </div>
-
-    );
-
+      ) : (
+        <h1>Student View</h1>
+      )}
+    </div>
+  );
 };
 
 export default StatisticExampleValueShorthand;

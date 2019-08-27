@@ -31,7 +31,7 @@ const AdminLogin = ({history}) => {
           }
         });
         if (isAdmin) {
-          history.push('admin/addMinion');
+          history.push('/');
         } else {
           alert('still not passing');
           history.push('/');

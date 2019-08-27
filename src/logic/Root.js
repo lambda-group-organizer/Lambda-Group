@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {Switch, Route} from 'react-router-dom';
-import Dashboard from '../Dashboard/Dashboard'
+import Dashboard from '../Dashboard/Dashboard';
 import AdminLogin from '../components/Auth/AdminLogin';
 import Register from '../components/Auth/Register';
 import AddMinion from '../components/Auth/AddMinion.js';
 import UserContext from '../context/UserContext';
+import OverLoardMainDashboard from '../components/admin/AdminDashboard/OverloardMainDashBoard.js';
 import firebase from '../logic/firebase';
 import {withRouter} from 'react-router-dom';
 // import jwt_decode from 'jwt-decode';
 
 const Root = ({history}) => {
-  
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Root = ({history}) => {
   return (
     <UserContext.Provider value={{user, setUser}}>
       <Switch>
-        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/" component={OverLoardMainDashboard} />
 
         {/* Admin Login */}
         <Route exact path="/admin/AdminLogin" component={AdminLogin} />
