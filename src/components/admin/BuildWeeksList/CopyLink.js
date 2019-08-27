@@ -36,7 +36,7 @@ const CopyLink = props => {
           }}
           ref={textAreaRef}
           value={`http://localhost:3000/${props.buildWeek}`}
-          ReadOnly
+          readOnly
         />
       </form>
       {/* <Button onClick={copyLink}>Copy URL</Button>
