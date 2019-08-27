@@ -1,38 +1,39 @@
-import React, {useState, useEffect} from 'react';
-import {Form, Button, Input} from 'semantic-ui-react';
-import {db} from '../logic/firebase.js';
-import CSVReader from 'react-csv-reader';
+import React, { useState, useEffect } from "react";
+import { Form, Button, Input } from "semantic-ui-react";
+import { db } from "../logic/firebase.js";
+import CSVReader from "react-csv-reader";
 
 const AddBuildWeek = props => {
   // ============================== Creating a Build Week ========================= //
 
-  const [buildWeekName, SetBuildWeekName] = useState('');
+  const [buildWeekName, SetBuildWeekName] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = e => {
-    SetBuildWeekName(e.target.value);
+    let spaceLessInput = e.target.value.replace(/ /g, "_");
+    SetBuildWeekName(spaceLessInput);
   };
 
   const addBuildWeek = async e => {
     e.preventDefault();
     setLoading(true);
-    const check = db.collection('build_weeks').doc(`${buildWeekName}`);
+    const check = db.collection("build_weeks").doc(`${buildWeekName}`);
     const giveMe = await check.get();
     const exist = giveMe.data();
     if (!exist) {
-      db.collection('build_weeks')
+      db.collection("build_weeks")
         .doc(`${buildWeekName}`)
         .set({
-          buildWeekName,
+          buildWeekName
         })
         .then(async () => {
           const buildWeek = db
-            .collection('build_weeks')
+            .collection("build_weeks")
             .doc(`${buildWeekName}`);
           const response = await buildWeek.get();
           response.data();
-          SetBuildWeekName('');
+          SetBuildWeekName("");
           setError(null);
           // Add projects to database
           convertedProjects();
@@ -42,7 +43,7 @@ const AddBuildWeek = props => {
           setError(err);
         });
     } else {
-      setError('That name is Already in the database!');
+      setError("That name is Already in the database!");
     }
   };
 
@@ -66,20 +67,23 @@ const AddBuildWeek = props => {
         androidDeveloper: item[10],
         dataEngineer: item[11],
         machineLearningEngineer: item[12],
-        teamMembers: [],
+        teamMembers: []
       };
-      if (index > 0 && project.title !== '') {
+      if (index > 0 && project.title !== "") {
         const buildWeek = db
-          .collection('build_weeks')
+          .collection("build_weeks")
           .doc(`${buildWeekName}`)
-          .collection('projects')
-          .add({project})
+          .collection("projects")
+          .add({ project })
           .then(ref => {
             project.uid = ref.id;
-            ref.set({project: {...ref.project, uid: ref.id}}, {merge: true});
+            ref.set(
+              { project: { ...ref.project, uid: ref.id } },
+              { merge: true }
+            );
           });
       }
-      if (project.title !== '') {
+      if (project.title !== "") {
         return project;
       } else {
         return null;
@@ -103,14 +107,15 @@ const AddBuildWeek = props => {
         label="Select CSV with projects"
         onFileLoaded={data => setCSVData(data)}
         inputId="ObiWan"
-        inputStyle={{color: 'red'}}
+        inputStyle={{ color: "red" }}
       />
       <Button
         type="submit"
         loading={loading ? loading : null}
         color="green"
-        disabled={loading}>
-        Creat{loading ? 'ing' : 'e'} Build Week
+        disabled={loading}
+      >
+        Creat{loading ? "ing" : "e"} Build Week
       </Button>
       {error && <p>{error}</p>}
     </Form>

@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {withRouter} from 'react-router-dom';
-import {db} from '../../../logic/firebase';
-import {Card, Button} from 'semantic-ui-react';
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
+import { db } from "../../../logic/firebase";
+import { Card, Button } from "semantic-ui-react";
+
+import CopyLink from "./CopyLink";
 
 const BuildWeeksList = props => {
   const [listOfBuildWeeks, setListOfBuildWeeks] = useState([]);
@@ -9,7 +11,7 @@ const BuildWeeksList = props => {
   //  ===================================== Populates list of build weeks ===================================== //
   // needs to run each time a build week is created
   const fetchBuildWeeks = async () => {
-    let buildWeeksCollection = await db.collection('build_weeks').get();
+    let buildWeeksCollection = await db.collection("build_weeks").get();
     buildWeeksCollection.forEach(function(doc) {
       setListOfBuildWeeks(prevSetOfBuildWeeks => {
         return [...prevSetOfBuildWeeks, `${doc.id}`];
@@ -44,6 +46,7 @@ const BuildWeeksList = props => {
                   </Button>
                 </div>
               </Card.Content>
+              <CopyLink buildWeek={buildWeek} />
             </Card>
           ))}
       </Card.Group>

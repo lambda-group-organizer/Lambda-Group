@@ -1,17 +1,17 @@
 // Modules
-import React, {useState,  useEffect} from 'react';
-import firebase, {db} from '../../../logic/firebase.js';
-import {Button, Card, Header, Form, Icon} from 'semantic-ui-react';
-import { withRouter } from 'react-router-dom';
-import fuzzySearch from '../../../components/globalComponents/fuzzySearch'
+import React, { useState, useEffect } from "react";
+import firebase, { db } from "../../../logic/firebase.js";
+import { Button, Card, Header, Form, Icon } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
+import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 
 // Components
-import DashBoardHeader from '../../globalComponents/DashBoardHeader';
-import AdminProjectView from './AdminProjectView';
-import LoginAnimation from '../../Auth/LoginAnimation';
-import '../../../Dashboard/Dashboard.css';
+import DashBoardHeader from "../../globalComponents/DashBoardHeader";
+import AdminProjectView from "./AdminProjectView";
+import LoginAnimation from "../../Auth/LoginAnimation";
+import "../../../Dashboard/Dashboard.css";
 
-const Dashboard = (props) => {
+const Dashboard = props => {
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
 
@@ -19,57 +19,65 @@ const Dashboard = (props) => {
     firebase.auth().signOut();
   };
 
-
   const fetchProjects = async () => {
     let tempProjects = [];
     const { BuildWeek } = props.match.params;
-    let projectsCollection = await db.collection('build_weeks').doc(`${BuildWeek}`).collection('projects').get()
+    let projectsCollection = await db
+      .collection("build_weeks")
+      .doc(`${BuildWeek}`)
+      .collection("projects")
+      .get();
     projectsCollection.forEach(function(doc) {
-      tempProjects.push(doc.data())
-      console.log(tempProjects)
-    })
-    setProjects(tempProjects)
-    setFilteredProjects(tempProjects)
-  }
+      tempProjects.push(doc.data());
+      console.log(tempProjects);
+    });
+    setProjects(tempProjects);
+    setFilteredProjects(tempProjects);
+  };
   useEffect(() => {
-    fetchProjects()
+    fetchProjects();
   }, []);
 
   function handleFuzzySearch(e) {
-    console.log(projects)
-    let searchResults = fuzzySearch(projects, ['project.title', 'project.description', 'project.productType'], e)  // Fuzzy search for students involved, title, description, productType(ios, web, etc)
-    if(e.target.value === "") {
-      setFilteredProjects(projects)
+    console.log(projects);
+    // Fuzzy search for students involved, title, description, productType(ios, web, etc)
+    let searchResults = fuzzySearch(
+      projects,
+      ["project.title", "project.description", "project.productType"],
+      e
+    );
+    if (e.target.value === "") {
+      setFilteredProjects(projects);
     } else {
-      setFilteredProjects(searchResults)
+      setFilteredProjects(searchResults);
     }
   }
 
-
   return (
-    <div style={{textAlign: 'center'}}>
+    <div style={{ textAlign: "center" }}>
       <DashBoardHeader />
       <div className="displayContainer">
         <LoginAnimation />
         <div>
-          <Form.Input 
-            type="text" 
-            onChange={(e) => handleFuzzySearch(e)}
+          <Form.Input
+            type="text"
+            onChange={e => handleFuzzySearch(e)}
             focus
             size="big"
             icon="filter"
             iconPosition="left"
-            placeholder="Fuzzy Search Projects"  
+            placeholder="Fuzzy Search Projects"
           />
         </div>
       </div>
-      {filteredProjects && filteredProjects.map(project => {
-        return (
-          <div key={project.project.uid}>
-          <AdminProjectView project={project}/>
-          </div>
-        )
-      })}
+      {filteredProjects &&
+        filteredProjects.map(project => {
+          return (
+            <div key={project.project.uid}>
+              <AdminProjectView project={project} />
+            </div>
+          );
+        })}
     </div>
   );
 };
