@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import {Switch, Route} from 'react-router-dom';
 import UserContext from '../context/UserContext';
+import StudentContext from '../context/StudentContext';
 import firebase from '../logic/firebase';
 import {withRouter} from 'react-router-dom';
 
-import Dashboard from '../Dashboard/Dashboard';
+//import Dashboard from '../Dashboard/Dashboard';
 import StudentDashBoard from '../components/globalComponents/DashBoardHeader.js';
 import AdminLogin from '../components/Auth/AdminLogin';
+import StudentLogin from '../components/Auth/StudentLogin';
+import StudentRegister from '../components/Auth/StudentRegister.js';
 import Register from '../components/Auth/Register';
 import AddMinion from '../components/Auth/AddMinion.js';
 import OverLoardMainDashboard from '../components/admin/AdminDashboard/OverloardMainDashBoard.js';
@@ -16,6 +19,7 @@ import AdminDashboard from '../components/admin/AdminDashboard/AdminDashboard.js
 
 const Root = ({history}) => {
   const [user, setUser] = useState(null);
+  const [student, setStudent] = useState(null);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async user => {
@@ -33,7 +37,24 @@ const Root = ({history}) => {
     });
   }, [history]);
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(async student => {
+      //const token = await user.ra;
+      //const decoded = jwt_decode(token);
+      //console.log(decoded.email);
+      if (student) {
+        const {displayName, uid, photoURL} = student;
+        // console.log(email)
+        setStudent({displayName, uid, photoURL});
+        history.push('/student/dashboard');
+      } else {
+        history.push('/student/StudentLogin');
+      }
+    });
+  }, [history]);
+
   return (
+    <>
     <UserContext.Provider value={{user, setUser}}>
       <Switch>
         <Route exact path="/" component={OverLoardMainDashboard} />
@@ -51,6 +72,14 @@ const Root = ({history}) => {
         <Route exact path="/:BuildWeek" component={AdminDashboard} />
       </Switch>
     </UserContext.Provider>
+      <StudentContext.Provider value={{student, setStudent}}>
+        <Switch>
+    <Route exact path='/student/StudentLogin' component={StudentLogin} />
+    <Route exact path="/student/dashboard" component={StudentDashBoard} />
+    <Route exact path="/student/Register" component={StudentRegister} />
+    </Switch>
+    </StudentContext.Provider>
+      </>
   );
 };
 
