@@ -90,6 +90,7 @@ const AddBuildWeek = props => {
       }
     });
     setLoading(false);
+    props.setUpdate(!props.update)
   };
 
   return (

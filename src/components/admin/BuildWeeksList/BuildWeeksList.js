@@ -21,7 +21,7 @@ const BuildWeeksList = props => {
   };
   useEffect(() => {
     fetchBuildWeeks();
-  }, []);
+  }, [props.update]);
 
   //  ===================================== Push to Individual Build Week View ===================================== //
 
