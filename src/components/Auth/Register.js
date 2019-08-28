@@ -287,7 +287,7 @@ const Register = ({history}) => {
         {admin ? registerAdminView : registerView}
       </Segment>
       <Message>
-        Already have an account? <Link to="/Login">Login</Link>
+        Already have an account? <Link to="/admin/AdminLogin">Login</Link>
       </Message>
     </div>
   );

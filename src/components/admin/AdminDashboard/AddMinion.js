@@ -1,18 +1,20 @@
 import React, {useState, useEffect} from 'react';
 //import firebase from '../../logic/firebase';
-import {db} from '../../logic/firebase';
+import {db} from '../../../logic/firebase.js';
 import Fuse from 'fuse.js';
 import {Form} from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom'
 
 
 const AddMinion = props => {
-  const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]);
 
   const fetchStudents = async () => {
+    console.log('running filtered students')
     let studentArr = [];
     await db
-      .collection('users')
+      .collection('students')
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -24,8 +26,8 @@ const AddMinion = props => {
           console.log(studentData);
           return studentArr;
         });
-        setUsers(studentArr);
-        setFilteredUsers(studentArr);
+        setStudents(studentArr);
+        setFilteredStudents(studentArr);
       });
   };
 
@@ -33,7 +35,8 @@ const AddMinion = props => {
     fetchStudents();
   }, []);
 
-  const searchUsers = (usersArr, e) => {
+  const searchStudents = (studentArr, e) => {
+    console.log(studentArr)
     let options = {
       findAllMatches: true,
       threshold: 0.6,
@@ -43,18 +46,19 @@ const AddMinion = props => {
       minMatchCharLength: 1,
       keys: ['name', 'email'],
     }
-    const fuse = new Fuse(usersArr, options);
+    const fuse = new Fuse(studentArr, options);
     const result = fuse.search(e.target.value);
     if(e.target.value === "") {
-      setFilteredUsers(users);
+      setFilteredStudents(students);
     } else  {
-      setFilteredUsers(result);
+      setFilteredStudents(result);
     }
   }
 
 
   return (
     <div>
+      {console.log('rendered!!')}
       <p>Add Minion</p>
       <Form.Input
         size="big"
@@ -62,13 +66,13 @@ const AddMinion = props => {
         iconPosition="left"
         placeholder="Fuzzy Search Users"
         type="text"
-        onChange={(e) => searchUsers(users, e)}
+        onChange={(e) => searchStudents(students, e)}
         />
-      {filteredUsers && filteredUsers.map(student => {
-        return (<p key={student.email}>{student.name} | {student.email}</p>)
+      {filteredStudents && filteredStudents.map(s => {
+        return (<p key={s.email}>{s.name} | {s.email}</p>)
       })}
     </div>
   );
 };
 
-export default AddMinion;
+export default withRouter(AddMinion);

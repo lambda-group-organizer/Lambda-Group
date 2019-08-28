@@ -33,7 +33,7 @@ const AdminLogin = ({history}) => {
         if (isAdmin) {
           history.push('/');
         } else {
-          history.push('/student/dashboard');
+          history.push('/admin/AdminLogin');
         }
       });
   };
@@ -86,9 +86,6 @@ const AdminLogin = ({history}) => {
           </Button>
         </Form>
       </Segment>
-      <Message>
-        New to us? <Link to="/Register">Register</Link>
-      </Message>
     </div>
   );
 };

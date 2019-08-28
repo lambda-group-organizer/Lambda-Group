@@ -34,7 +34,7 @@ const StudentLogin = ({history}) => {
         if (isStudent) {
           history.push('/student/dashboard');
         } else {
-          history.push('./student/StudentLogin');
+          history.push('/student/StudentLogin');
         }
       });
   };
