@@ -5,11 +5,12 @@ import firebase from '../logic/firebase';
 import {withRouter} from 'react-router-dom';
 
 import Dashboard from '../Dashboard/Dashboard';
+import StudentDashBoard from '../components/globalComponents/DashBoardHeader.js';
 import AdminLogin from '../components/Auth/AdminLogin';
 import Register from '../components/Auth/Register';
 import AddMinion from '../components/Auth/AddMinion.js';
 import OverLoardMainDashboard from '../components/admin/AdminDashboard/OverloardMainDashBoard.js';
-import AdminDashboard from '../components/admin/AdminDashboard/AdminDashboard.js'
+import AdminDashboard from '../components/admin/AdminDashboard/AdminDashboard.js';
 
 // import jwt_decode from 'jwt-decode';
 

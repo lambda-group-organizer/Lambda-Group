@@ -9,7 +9,12 @@ const BuildWeeksList = props => {
   const [listOfBuildWeeks, setListOfBuildWeeks] = useState([]);
 
   //  ===================================== Populates list of build weeks ===================================== //
-  // needs to run each time a build week is created
+  //TODO: needs to run each time a build week is created
+  // I've lifted the state up and tried multiple ways of dealing with this.
+  // the problem is right here. as it stands this is creating multiple cards
+  // when a new build week is added.  however I don't have another way to do
+  // this currently. freaking firebase.  going to have to bug fix this later.
+  // moving on for now.
   const fetchBuildWeeks = async () => {
     let buildWeeksCollection = await db.collection("build_weeks").get();
     buildWeeksCollection.forEach(function(doc) {
@@ -21,7 +26,7 @@ const BuildWeeksList = props => {
   };
   useEffect(() => {
     fetchBuildWeeks();
-  }, []);
+  }, [props.update]);
 
   //  ===================================== Push to Individual Build Week View ===================================== //
 

@@ -19,11 +19,11 @@ import LoginAnimation from './LoginAnimation';
 const Register = ({history}) => {
   const {setUser} = useContext(UserContext);
   const [email, setEmail] = useState('');
-  const [adminEmail, setAdminEmail] = useState('');
+  const [studentEmail, setStudentEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [adminPassword, setAdminPassword] = useState('');
+  const [studentPassword, setStudentPassword] = useState('');
   const [displayName, setName] = useState('');
-  const [adminName, setAdminName] = useState('');
+  const [studentName, setStudent] = useState('');
   const [admin, setAdmin] = useState(false);
 
   const register = event => {
@@ -34,17 +34,19 @@ const Register = ({history}) => {
       .createUserWithEmailAndPassword(email, password)
       .then(createdUser => {
         console.log(`createdUser : ${createdUser}`);
-        createdUser.user.updateProfile({displayName}).then(() => {
+        createdUser.user.updateProfile({studentName}).then(() => {
           console.log(createdUser.user);
           setUser({
             displayName,
+            studentName,
             uid: createdUser.user.uid,
             email: createdUser.user.email,
           });
-          db.collection('users')
+          db.collection('students')
             .add({
               email,
               displayName,
+              studentName,
               uid: createdUser.user.uid,
             })
             .then(docRef => {
@@ -53,40 +55,42 @@ const Register = ({history}) => {
             .catch(err => {
               console.log(`error: ${err}`);
             });
-          history.push('/');
+          history.push('/student/dashboard');
         });
       })
       .catch(err => console.log(`error : ${err}`));
   };
 
-  const registerAdmin = event => {
-    console.log('Clicked Admin');
+  const registerStudent = event => {
+    console.log('Clicked Student');
     event.preventDefault();
     firebase
       .auth()
-      .createUserWithEmailAndPassword(adminEmail, adminPassword)
+      .createUserWithEmailAndPassword(studentEmail, studentPassword)
       .then(createdUser => {
         console.log(`createdUser : ${createdUser}`);
-        createdUser.user.updateProfile({adminName}).then(() => {
+        createdUser.user.updateProfile({displayName}).then(() => {
           console.log(createdUser.user);
           setUser({
-            adminName,
+            displayName,
+            studentName,
             uid: createdUser.user.uid,
-            role: 'admin',
+            role: 'student',
           });
 
-          db.collection('admin')
+          db.collection('student')
             .doc(createdUser.user.uid)
             .set({
-              name: adminName,
+              name: studentName,
               uid: createdUser.user.uid,
-              role: 'admin',
+              displayName,
+              role: 'student',
             })
             .then(ref => {
               // console.log('Added document with ID: ', ref.uid);
             });
 
-          history.push('/');
+          history.push('/student/dashboard');
         });
       })
       .catch(err => console.log(`error : ${err}`));
@@ -99,7 +103,7 @@ const Register = ({history}) => {
         basic
         color="blue"
         size="small"
-        onClick={() => setAdmin(!admin)}>
+        onClick={() => setStudent(!student)}>
         Register as a group organizer
       </Button>
 
@@ -111,7 +115,7 @@ const Register = ({history}) => {
             marginBottom: '25px',
           }}
         />
-        {!admin ? (
+        {!studentName ? (
           <div>
             {!displayName ? (
               <Label color="red" pointing="below">
@@ -164,7 +168,7 @@ const Register = ({history}) => {
           </div>
         ) : (
           <div>
-            {!adminEmail ? (
+            {!studentEmail ? (
               <Label color="red" pointing="below">
                 Enter your email
               </Label>
@@ -173,13 +177,13 @@ const Register = ({history}) => {
             )}
             <Form.Input
               icon="mail"
-              value={adminEmail}
+              value={studentEmail}
               type="email"
               iconPosition="left"
               placeholder="E-mail address"
-              onChange={event => setAdminEmail(event.target.value)}
+              onChange={event => setStudentEmail(event.target.value)}
             />
-            {!adminPassword ? (
+            {!studentPassword ? (
               <Label color="red" pointing="below">
                 Enter your password
               </Label>
@@ -188,11 +192,11 @@ const Register = ({history}) => {
             )}
             <Form.Input
               icon="lock"
-              value={adminPassword}
+              value={studentPassword}
               iconPosition="left"
               placeholder="Password"
               type="password"
-              onChange={event => setAdminPassword(event.target.value)}
+              onChange={event => setStudentPassword(event.target.value)}
             />
             <Button size="large" fluid color="red" type="submit">
               Register Organizer
@@ -203,17 +207,17 @@ const Register = ({history}) => {
     </div>
   );
 
-  const registerAdminView = (
+  const registerStudentView = (
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <Button
         style={{alignSelf: 'center'}}
         basic
         color="blue"
         size="small"
-        onClick={() => setAdmin(!admin)}>
+        onClick={() => setStudent(!studentName)}>
         Back to registering a participant
       </Button>
-      <Form onSubmit={registerAdmin}>
+      <Form onSubmit={registerStudent}>
         <div
           style={{
             display: 'flex',
@@ -222,7 +226,7 @@ const Register = ({history}) => {
           }}
         />
 
-        {!adminName ? (
+        {!studentName ? (
           <Label color="red" pointing="below">
             Enter your full name
           </Label>
@@ -231,13 +235,13 @@ const Register = ({history}) => {
         )}
         <Form.Input
           icon="user"
-          value={adminName}
+          value={studentName}
           iconPosition="left"
           placeholder="Full Name"
           type="text"
-          onChange={event => setAdminName(event.target.value)}
+          onChange={event => setStudent(event.target.value)}
         />
-        {!adminEmail ? (
+        {!studentEmail ? (
           <Label color="red" pointing="below">
             Enter your email
           </Label>
@@ -246,13 +250,13 @@ const Register = ({history}) => {
         )}
         <Form.Input
           icon="mail"
-          value={adminEmail}
+          value={studentEmail}
           type="email"
           iconPosition="left"
           placeholder="E-mail address"
-          onChange={event => setAdminEmail(event.target.value)}
+          onChange={event => setStudentEmail(event.target.value)}
         />
-        {!adminPassword ? (
+        {!studentPassword ? (
           <Label color="red" pointing="below">
             Enter your password
           </Label>
@@ -261,11 +265,11 @@ const Register = ({history}) => {
         )}
         <Form.Input
           icon="lock"
-          value={adminPassword}
+          value={studentPassword}
           iconPosition="left"
           placeholder="Password"
           type="password"
-          onChange={event => setAdminPassword(event.target.value)}
+          onChange={event => setStudentPassword(event.target.value)}
         />
         <Button size="large" fluid color="red" type="submit">
           Register Organizer
@@ -282,7 +286,7 @@ const Register = ({history}) => {
           <Icon color="red" name={appIconName} />
           {appName}
         </Header>
-        {admin ? registerAdminView : registerView}
+        {studentName ? registerStudentView : registerView}
       </Segment>
       <Message>
         Already have an account? <Link to="/Login">Login</Link>

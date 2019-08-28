@@ -1,12 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, Button } from "semantic-ui-react";
-import { Z_FIXED } from "zlib";
+import { db } from '../../../logic/firebase.js';
+//import { Z_FIXED } from "zlib";
 
 const CopyLink = props => {
   const [copySuccess, setCopySuccess] = useState(false);
   const textAreaRef = useRef(null);
 
+  async function AddLinkToBuildWeek() {
+    db.collection('build_weeks').doc(`${props.buildWeek}`).set({
+      studentUrl: `http://localhost:3000/${props.buildWeek}`
+    }, {merge: true})
+    try {
+    const response = (() => {
+      console.log('Url Added to Firestore!', response)
+    })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   function copyToClipboard(e) {
+    AddLinkToBuildWeek(e)
     textAreaRef.current.select();
     document.execCommand("copy");
     // This is just personal preference.
@@ -21,11 +36,11 @@ const CopyLink = props => {
   return (
     <>
       {document.queryCommandSupported("copy") && (
-        <div>
-          <button onClick={copyToClipboard}>
+        <Card>
+          <Button color="blue" onClick={copyToClipboard}>
             {copySuccess ? "Copied!" : "Copy URL"}
-          </button>
-        </div>
+          </Button>
+        </Card>
       )}
       <form style={{ overflow: "hidden", position: "relative" }}>
         <textarea
