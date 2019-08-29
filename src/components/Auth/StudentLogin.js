@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
-import UserContext from '../../context/UserContext';
+//import \serContext from '../../context/UserContext';
+import StudentContext from '../../context/StudentContext.js';
 import firebase from '../../logic/firebase';
 import './Login.css';
 import {appName, appIconName} from '../../logic/constants';
@@ -8,32 +9,32 @@ import {Link} from 'react-router-dom';
 import LoginAnimation from './LoginAnimation';
 import {db} from '../../logic/firebase.js';
 
-const AdminLogin = ({history}) => {
-  const {setUser} = useContext(UserContext);
+const StudentLogin = ({history}) => {
+  const {setStudent} = useContext(StudentContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // CHECK IF USER IS ADMIN
-  const overloardFunc = async userEmail => {
-    let adminEmails = [];
+  // CHECK IF USER IS STUDENT
+  const LambdaStudent = async userEmail => {
+    let studentEmails = [];
     await db
-      .collection('admin')
+      .collection('students')
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          adminEmails.push(doc.data().email);
+          studentEmails.push(doc.data().email);
         });
-        let isAdmin = false;
-        adminEmails.forEach(theAdmin => {
-          if (theAdmin === userEmail) {
-            isAdmin = true;
+        let isStudent = false;
+        studentEmails.forEach(student => {
+          if (student === studentEmails) {
+            isStudent = true;
             return;
           }
         });
-        if (isAdmin) {
-          history.push('/');
+        if (isStudent) {
+          history.push('/student/dashboard');
         } else {
-          history.push('/admin/AdminLogin');
+          history.push('/student/StudentLogin');
         }
       });
   };
@@ -45,11 +46,11 @@ const AdminLogin = ({history}) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(loggedInuser => {
-        setUser({
+        setStudent({
           displayName: loggedInuser.user.displayName,
           uid: loggedInuser.user.uid,
         });
-        overloardFunc(loggedInuser.user.email);
+        LambdaStudent(loggedInuser.user.email);
       })
       .catch(err => console.log(err));
   };
@@ -86,8 +87,11 @@ const AdminLogin = ({history}) => {
           </Button>
         </Form>
       </Segment>
+      <Message>
+        New to us? <Link to="/student/Register">Student Register</Link>
+      </Message>
     </div>
   );
 };
 
-export default AdminLogin;
+export default StudentLogin;

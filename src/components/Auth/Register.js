@@ -40,12 +40,14 @@ const Register = ({history}) => {
             displayName,
             uid: createdUser.user.uid,
             email: createdUser.user.email,
+            role: 'admin'
           });
           db.collection('users')
             .add({
               email,
               displayName,
               uid: createdUser.user.uid,
+              role: 'admin'
             })
             .then(docRef => {
               console.log('Document written with id:', docRef.id);
@@ -285,7 +287,7 @@ const Register = ({history}) => {
         {admin ? registerAdminView : registerView}
       </Segment>
       <Message>
-        Already have an account? <Link to="/Login">Login</Link>
+        Already have an account? <Link to="/admin/AdminLogin">Login</Link>
       </Message>
     </div>
   );
