@@ -16,6 +16,7 @@ const BuildWeeksList = props => {
   // this currently. freaking firebase.  going to have to bug fix this later.
   // moving on for now.
   const fetchBuildWeeks = async () => {
+    setListOfBuildWeeks([]);
     let buildWeeksCollection = await db.collection("build_weeks").get();
     buildWeeksCollection.forEach(function(doc) {
       setListOfBuildWeeks(prevSetOfBuildWeeks => {
@@ -27,6 +28,7 @@ const BuildWeeksList = props => {
   useEffect(() => {
     fetchBuildWeeks();
   }, [props.update]);
+  // }, []);
 
   //  ===================================== Push to Individual Build Week View ===================================== //
 
