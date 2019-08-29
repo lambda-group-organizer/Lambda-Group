@@ -1,25 +1,25 @@
 import React from 'react'
-import { Card, Button, Header, Icon } from 'semantic-ui-react'
+import { Button, Header, Icon } from 'semantic-ui-react'
 import './AdminProjectView.css'
 
 const AdminProjectView = ({project: {project}}) => {
   return (
-        <Card key={project.uid}>
-        <p>{project.title}</p>
-    <p>{project.androidDeveloper}</p>
-    <p>{project.dataEngineer}</p>
-    <p>{project.designLinks_dataSets}</p>
-    <p>{project.frontEndDeveloper}</p>
-    <p>{project.FrontEndFrameWorkDeveloper}</p>
-    <p>{project.machineLearningEngineer}</p>
-    <p>{project.productType}</p>
-    <p>{project.projectLead}</p>
-    <p>{project.uXDesigner}</p>
-    <p>Team members . map</p>
+        <div className="card" key={project.uid}>
+        <p className="p">{project.title}</p>
+    <p className="p">{project.androidDeveloper}</p>
+    <p className="p">{project.dataEngineer}</p>
+    <p className="p">{project.designLinks_dataSets}</p>
+    <p className="p">{project.frontEndDeveloper}</p>
+    <p className="p">{project.FrontEndFrameWorkDeveloper}</p>
+    <p className="p">{project.machineLearningEngineer}</p>
+    <p className="p">{project.productType}</p>
+    <p className="p">{project.projectLead}</p>
+    <p className="p">{project.uXDesigner}</p>
+    <p className="p">Team members . map</p>
         <p>{project.description}</p>
     <p>{project.webBackEndDeveloper}</p>
     <p>{project.WebUiDeveloper}</p>
-        </Card>
+        </div>
   )
 }
 
