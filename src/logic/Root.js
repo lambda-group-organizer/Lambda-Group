@@ -5,7 +5,8 @@ import StudentContext from '../context/StudentContext';
 import firebase, {db} from '../logic/firebase';
 import {withRouter} from 'react-router-dom';
 //import Dashboard from '../Dashboard/Dashboard';
-import StudentDashBoard from '../components/globalComponents/DashBoardHeader.js';
+import StudentDashBoard from '../components/students/StudentDashBoard/StudentDashBoard.js';
+import StudentBuildWeekLink from '../components/students/StudentBuildWeekLink/StudentBuildWeekLink.js';
 import AdminLogin from '../components/Auth/AdminLogin';
 import StudentLogin from '../components/Auth/StudentLogin';
 import StudentRegister from '../components/Auth/StudentRegister.js';
@@ -17,9 +18,9 @@ import AdminDashboard from '../components/admin/AdminDashboard/AdminDashboard.js
 // import jwt_decode from 'jwt-decode';
 
 const Root = ({history}) => {
-  const [user, setUser] = useState(null);
+  //const [user, setUser] = useState(null);
   const [student, setStudent] = useState(null);
-  const [role, setRole] = useState('student');
+  //const [rol, setRole] = useState('student');
 
   //useEffect(() => {
   //firebase.auth().onAuthStateChanged(async user => {
@@ -62,9 +63,10 @@ const Root = ({history}) => {
     <>
       <StudentContext.Provider value={{student, setStudent}}>
         <Switch>
-          <Route exact path="/student/StudentLogin" component={StudentLogin} />
-          <Route exact path="/student/dashboard" component={StudentDashBoard} />
-          <Route exact path="/student/Register" component={StudentRegister} />
+         <Route path="/student/dashboard" component={StudentDashBoard} />
+            <Route path="/student/Register" component={StudentRegister} />
+          <Route path="/student/StudentLogin" component={StudentLogin} />
+          <Route path="/:buildWeek" component={StudentBuildWeekLink} />
         </Switch>
       </StudentContext.Provider>
     </>
