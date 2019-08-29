@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, Button, Header, Icon } from 'semantic-ui-react'
+import './AdminProjectView.css'
 
 const AdminProjectView = ({project: {project}}) => {
   return (
