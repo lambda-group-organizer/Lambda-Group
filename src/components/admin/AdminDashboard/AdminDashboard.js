@@ -1,7 +1,7 @@
 // Modules
 import React, { useState, useEffect } from "react";
 import firebase, { db } from "../../../logic/firebase.js";
-import { Button, Card, Header, Form, Icon } from "semantic-ui-react";
+import { Button, Header, Form, Icon } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 
@@ -72,6 +72,7 @@ const Dashboard = props => {
           />
         </div>
       </div>
+      <div className="projects-wrapper">
       {filteredProjects &&
         filteredProjects.map(project => {
           return (
@@ -80,6 +81,7 @@ const Dashboard = props => {
             </div>
           );
         })}
+      </div>
     </div>
   );
 };
