@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom';
 import LoginAnimation from './LoginAnimation';
 import {db} from '../../logic/firebase.js';
 
-const StudentLogin = ({history}) => {
+const StudentLogin = ({history, ...props}) => {
   const {setStudent} = useContext(StudentContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,12 +39,14 @@ const StudentLogin = ({history}) => {
           console.log(urls)
         })
         if (isStudent) {
-          history.push('/student/dashboard');
+          //return <Redirect to="/student/dashboard" />
+          history.push(`/student/dashboard`);
         } else {
           history.push('/student/StudentLogin');
         }
       });
   };
+
 
   const login = event => {
     event.preventDefault();
