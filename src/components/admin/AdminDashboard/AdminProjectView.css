@@ -5,11 +5,16 @@ body {
 }
 
 .card-wrapper {
-  border: 1px solid red;
-  overflow: auto;
+  border: 1px solid orange;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .card {
-    width: 15vw;
+    width: 25vw;
     height: 25vh;
+    overflow: auto;
+    overflow-x: hidden;
+    border: 1px solid magenta;
+    background-color: pink;
 }
