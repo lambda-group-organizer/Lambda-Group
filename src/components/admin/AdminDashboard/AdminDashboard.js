@@ -9,7 +9,9 @@ import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
 import AdminProjectView from "./AdminProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
-import "../../../Dashboard/Dashboard.css";
+
+// CSS
+import './AdminProjectView.css';
 
 const Dashboard = props => {
   const [projects, setProjects] = useState([]);
@@ -73,7 +75,7 @@ const Dashboard = props => {
       {filteredProjects &&
         filteredProjects.map(project => {
           return (
-            <div key={project.project.uid}>
+            <div key={project.project.uid} className="card-wrapper">
               <AdminProjectView project={project} />
             </div>
           );
