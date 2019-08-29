@@ -1,0 +1,23 @@
+body {
+  min-width: 100%;
+}
+.background {
+  color: #424242;
+}
+
+.buttons {
+  margin-bottom: 2%;
+}
+
+.card-wrapper {
+  border: 1px solid red;
+}
+
+.filter {
+  /* border: 2px solid #ba112e; */
+  /* box-shadow: 2px 2px 12px 1px; */
+  /* font-size: 2rem; */
+  color: red;
+}
+
+
