@@ -18,7 +18,7 @@ const OverLoardMainDashboard = props => {
       <BuildWeeksList update={update} />
     </div>
     <Switch>
-      <Route path="admin/addMinion" component={AddMinion} />
+      <Route path="/admin/addMinion" component={AddMinion} />
     </Switch>
     </>
   );
