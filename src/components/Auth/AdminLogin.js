@@ -1,23 +1,30 @@
-import React, {useContext, useState} from 'react';
-import UserContext from '../../context/UserContext';
-import firebase from '../../logic/firebase';
-import './Login.css';
-import {appName, appIconName} from '../../logic/constants';
-import {Form, Button, Icon, Header, Segment, Message} from 'semantic-ui-react';
-import {Link} from 'react-router-dom';
-import LoginAnimation from './LoginAnimation';
-import {db} from '../../logic/firebase.js';
+import React, { useContext, useState } from "react";
+import UserContext from "../../context/UserContext";
+import firebase from "../../logic/firebase";
+import "./Login.css";
+import { appName, appIconName } from "../../logic/constants";
+import {
+  Form,
+  Button,
+  Icon,
+  Header,
+  Segment,
+  Message
+} from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import LoginAnimation from "./LoginAnimation";
+import { db } from "../../logic/firebase.js";
 
-const AdminLogin = ({history}) => {
-  const {setUser} = useContext(UserContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const AdminLogin = ({ history }) => {
+  const { setUser } = useContext(UserContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // CHECK IF USER IS ADMIN
   const overloardFunc = async userEmail => {
     let adminEmails = [];
     await db
-      .collection('admin')
+      .collection("admin")
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -31,9 +38,9 @@ const AdminLogin = ({history}) => {
           }
         });
         if (isAdmin) {
-          history.push('/');
+          history.push("/");
         } else {
-          history.push('/admin/AdminLogin');
+          history.push("/admin/AdminLogin");
         }
       });
   };
@@ -47,7 +54,7 @@ const AdminLogin = ({history}) => {
       .then(loggedInuser => {
         setUser({
           displayName: loggedInuser.user.displayName,
-          uid: loggedInuser.user.uid,
+          uid: loggedInuser.user.uid
         });
         overloardFunc(loggedInuser.user.email);
       })
