@@ -1,23 +1,23 @@
-import React, {useState, useEffect} from 'react';
-import {Switch, Route} from 'react-router-dom';
-import UserContext from '../context/UserContext';
-import StudentContext from '../context/StudentContext';
-import firebase, {db} from '../logic/firebase';
-import {withRouter} from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Switch, Route } from "react-router-dom";
+import UserContext from "../context/UserContext";
+import StudentContext from "../context/StudentContext";
+import firebase, { db } from "../logic/firebase";
+import { withRouter } from "react-router-dom";
 //import Dashboard from '../Dashboard/Dashboard';
-import StudentDashBoard from '../components/students/StudentDashBoard/StudentDashBoard.js';
-import StudentBuildWeekLink from '../components/students/StudentBuildWeekLink/StudentBuildWeekLink.js';
-import AdminLogin from '../components/Auth/AdminLogin';
-import StudentLogin from '../components/Auth/StudentLogin';
-import StudentRegister from '../components/Auth/StudentRegister.js';
+import StudentDashBoard from "../components/students/StudentDashBoard/StudentDashBoard.js";
+import StudentBuildWeekLink from "../components/students/StudentBuildWeekLink/StudentBuildWeekLink.js";
+import AdminLogin from "../components/Auth/AdminLogin";
+import StudentLogin from "../components/Auth/StudentLogin";
+import StudentRegister from "../components/Auth/StudentRegister.js";
 //import Register from '../components/Auth/Register';
-import AddMinion from '../components/admin/AdminDashboard/AddMinion.js';
-import OverLoardMainDashboard from '../components/admin/AdminDashboard/OverloardMainDashBoard.js';
-import AdminDashboard from '../components/admin/AdminDashboard/AdminDashboard.js';
+import AddMinion from "../components/admin/AdminDashboard/AddMinion.js";
+import OverLoardMainDashboard from "../components/admin/AdminDashboard/OverloardMainDashBoard.js";
+import AdminDashboard from "../components/admin/AdminDashboard/AdminDashboard.js";
 
 // import jwt_decode from 'jwt-decode';
 
-const Root = ({history}) => {
+const Root = ({ history }) => {
   //const [user, setUser] = useState(null);
   const [student, setStudent] = useState(null);
   //const [rol, setRole] = useState('student');
@@ -49,22 +49,22 @@ const Root = ({history}) => {
       //const decoded = jwt_decode(token);
       //console.log(decoded.email);
       if (student) {
-        const {displayName, uid, photoURL} = student;
+        const { displayName, uid, photoURL } = student;
         // console.log(email)
-        setStudent({displayName, uid, photoURL});
-        history.push('/student/dashboard');
+        setStudent({ displayName, uid, photoURL });
+        history.push("/student/dashboard");
       } else {
-        history.push('/student/StudentLogin');
+        history.push("/student/StudentLogin");
       }
     });
   }, [history]);
 
   return (
     <>
-      <StudentContext.Provider value={{student, setStudent}}>
+      <StudentContext.Provider value={{ student, setStudent }}>
         <Switch>
-         <Route path="/student/dashboard" component={StudentDashBoard} />
-            <Route path="/student/Register" component={StudentRegister} />
+          <Route path="/student/dashboard" component={StudentDashBoard} />
+          <Route path="/student/Register" component={StudentRegister} />
           <Route path="/student/StudentLogin" component={StudentLogin} />
           <Route path="/:buildWeek" component={StudentBuildWeekLink} />
         </Switch>
@@ -76,19 +76,19 @@ const Root = ({history}) => {
 export default withRouter(Root);
 
 //<UserContext.Provider value={{user, setUser}}>
-  //<Switch>
-    //<Route exact path="/" component={OverLoardMainDashboard} />
-    //{[> Admin Login <]}
-    //<Route exact path="/admin/AdminLogin" component={AdminLogin} />
-    //<Route exact path="/admin/addMinion" component={AddMinion} />
-    //<Route exact path="/admin/:BuildWeek" component={AdminDashboard} />
+//<Switch>
+//<Route exact path="/" component={OverLoardMainDashboard} />
+//{[> Admin Login <]}
+//<Route exact path="/admin/AdminLogin" component={AdminLogin} />
+//<Route exact path="/admin/addMinion" component={AddMinion} />
+//<Route exact path="/admin/:BuildWeek" component={AdminDashboard} />
 
-    //{[> If checks for student role from firebase <]}
+//{[> If checks for student role from firebase <]}
 
-    //{[> Student Login <]}
-    //{[> <Route exact path="/Login" component={Login} /> <]}
-    //<Route exact path="/student/:BuildWeek" component={AdminDashboard} />
-  //</Switch>
+//{[> Student Login <]}
+//{[> <Route exact path="/Login" component={Login} /> <]}
+//<Route exact path="/student/:BuildWeek" component={AdminDashboard} />
+//</Switch>
 //</UserContext.Provider>
 // // PROOF OF CONCEPT
 

@@ -1,7 +1,7 @@
-import React, {useContext, useState} from 'react';
-import StudentContext from '../../context/StudentContext';
-import firebase from '../../logic/firebase';
-import {db} from '../../logic/firebase.js';
+import React, { useContext, useState } from "react";
+import StudentContext from "../../context/allContexts/StudentContext";
+import firebase from "../../logic/firebase";
+import { db } from "../../logic/firebase.js";
 import {
   Header,
   Button,
@@ -9,66 +9,64 @@ import {
   Form,
   Segment,
   Message,
-  Label,
-} from 'semantic-ui-react';
-import {appName, appIconName} from '../../logic/constants';
-import './Register.css';
-import {Link} from 'react-router-dom';
-import LoginAnimation from './LoginAnimation';
+  Label
+} from "semantic-ui-react";
+import { appName, appIconName } from "../../logic/constants";
+import "./Register.css";
+import { Link } from "react-router-dom";
+import LoginAnimation from "./LoginAnimation";
 
-const StudentRegister = ({history}) => {
-  const {setStudent} = useContext(StudentContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
-
+const StudentRegister = ({ history }) => {
+  const { setStudent } = useContext(StudentContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
 
   const registerStudent = event => {
-    console.log('Clicked Student');
+    console.log("Clicked Student");
     event.preventDefault();
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(createdUser => {
         console.log(`createdUser : ${createdUser}`);
-        createdUser.user.updateProfile({displayName}).then(() => {
+        createdUser.user.updateProfile({ displayName }).then(() => {
           console.log(createdUser.user);
           setStudent({
             displayName,
             uid: createdUser.user.uid,
-            role: 'student',
+            role: "student"
           });
 
-          db.collection('students')
+          db.collection("students")
             .doc(createdUser.user.uid)
             .set({
               uid: createdUser.user.uid,
               email: createdUser.user.email,
               displayName,
-              role: 'student',
+              role: "student"
             })
             .then(ref => {
               // console.log('Added document with ID: ', ref.uid);
             });
 
-          history.push('/student/dashboard');
+          history.push("/student/dashboard");
         });
       })
       .catch(err => console.log(`error : ${err}`));
   };
 
-
   const registerStudentView = (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <Header as="h2">
         <Icon color="red" name={appIconName} />
         {appName}
       </Header>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginBottom: '25px',
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "25px"
         }}
       />
       <Form onSubmit={registerStudent}>
@@ -77,7 +75,7 @@ const StudentRegister = ({history}) => {
             Enter your full name
           </Label>
         ) : (
-          ''
+          ""
         )}
         <Form.Input
           icon="user"
@@ -92,7 +90,7 @@ const StudentRegister = ({history}) => {
             Enter your email
           </Label>
         ) : (
-          ''
+          ""
         )}
         <Form.Input
           icon="mail"
@@ -107,7 +105,7 @@ const StudentRegister = ({history}) => {
             Enter your password
           </Label>
         ) : (
-          ''
+          ""
         )}
         <Form.Input
           icon="lock"
@@ -129,7 +127,7 @@ const StudentRegister = ({history}) => {
       <LoginAnimation />
       {registerStudentView}
       <Message>
-    Already have an account? <Link to="/student/StudentLogin">Login</Link>
+        Already have an account? <Link to="/student/StudentLogin">Login</Link>
       </Message>
     </div>
   );

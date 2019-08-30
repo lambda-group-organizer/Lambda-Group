@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import UserContext from "../../context/UserContext";
+import UserContext from "../../context/allContexts/UserContext";
 import firebase from "../../logic/firebase";
 import "./Login.css";
 import { appName, appIconName } from "../../logic/constants";
