@@ -1,7 +1,7 @@
-import React, {useContext, useState} from 'react';
-import UserContext from '../../context/UserContext';
-import firebase from '../../logic/firebase';
-import {db} from '../../logic/firebase.js';
+import React, { useContext, useState } from "react";
+import UserContext from "../../context/allContexts/UserContext";
+import firebase from "../../logic/firebase";
+import { db } from "../../logic/firebase.js";
 import {
   Header,
   Button,
@@ -9,108 +9,109 @@ import {
   Form,
   Segment,
   Message,
-  Label,
-} from 'semantic-ui-react';
-import {appName, appIconName} from '../../logic/constants';
-import './Register.css';
-import {Link} from 'react-router-dom';
-import LoginAnimation from './LoginAnimation';
+  Label
+} from "semantic-ui-react";
+import { appName, appIconName } from "../../logic/constants";
+import "./Register.css";
+import { Link } from "react-router-dom";
+import LoginAnimation from "./LoginAnimation";
 
-const Register = ({history}) => {
-  const {setUser} = useContext(UserContext);
-  const [email, setEmail] = useState('');
-  const [adminEmail, setAdminEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [adminPassword, setAdminPassword] = useState('');
-  const [displayName, setName] = useState('');
-  const [adminName, setAdminName] = useState('');
+const Register = ({ history }) => {
+  const { setUser } = useContext(UserContext);
+  const [email, setEmail] = useState("");
+  const [adminEmail, setAdminEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const [displayName, setName] = useState("");
+  const [adminName, setAdminName] = useState("");
   const [admin, setAdmin] = useState(false);
 
   const register = event => {
-    console.log('Clicked register');
+    console.log("Clicked register");
     event.preventDefault();
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(createdUser => {
         console.log(`createdUser : ${createdUser}`);
-        createdUser.user.updateProfile({displayName}).then(() => {
+        createdUser.user.updateProfile({ displayName }).then(() => {
           console.log(createdUser.user);
           setUser({
             displayName,
             uid: createdUser.user.uid,
             email: createdUser.user.email,
-            role: 'admin'
+            role: "admin"
           });
-          db.collection('users')
+          db.collection("users")
             .add({
               email,
               displayName,
               uid: createdUser.user.uid,
-              role: 'admin'
+              role: "admin"
             })
             .then(docRef => {
-              console.log('Document written with id:', docRef.id);
+              console.log("Document written with id:", docRef.id);
             })
             .catch(err => {
               console.log(`error: ${err}`);
             });
-          history.push('/');
+          history.push("/");
         });
       })
       .catch(err => console.log(`error : ${err}`));
   };
 
   const registerAdmin = event => {
-    console.log('Clicked Admin');
+    console.log("Clicked Admin");
     event.preventDefault();
     firebase
       .auth()
       .createUserWithEmailAndPassword(adminEmail, adminPassword)
       .then(createdUser => {
         console.log(`createdUser : ${createdUser}`);
-        createdUser.user.updateProfile({adminName}).then(() => {
+        createdUser.user.updateProfile({ adminName }).then(() => {
           console.log(createdUser.user);
           setUser({
             adminName,
             uid: createdUser.user.uid,
-            role: 'admin',
+            role: "admin"
           });
 
-          db.collection('admin')
+          db.collection("admin")
             .doc(createdUser.user.uid)
             .set({
               name: adminName,
               uid: createdUser.user.uid,
-              role: 'admin',
+              role: "admin"
             })
             .then(ref => {
               // console.log('Added document with ID: ', ref.uid);
             });
 
-          history.push('/');
+          history.push("/");
         });
       })
       .catch(err => console.log(`error : ${err}`));
   };
 
   const registerView = (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <Button
-        style={{alignSelf: 'center'}}
+        style={{ alignSelf: "center" }}
         basic
         color="blue"
         size="small"
-        onClick={() => setAdmin(!admin)}>
+        onClick={() => setAdmin(!admin)}
+      >
         Register as a group organizer
       </Button>
 
       <Form onSubmit={register}>
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: '25px',
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "25px"
           }}
         />
         {!admin ? (
@@ -120,7 +121,7 @@ const Register = ({history}) => {
                 Enter your full name
               </Label>
             ) : (
-              ''
+              ""
             )}
             <Form.Input
               icon="user"
@@ -135,7 +136,7 @@ const Register = ({history}) => {
                 Enter your email address
               </Label>
             ) : (
-              ''
+              ""
             )}
             <Form.Input
               icon="mail"
@@ -150,7 +151,7 @@ const Register = ({history}) => {
                 Enter a password
               </Label>
             ) : (
-              ''
+              ""
             )}
             <Form.Input
               icon="lock"
@@ -171,7 +172,7 @@ const Register = ({history}) => {
                 Enter your email
               </Label>
             ) : (
-              ''
+              ""
             )}
             <Form.Input
               icon="mail"
@@ -186,7 +187,7 @@ const Register = ({history}) => {
                 Enter your password
               </Label>
             ) : (
-              ''
+              ""
             )}
             <Form.Input
               icon="lock"
@@ -206,21 +207,22 @@ const Register = ({history}) => {
   );
 
   const registerAdminView = (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <Button
-        style={{alignSelf: 'center'}}
+        style={{ alignSelf: "center" }}
         basic
         color="blue"
         size="small"
-        onClick={() => setAdmin(!admin)}>
+        onClick={() => setAdmin(!admin)}
+      >
         Back to registering a participant
       </Button>
       <Form onSubmit={registerAdmin}>
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: '25px',
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "25px"
           }}
         />
 
@@ -229,7 +231,7 @@ const Register = ({history}) => {
             Enter your full name
           </Label>
         ) : (
-          ''
+          ""
         )}
         <Form.Input
           icon="user"
@@ -244,7 +246,7 @@ const Register = ({history}) => {
             Enter your email
           </Label>
         ) : (
-          ''
+          ""
         )}
         <Form.Input
           icon="mail"
@@ -259,7 +261,7 @@ const Register = ({history}) => {
             Enter your password
           </Label>
         ) : (
-          ''
+          ""
         )}
         <Form.Input
           icon="lock"
