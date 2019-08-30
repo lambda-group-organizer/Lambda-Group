@@ -1,18 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
-// import { AdminContext } from "../../context/allContexts";
+import React, { useContext, useEffect } from "react";
 import { UserContext } from "../../context/allContexts";
 import firebase from "../../logic/firebase";
 import "./Login.css";
 import { appName, appIconName } from "../../logic/constants";
-import {
-  Form,
-  Button,
-  Icon,
-  Header,
-  Segment,
-  Message
-} from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Form, Button, Icon, Header, Segment } from "semantic-ui-react";
 import LoginAnimation from "./LoginAnimation";
 import { db } from "../../logic/firebase.js";
 
@@ -30,9 +21,6 @@ const Login = ({ history }) => {
 
   const login = event => {
     event.preventDefault();
-    console.log(
-      "LOGIN FUNCTION RUNNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    );
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -60,15 +48,9 @@ const Login = ({ history }) => {
         adminEmails.forEach(theAdmin => {
           if (theAdmin === userEmail) {
             setRole("admin");
-            // isAdmin = true;
             return;
           }
         });
-        // if (role !== "admin" || isAdmin) {
-        //   history.push("/overlord");
-        // } else {
-        //   history.push("/");
-        // }
       });
   };
 
