@@ -9,11 +9,11 @@ import {Link} from 'react-router-dom';
 import LoginAnimation from './LoginAnimation';
 import {db} from '../../logic/firebase.js';
 
-const StudentLogin = ({history}) => {
+const StudentLogin = ({history, ...props}) => {
   const {setStudent} = useContext(StudentContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  console.log(history)
   // CHECK IF USER IS STUDENT
   const LambdaStudent = async userEmail => {
     let studentEmails = [];
@@ -26,18 +26,27 @@ const StudentLogin = ({history}) => {
         });
         let isStudent = false;
         studentEmails.forEach(student => {
-          if (student === studentEmails) {
+          if (student.toString() === studentEmails.toString()) {
             isStudent = true;
             return;
           }
         });
+        let urls = []
+        db.collection('build_weeks').get().then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            urls.push(doc.data().studentUrl)
+          })
+          console.log(urls)
+        })
         if (isStudent) {
-          history.push('/student/dashboard');
+          //return <Redirect to="/student/dashboard" />
+          history.push(`/student/dashboard`);
         } else {
           history.push('/student/StudentLogin');
         }
       });
   };
+
 
   const login = event => {
     event.preventDefault();
