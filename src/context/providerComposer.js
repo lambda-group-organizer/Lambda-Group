@@ -1,6 +1,8 @@
 import React from "react";
-import StudentLogin from "../components/Auth/StudentLogin";
-import { StudentProvider } from "./allContexts";
+// import StudentLogin from "../components/Auth/StudentLogin";
+// import { StudentProvider } from "./allContexts";
+// import { AdminProvider } from "./allContexts";
+import { UserProvider } from "./allContexts";
 
 function ProviderComposer({ contexts, children }) {
   return contexts.reduceRight(
@@ -15,7 +17,8 @@ function ProviderComposer({ contexts, children }) {
 
 function ContextProvider({ children }) {
   return (
-    <ProviderComposer contexts={[<StudentProvider />]}>
+    // <ProviderComposer contexts={[<StudentProvider />, <AdminProvider />]}>
+    <ProviderComposer contexts={[<UserProvider />]}>
       {children}
     </ProviderComposer>
   );

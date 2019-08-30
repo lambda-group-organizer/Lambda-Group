@@ -1,6 +1,6 @@
-import React, { useState, createContext } from "react";
+import { useState, createContext } from "react";
 
-export const StudentContext = React.createContext();
+export const StudentContext = createContext();
 
 export function StudentProvider(props) {
   const [student, setStudent] = useState(null);

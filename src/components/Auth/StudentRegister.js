@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
-import StudentContext from "../../context/allContexts/StudentContext";
+// import { StudentContext } from "../../context/allContexts";
+import { UserContext } from "../../context/allContexts";
 import firebase from "../../logic/firebase";
 import { db } from "../../logic/firebase.js";
 import {
@@ -17,7 +18,7 @@ import { Link } from "react-router-dom";
 import LoginAnimation from "./LoginAnimation";
 
 const StudentRegister = ({ history }) => {
-  const { setStudent } = useContext(StudentContext);
+  const { setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -32,7 +33,7 @@ const StudentRegister = ({ history }) => {
         console.log(`createdUser : ${createdUser}`);
         createdUser.user.updateProfile({ displayName }).then(() => {
           console.log(createdUser.user);
-          setStudent({
+          setUser({
             displayName,
             uid: createdUser.user.uid,
             role: "student"
