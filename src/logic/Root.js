@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 // import UserContext from "../context/UserContext";
-import { AdminContext } from "../context/allContexts";
+//import { AdminContext } from "../context/allContexts";
 import firebase, { db } from "../logic/firebase";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../context/allContexts";
@@ -29,6 +29,39 @@ const Root = ({ history }) => {
     setPassword
   } = useContext(UserContext);
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      console.log('user: ', user);
+      if (user) {
+        checkIfAdmin(user.email)
+        const { displayName, uid } = user;
+        setUser({displayName, uid})
+      } else {
+        history.push("/")
+      }
+    })
+  }, [])
+
+  // CHECK IF USER IS ADMIN
+  const checkIfAdmin = async userEmail => {
+    let adminEmails = [];
+    await db
+      .collection("admin")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          adminEmails.push(doc.data().email);
+        });
+        let isAdmin = false;
+        adminEmails.forEach(theAdmin => {
+          if (theAdmin === userEmail) {
+            setRole("minion");
+            return;
+          }
+        });
+      });
+  };
+
   return (
     <>
       <UserContext.Provider
@@ -45,7 +78,7 @@ const Root = ({ history }) => {
       >
         <Switch>
           <Route exact path="/" component={Login} />
-          {role === "admin" ? (
+          {role === "minion" ? (
             <>
               <Route
                 exact

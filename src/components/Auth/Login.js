@@ -36,29 +36,41 @@ const Login = ({ history }) => {
   };
   // CHECK IF USER IS ADMIN
   const checkIfAdmin = async userEmail => {
-    let adminEmails = [];
+    let emailList = [];
     await db
       .collection("admin")
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          adminEmails.push(doc.data().email);
+          emailList.push( doc.data().email);
         });
         let isAdmin = false;
-        adminEmails.forEach(theAdmin => {
+        emailList.forEach(theAdmin => {
           if (theAdmin === userEmail) {
-            setRole("admin");
+            isAdmin = true;
+            setRole("minion");
             return;
           }
         });
+        if (!isAdmin) {
+          setRole("student")
+        }
       });
+    setPassword("")
   };
 
   useEffect(() => {
-    if (role === "admin") {
+    if (role === "minion") {
       history.push("/overlord");
+    }  else if (role === "student") {
+      history.push("/student/dashboard")
+    } else {
+      history.push('/')
     }
   }, [role]);
+//else if (role === "minion") {
+      //history.push('/student/dashboard')
+    //}
 
   return (
     <div className="Login">
