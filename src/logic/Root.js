@@ -44,24 +44,51 @@ const Root = ({ history }) => {
   }, []);
 
   // CHECK IF USER IS ADMIN
+  // const checkIfAdmin = async userEmail => {
+  //   let adminEmails = [];
+  //   await db
+  //     .collection("admin")
+  //     .get()
+  //     .then(querySnapshot => {
+  //       querySnapshot.forEach(doc => {
+  //         adminEmails.push(doc.data().email);
+  //       });
+  //       let isAdmin = false;
+  //       adminEmails.forEach(theAdmin => {
+  //         if (theAdmin === userEmail) {
+  //           console.log("SET ROLE MINION");
+  //           setEmail(theAdmin);
+  //           setRole("minion");
+  //           return;
+  //         }
+  //       });
+  //     });
+  // };
+  // TESTING
   const checkIfAdmin = async userEmail => {
-    let adminEmails = [];
+    console.log("USER EMAIL: ", userEmail);
+    let adminList = [];
     await db
       .collection("admin")
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          adminEmails.push(doc.data().email);
+          adminList.push({ email: doc.data().email, role: doc.data().role });
         });
         let isAdmin = false;
-        adminEmails.forEach(theAdmin => {
-          if (theAdmin === userEmail) {
+        adminList.forEach(admin => {
+          console.log(admin);
+          if (admin.email === userEmail) {
             console.log("SET ROLE MINION");
-            setEmail(theAdmin);
-            setRole("minion");
+            setEmail(admin.email);
+            setRole(admin.role);
             return;
           }
         });
+        if (!isAdmin) {
+          setEmail(userEmail);
+          setRole("student");
+        }
       });
   };
 
@@ -81,7 +108,7 @@ const Root = ({ history }) => {
       >
         <Switch>
           <Route exact path="/" component={Login} />
-          {role === "minion" ? (
+          {role === "minion" || role === "overlord" ? (
             <>
               <Route
                 exact

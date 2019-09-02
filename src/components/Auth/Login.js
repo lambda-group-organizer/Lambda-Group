@@ -36,20 +36,20 @@ const Login = ({ history }) => {
   };
   // CHECK IF USER IS ADMIN
   const checkIfAdmin = async userEmail => {
-    let emailList = [];
+    let adminList = [];
     await db
       .collection("admin")
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          emailList.push(doc.data().email);
+          adminList.push({ email: doc.data().email, role: doc.data().role });
         });
         let isAdmin = false;
-        emailList.forEach(theAdmin => {
-          if (theAdmin === userEmail) {
+        adminList.forEach(admin => {
+          if (admin.email === userEmail) {
             isAdmin = true;
-            setEmail(userEmail);
-            setRole("minion");
+            setEmail(admin.email);
+            setRole(admin.role);
             return;
           }
         });
@@ -61,7 +61,9 @@ const Login = ({ history }) => {
   };
 
   useEffect(() => {
-    if (role === "minion") {
+    if (role === "overlord") {
+      history.push("/overlord");
+    } else if (role === "minion") {
       history.push("/overlord");
     } else if (role === "student") {
       history.push("/student/dashboard");
