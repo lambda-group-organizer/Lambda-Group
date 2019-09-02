@@ -31,16 +31,17 @@ const Root = ({ history }) => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
-      console.log('user: ', user);
+      console.log("user: ", user);
       if (user) {
-        checkIfAdmin(user.email)
+        console.log("CHECK IF ADMIN");
+        checkIfAdmin(user.email);
         const { displayName, uid } = user;
-        setUser({displayName, uid})
+        setUser({ displayName, uid });
       } else {
-        history.push("/")
+        history.push("/");
       }
-    })
-  }, [])
+    });
+  }, []);
 
   // CHECK IF USER IS ADMIN
   const checkIfAdmin = async userEmail => {
@@ -55,6 +56,8 @@ const Root = ({ history }) => {
         let isAdmin = false;
         adminEmails.forEach(theAdmin => {
           if (theAdmin === userEmail) {
+            console.log("SET ROLE MINION");
+            setEmail(theAdmin);
             setRole("minion");
             return;
           }

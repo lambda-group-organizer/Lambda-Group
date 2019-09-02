@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { UserContext } from "../../context/allContexts";
 import firebase from "../../logic/firebase";
 import "./Login.css";
@@ -42,35 +42,33 @@ const Login = ({ history }) => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          emailList.push( doc.data().email);
+          emailList.push(doc.data().email);
         });
         let isAdmin = false;
         emailList.forEach(theAdmin => {
           if (theAdmin === userEmail) {
             isAdmin = true;
+            setEmail(userEmail);
             setRole("minion");
             return;
           }
         });
         if (!isAdmin) {
-          setRole("student")
+          setRole("student");
         }
       });
-    setPassword("")
+    setPassword("");
   };
 
   useEffect(() => {
     if (role === "minion") {
       history.push("/overlord");
-    }  else if (role === "student") {
-      history.push("/student/dashboard")
+    } else if (role === "student") {
+      history.push("/student/dashboard");
     } else {
-      history.push('/')
+      history.push("/");
     }
   }, [role]);
-//else if (role === "minion") {
-      //history.push('/student/dashboard')
-    //}
 
   return (
     <div className="Login">
