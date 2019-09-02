@@ -29,8 +29,8 @@ const Dashboard = props => {
       .get();
     projectsCollection.forEach(function(doc) {
       tempProjects.push(doc.data());
-      console.log(tempProjects);
     });
+    console.log(tempProjects);
     setProjects(tempProjects);
     setFilteredProjects(tempProjects);
   };

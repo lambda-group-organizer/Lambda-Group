@@ -1,9 +1,17 @@
 import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../context/allContexts";
 import firebase from "../../logic/firebase";
 import "./Login.css";
 import { appName, appIconName } from "../../logic/constants";
-import { Form, Button, Icon, Header, Segment } from "semantic-ui-react";
+import {
+  Form,
+  Button,
+  Icon,
+  Header,
+  Segment,
+  Message
+} from "semantic-ui-react";
 import LoginAnimation from "./LoginAnimation";
 import { db } from "../../logic/firebase.js";
 
@@ -36,27 +44,39 @@ const Login = ({ history }) => {
   };
   // CHECK IF USER IS ADMIN
   const checkIfAdmin = async userEmail => {
-    let adminEmails = [];
+    let adminList = [];
     await db
       .collection("admin")
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          adminEmails.push(doc.data().email);
+          adminList.push({ email: doc.data().email, role: doc.data().role });
         });
         let isAdmin = false;
-        adminEmails.forEach(theAdmin => {
-          if (theAdmin === userEmail) {
-            setRole("admin");
+        adminList.forEach(admin => {
+          if (admin.email === userEmail) {
+            isAdmin = true;
+            setEmail(admin.email);
+            setRole(admin.role);
             return;
           }
         });
+        if (!isAdmin) {
+          setRole("student");
+        }
       });
+    setPassword("");
   };
 
   useEffect(() => {
-    if (role === "admin") {
+    if (role === "overlord") {
       history.push("/overlord");
+    } else if (role === "minion") {
+      history.push("/overlord");
+    } else if (role === "student") {
+      history.push("/student/dashboard");
+    } else {
+      history.push("/");
     }
   }, [role]);
 
@@ -91,6 +111,9 @@ const Login = ({ history }) => {
             Login
           </Button>
         </Form>
+        <Message id="loginMessage">
+          Don't have an account? <Link to="/register">Register</Link>
+        </Message>
       </Segment>
     </div>
   );

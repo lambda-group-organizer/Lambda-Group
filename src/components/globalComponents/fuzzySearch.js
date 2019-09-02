@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import Fuse from 'fuse.js'
+import Fuse from "fuse.js";
 
 function fuzzySearch(list, keys, e) {
-  e.preventDefault()
+  e.preventDefault();
   //console.log(list.arr, 'list.arr')
   //console.log('list', list)
   let options = {
@@ -15,10 +14,9 @@ function fuzzySearch(list, keys, e) {
     keys: [...keys]
   };
   const fuse = new Fuse(list, options); // "list" is the item array
-  console.log("INPUT: ", e.target.value)
+  console.log("INPUT: ", e.target.value);
   const result = fuse.search(e.target.value);
-  return result
-
+  return result;
 }
 
 export default fuzzySearch;

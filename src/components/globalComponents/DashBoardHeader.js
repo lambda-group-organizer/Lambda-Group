@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {Button, Icon, Header,} from 'semantic-ui-react';
 import firebase from '../../logic/firebase.js';
+import  { UserContext }  from '../../context/allContexts'
+import { withRouter } from 'react-router-dom'
 
 const DashBoardHeader = props => {
-
+    const { setRole, setUser } = useContext(UserContext)
     const signOut = () => {
+        setRole(null)
+        setUser(null)
       firebase.auth().signOut();
+        props.history.push('/')
     };
 
     return (
@@ -35,4 +40,4 @@ const DashBoardHeader = props => {
     )
 }
 
-export default DashBoardHeader;
+export default withRouter(DashBoardHeader);

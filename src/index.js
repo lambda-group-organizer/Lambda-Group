@@ -8,7 +8,6 @@ import { BrowserRouter } from "react-router-dom";
 import { ContextProvider } from "./context/providerComposer";
 
 require("dotenv").config();
-
 ReactDOM.render(
   <BrowserRouter>
     <ContextProvider>

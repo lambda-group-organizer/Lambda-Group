@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 // import UserContext from "../context/UserContext";
-import { AdminContext } from "../context/allContexts";
+//import { AdminContext } from "../context/allContexts";
 import firebase, { db } from "../logic/firebase";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../context/allContexts";
@@ -11,8 +11,7 @@ import StudentDashBoard from "../components/students/StudentDashBoard/StudentDas
 // import StudentBuildWeekLink from "../components/students/StudentBuildWeekLink/StudentBuildWeekLink.js";
 import Login from "../components/Auth/Login";
 // import StudentLogin from "../components/Auth/StudentLogin";
-import StudentRegister from "../components/Auth/StudentRegister.js";
-//import Register from '../components/Auth/Register';
+import Register from "../components/Auth/Register.js";
 import AddMinion from "../components/admin/AdminDashboard/AddMinion.js";
 import OverLoardMainDashboard from "../components/admin/AdminDashboard/OverloardMainDashBoard.js";
 import AdminDashboard from "../components/admin/AdminDashboard/AdminDashboard.js";
@@ -28,6 +27,43 @@ const Root = ({ history }) => {
     password,
     setPassword
   } = useContext(UserContext);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        checkIfAdmin(user.email);
+        const { displayName, uid } = user;
+        setUser({ displayName, uid });
+      } else {
+        history.push("/");
+      }
+    });
+  }, []);
+
+  const checkIfAdmin = async userEmail => {
+    let adminList = [];
+    await db
+      .collection("admin")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          adminList.push({ email: doc.data().email, role: doc.data().role });
+        });
+        let isAdmin = false;
+        adminList.forEach(admin => {
+          if (admin.email === userEmail) {
+            isAdmin = true;
+            setEmail(admin.email);
+            setRole(admin.role);
+            return;
+          }
+        });
+        if (!isAdmin) {
+          setEmail(userEmail);
+          setRole("student");
+        }
+      });
+  };
 
   return (
     <>
@@ -45,14 +81,14 @@ const Root = ({ history }) => {
       >
         <Switch>
           <Route exact path="/" component={Login} />
-          {role === "admin" ? (
+          <Route exact path="/register" component={Register} />
+          {role === "minion" || role === "overlord" ? (
             <>
               <Route
                 exact
                 path="/overlord"
                 component={OverLoardMainDashboard}
               />
-              <Route exact path="/admin/addMinion" component={AddMinion} />
               <Route
                 exact
                 path="/admin/:BuildWeek"
@@ -63,7 +99,6 @@ const Root = ({ history }) => {
           {role === "student" ? (
             <>
               <Route path="/student/dashboard" component={StudentDashBoard} />
-              <Route path="/student/Register" component={StudentRegister} />
             </>
           ) : null}
 
