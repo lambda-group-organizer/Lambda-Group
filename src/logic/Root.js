@@ -11,8 +11,7 @@ import StudentDashBoard from "../components/students/StudentDashBoard/StudentDas
 // import StudentBuildWeekLink from "../components/students/StudentBuildWeekLink/StudentBuildWeekLink.js";
 import Login from "../components/Auth/Login";
 // import StudentLogin from "../components/Auth/StudentLogin";
-import StudentRegister from "../components/Auth/StudentRegister.js";
-//import Register from '../components/Auth/Register';
+import Register from "../components/Auth/Register.js";
 import AddMinion from "../components/admin/AdminDashboard/AddMinion.js";
 import OverLoardMainDashboard from "../components/admin/AdminDashboard/OverloardMainDashBoard.js";
 import AdminDashboard from "../components/admin/AdminDashboard/AdminDashboard.js";
@@ -82,6 +81,7 @@ const Root = ({ history }) => {
       >
         <Switch>
           <Route exact path="/" component={Login} />
+          <Route exact path="/register" component={Register} />
           {role === "minion" || role === "overlord" ? (
             <>
               <Route
@@ -89,7 +89,6 @@ const Root = ({ history }) => {
                 path="/overlord"
                 component={OverLoardMainDashboard}
               />
-              <Route exact path="/admin/addMinion" component={AddMinion} />
               <Route
                 exact
                 path="/admin/:BuildWeek"
@@ -100,7 +99,6 @@ const Root = ({ history }) => {
           {role === "student" ? (
             <>
               <Route path="/student/dashboard" component={StudentDashBoard} />
-              <Route path="/student/Register" component={StudentRegister} />
             </>
           ) : null}
 

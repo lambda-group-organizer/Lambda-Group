@@ -1,9 +1,17 @@
 import React, { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../context/allContexts";
 import firebase from "../../logic/firebase";
 import "./Login.css";
 import { appName, appIconName } from "../../logic/constants";
-import { Form, Button, Icon, Header, Segment } from "semantic-ui-react";
+import {
+  Form,
+  Button,
+  Icon,
+  Header,
+  Segment,
+  Message
+} from "semantic-ui-react";
 import LoginAnimation from "./LoginAnimation";
 import { db } from "../../logic/firebase.js";
 
@@ -103,6 +111,9 @@ const Login = ({ history }) => {
             Login
           </Button>
         </Form>
+        <Message id="loginMessage">
+          Don't have an account? <Link to="/register">Register</Link>
+        </Message>
       </Segment>
     </div>
   );
