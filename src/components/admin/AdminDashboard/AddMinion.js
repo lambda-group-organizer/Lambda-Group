@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../../logic/firebase.js";
 import Fuse from "fuse.js";
 import { Form } from "semantic-ui-react";
-import { withRouter } from "react-router-dom";
 
 const AddMinion = props => {
   const [students, setStudents] = useState([]);

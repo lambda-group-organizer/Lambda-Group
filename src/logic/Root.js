@@ -31,9 +31,7 @@ const Root = ({ history }) => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
-      console.log("user: ", user);
       if (user) {
-        console.log("CHECK IF ADMIN");
         checkIfAdmin(user.email);
         const { displayName, uid } = user;
         setUser({ displayName, uid });
@@ -43,30 +41,7 @@ const Root = ({ history }) => {
     });
   }, []);
 
-  // CHECK IF USER IS ADMIN
-  // const checkIfAdmin = async userEmail => {
-  //   let adminEmails = [];
-  //   await db
-  //     .collection("admin")
-  //     .get()
-  //     .then(querySnapshot => {
-  //       querySnapshot.forEach(doc => {
-  //         adminEmails.push(doc.data().email);
-  //       });
-  //       let isAdmin = false;
-  //       adminEmails.forEach(theAdmin => {
-  //         if (theAdmin === userEmail) {
-  //           console.log("SET ROLE MINION");
-  //           setEmail(theAdmin);
-  //           setRole("minion");
-  //           return;
-  //         }
-  //       });
-  //     });
-  // };
-  // TESTING
   const checkIfAdmin = async userEmail => {
-    console.log("USER EMAIL: ", userEmail);
     let adminList = [];
     await db
       .collection("admin")
@@ -77,9 +52,8 @@ const Root = ({ history }) => {
         });
         let isAdmin = false;
         adminList.forEach(admin => {
-          console.log(admin);
           if (admin.email === userEmail) {
-            console.log("SET ROLE MINION");
+            isAdmin = true;
             setEmail(admin.email);
             setRole(admin.role);
             return;

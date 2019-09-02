@@ -3,15 +3,7 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "../../context/allContexts";
 import firebase from "../../logic/firebase";
 import { db } from "../../logic/firebase.js";
-import {
-  Header,
-  Button,
-  Icon,
-  Form,
-  Segment,
-  Message,
-  Label
-} from "semantic-ui-react";
+import { Header, Button, Icon, Form, Message, Label } from "semantic-ui-react";
 import { appName, appIconName } from "../../logic/constants";
 import "./Register.css";
 import { Link } from "react-router-dom";

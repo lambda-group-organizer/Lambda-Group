@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button, Input } from "semantic-ui-react";
 import { db } from "../logic/firebase.js";
 import CSVReader from "react-csv-reader";
@@ -70,8 +70,7 @@ const AddBuildWeek = props => {
         teamMembers: []
       };
       if (index > 0 && project.title !== "") {
-        const buildWeek = db
-          .collection("build_weeks")
+        db.collection("build_weeks")
           .doc(`${buildWeekName}`)
           .collection("projects")
           .add({ project })
@@ -90,7 +89,7 @@ const AddBuildWeek = props => {
       }
     });
     setLoading(false);
-    props.setUpdate(!props.update)
+    props.setUpdate(!props.update);
   };
 
   return (

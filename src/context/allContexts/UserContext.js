@@ -1,5 +1,4 @@
 import React, { useState, createContext } from "react";
-import firebase, { db } from "../../logic/firebase";
 
 export const UserContext = createContext();
 
