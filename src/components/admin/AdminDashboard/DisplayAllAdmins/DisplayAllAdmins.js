@@ -40,7 +40,7 @@ const DisplayAllAdmins = ({triggerAdminFunc, setTriggerAdminFunc}) => {
 
   const removeAdmin = user => {
     db.collection('admin')
-      .doc(`${user.name}`)
+      .doc(`${user.email}`)
       .delete()
       .then(function() {
         console.log('DELETED');

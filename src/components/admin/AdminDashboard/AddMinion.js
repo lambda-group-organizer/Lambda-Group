@@ -57,7 +57,7 @@ const AddMinion = props => {
 
   const makeOverloard = (s, role) => {
     db.collection('admin')
-      .doc(`${s.name}`)
+      .doc(`${s.email}`)
       .set({
         displayName: s.name,
         email: s.email,
