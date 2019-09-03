@@ -128,9 +128,14 @@ const Root = (props, { history, match }) => {
           ) : null}
           {role === "student" ? (
             <>
-              <Route path="/student/dashboard" component={StudentDashBoard} />
               <Route
-                path="/student/:buildWeek"
+                exact
+                path="/student/dashboard"
+                component={StudentDashBoard}
+              />
+              <Route
+                exact
+                path="/student/buildweek/:buildWeek"
                 component={StudentBuildWeekView}
               />
             </>
