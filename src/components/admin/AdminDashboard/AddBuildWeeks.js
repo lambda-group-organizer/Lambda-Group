@@ -79,6 +79,7 @@ const AddBuildWeek = props => {
         teamMembers: [],
       };
       if (index > 0 && project.title !== "") {
+        console.log(project.webUiDeveloper, project.frontEndDeveloper, project.frontEndFrameWorkDeveloper, project.webBackEndDeveloper, project.uXDesigner, project.projectLead, project.androidDeveloper, project.dataEngineer, project.machineLearningEngineer)
         db.collection("build_weeks")
           .doc(`${buildWeekName}`)
           .collection("projects")
@@ -86,7 +87,17 @@ const AddBuildWeek = props => {
           .then(ref => {
             project.uid = ref.id;
             ref.set(
-              { project: { ...ref.project, uid: ref.id } },
+              { project: { ...ref.project, uid: ref.id, availableRoles:  {
+                androidDeveloper: { names: [], limits: project.androidDeveloper },
+                dataEngineer: { names: [], limits: project.dataEngineer },
+                frontEndDeveloper: { names: [], limits: project.frontEndDeveloper },
+                frontEndFrameWorkDeveloper: { names: [], limits: project.frontEndFrameWorkDeveloper },
+                machineLearningEngineer: { names: [], limits: project.machineLearningEngineer },
+                projectLead: { names: [], limits: project.projectLead },
+                uXDesigner: { names: [], limits: project.uXDesigner },
+                webBackEndDeveloper: { names: [], limits: project.webBackEndDeveloper },
+                webUiDeveloper: { names: [], limits: project.webUiDeveloper },
+              }} },
               { merge: true }
             );
           });

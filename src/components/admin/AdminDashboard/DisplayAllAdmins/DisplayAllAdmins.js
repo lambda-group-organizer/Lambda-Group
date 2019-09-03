@@ -70,7 +70,7 @@ const DisplayAllAdmins = ({triggerAdminFunc, setTriggerAdminFunc}) => {
                       Remove
                     </Button>{' '}
                     <Button.Or />
-              <Button onClick={() => updatePermissions(o)} color="blue">Downgrade</Button>
+              <Button onClick={() => updatePermissions(o)} color="blue">Make Team Lead</Button>
                   </Button.Group>
                 </Card.Content>
               </Card>
@@ -92,7 +92,7 @@ const DisplayAllAdmins = ({triggerAdminFunc, setTriggerAdminFunc}) => {
                       Remove
                     </Button>
                     <Button.Or />
-                    <Button color="blue">Upgrade</Button>
+                    <Button color="blue">Make Admin</Button>
                   </Button.Group>
                 </Card.Content>
               </Card>
