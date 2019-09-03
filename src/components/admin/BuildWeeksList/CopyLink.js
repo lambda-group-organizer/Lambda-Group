@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Card, Button } from "semantic-ui-react";
-import { db } from '../../../logic/firebase.js';
+import { db } from "../../../logic/firebase.js";
 //import { Z_FIXED } from "zlib";
 
 const CopyLink = props => {
@@ -8,20 +8,25 @@ const CopyLink = props => {
   const textAreaRef = useRef(null);
 
   async function AddLinkToBuildWeek() {
-    db.collection('build_weeks').doc(`${props.buildWeek}`).set({
-      studentUrl: `http://localhost:3000/${props.buildWeek}`
-    }, {merge: true})
+    db.collection("build_weeks")
+      .doc(`${props.buildWeek}`)
+      .set(
+        {
+          studentUrl: `http://localhost:3000/${props.buildWeek}`
+        },
+        { merge: true }
+      );
     try {
-    const response = (() => {
-      console.log('Url Added to Firestore!', response)
-    })
+      const response = () => {
+        console.log("Url Added to Firestore!", response);
+      };
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   }
 
   function copyToClipboard(e) {
-    AddLinkToBuildWeek(e)
+    AddLinkToBuildWeek(e);
     textAreaRef.current.select();
     document.execCommand("copy");
     // This is just personal preference.
