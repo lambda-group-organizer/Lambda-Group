@@ -3,11 +3,12 @@ import {db} from '../../../../logic/firebase.js';
 import './DisplayAllAdmins.css';
 import {Button, Header, Card, List} from 'semantic-ui-react';
 
-const DisplayAllAdmins = ({triggerAdminFunc}) => {
+const DisplayAllAdmins = ({triggerAdminFunc, setTriggerAdminFunc}) => {
   const [overlords, setOverlords] = useState([]);
   const [minions, setMinions] = useState([]);
 
   const fetchAdmins = async () => {
+    console.log('fetch admins running!')
     let overLoardArr = [];
     let minionArr = [];
     await db
@@ -22,12 +23,14 @@ const DisplayAllAdmins = ({triggerAdminFunc}) => {
           };
           if (adminData.role === 'overlord') {
             overLoardArr.push(adminData);
+            return overLoardArr
           } else {
             minionArr.push(adminData);
+            return minionArr
           }
-          setOverlords(overLoardArr);
-          setMinions(minionArr);
         });
+        setMinions(minionArr);
+        setOverlords(overLoardArr);
       });
   };
 
@@ -41,11 +44,16 @@ const DisplayAllAdmins = ({triggerAdminFunc}) => {
       .delete()
       .then(function() {
         console.log('DELETED');
+        setTriggerAdminFunc(!triggerAdminFunc)
       })
       .catch(err => {
         console.error(err);
       });
   };
+
+  const updatePermissions = (user) => {
+    console.log(user)
+  }
 
   return (
     <>
@@ -62,7 +70,7 @@ const DisplayAllAdmins = ({triggerAdminFunc}) => {
                       Remove
                     </Button>{' '}
                     <Button.Or />
-                    <Button color="blue">Downgrade</Button>
+              <Button onClick={() => updatePermissions(o)} color="blue">Downgrade</Button>
                   </Button.Group>
                 </Card.Content>
               </Card>

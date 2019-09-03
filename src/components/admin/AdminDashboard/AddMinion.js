@@ -8,7 +8,7 @@ import {Form, Button} from 'semantic-ui-react';
 const AddMinion = props => {
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
-  const [triggerAdminFunc, setTriggerAdminFunc] = useState(false)
+  const [triggerAdminFunc, setTriggerAdminFunc] = useState(false);
 
   const fetchStudents = async () => {
     console.log('running filtered students');
@@ -65,7 +65,7 @@ const AddMinion = props => {
       })
       .then(function() {
         console.log('Granted Permissions!');
-        setTriggerAdminFunc(!triggerAdminFunc)
+        setTriggerAdminFunc(!triggerAdminFunc);
       })
       .catch(err => {
         console.error(err);
@@ -75,7 +75,10 @@ const AddMinion = props => {
   return (
     <div>
       <p>Add Minion</p>
-        <DisplayAllAdmins triggerAdminFunc={triggerAdminFunc}/>
+      <DisplayAllAdmins
+        triggerAdminFunc={triggerAdminFunc}
+        setTriggerAdminFunc={setTriggerAdminFunc}
+      />
       <Form.Input
         size="big"
         focus
