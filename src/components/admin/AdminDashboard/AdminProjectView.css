@@ -1,7 +1,6 @@
 .card {
-  background-color: #ccccff !important;
   border: 1px solid #2185d0 !important;
-  width: 24% !important;
+  width: 30% !important;
 }
 
 .card-header {
@@ -21,8 +20,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #2185d0;
-  color: white !important;
+  background-color: white;
   border-radius: .28571429rem;
   border: 1px solid #11466e;
 }

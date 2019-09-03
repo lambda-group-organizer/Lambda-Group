@@ -3,17 +3,17 @@ import { Card, Button, Header, Icon } from 'semantic-ui-react';
 import "./AdminProjectView.css";
 
 const AdminProjectView = ({ project: { project } }) => {
-  let pitchAndMVP = project.description;
-  pitchAndMVP = pitchAndMVP.split('MVP');
-  pitchAndMVP[0] = pitchAndMVP[0].split('Pitch:');
-  pitchAndMVP[0].shift();
+//   let pitchAndMVP = project.description;
+//   pitchAndMVP = pitchAndMVP.split('MVP');
+//   pitchAndMVP[0] = pitchAndMVP[0].split('Pitch:');
+//   pitchAndMVP[0].shift();
 	return (
 		<Card className="card" centered={true} key={project.uid}>
 			<Card.Content>
 					<Card.Header className="card-header" as="h3">{project.title}</Card.Header>
 					<Card.Description textAlign="left" className="content">
 					  <Card.Header as="h4" className="content-header" textAlign="center">Pitch:</Card.Header>
-					  <Card.Description className="content-text">{pitchAndMVP[0]}</Card.Description>
+					  <Card.Description className="content-text">{project.description}</Card.Description>
 					</Card.Description>
 					<Card.Description textAlign="left" className="content">
 					  <Card.Header as="h4" className="content-header" textAlign="center">Devs Needed:</Card.Header>
@@ -36,7 +36,7 @@ const AdminProjectView = ({ project: { project } }) => {
 //           {project.designLinks_dataSets}
 //         </Card.Description>
 //       </Card.Content>
-//     </Card>
+//     		</Card>
 //        <p className="p">{project.title}</p>
 //        <p className="p">{project.androidDeveloper}</p>
 //     <p className="p">{project.dataEngineer}</p>
