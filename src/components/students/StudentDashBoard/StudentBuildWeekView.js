@@ -7,12 +7,12 @@ import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 
 // Components
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
-import AdminProjectView from "./AdminProjectView";
+import StudentProjectView from "./StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
 import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
 
-const Dashboard = props => {
+const StudentBuildWeekView = props => {
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
 
@@ -66,7 +66,7 @@ const Dashboard = props => {
         filteredProjects.map(project => {
           return (
             <div key={project.project.uid}>
-              <AdminProjectView project={project} />
+              <StudentProjectView project={project} />
             </div>
           );
         })}
@@ -74,4 +74,4 @@ const Dashboard = props => {
   );
 };
 
-export default withRouter(Dashboard);
+export default withRouter(StudentBuildWeekView);
