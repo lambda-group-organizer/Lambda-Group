@@ -12,7 +12,7 @@ const CopyLink = props => {
       .doc(`${props.buildWeek}`)
       .set(
         {
-          studentUrl: `http://localhost:3000/${props.buildWeek}`
+          studentUrl: `${process.env.REACT_APP_BASE_URL}student/buildweek/${props.buildWeek}`
         },
         { merge: true }
       );
@@ -55,7 +55,7 @@ const CopyLink = props => {
             left: "-1000"
           }}
           ref={textAreaRef}
-          value={`http://localhost:3000/${props.buildWeek}`}
+          value={`${process.env.REACT_APP_BASE_URL}student/buildweek/${props.buildWeek}`}
           readOnly
         />
       </form>
