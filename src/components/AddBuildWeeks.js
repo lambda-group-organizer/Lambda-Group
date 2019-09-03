@@ -25,7 +25,7 @@ const AddBuildWeek = props => {
       db.collection("build_weeks")
         .doc(`${buildWeekName}`)
         .set({
-          buildWeekName
+          buildWeekName,
         })
         .then(async () => {
           const buildWeek = db
@@ -67,7 +67,7 @@ const AddBuildWeek = props => {
         androidDeveloper: item[10],
         dataEngineer: item[11],
         machineLearningEngineer: item[12],
-        teamMembers: []
+        teamMembers: [],
       };
       if (index > 0 && project.title !== "") {
         db.collection("build_weeks")
