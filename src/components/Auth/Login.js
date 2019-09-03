@@ -24,7 +24,9 @@ const Login = ({ history }) => {
     password,
     setPassword,
     role,
-    setRole
+    setRole,
+    currentBuildWeekURL,
+    setCurrentBuildWeekURL
   } = useContext(UserContext);
 
   const login = event => {
@@ -74,7 +76,13 @@ const Login = ({ history }) => {
     } else if (role === "minion") {
       history.push("/overlord");
     } else if (role === "student") {
-      history.push("/student/dashboard");
+      // Push to student's pick a build week associated with context
+      // else push to /student/dashboard to pick a build week
+      if (currentBuildWeekURL) {
+        history.push(`/student/${currentBuildWeekURL}`);
+      } else {
+        // history.push("/student/dashboard");
+      }
     } else {
       history.push("/");
     }

@@ -15,21 +15,48 @@ import Register from "../components/Auth/Register.js";
 import AddMinion from "../components/admin/AdminDashboard/AddMinion.js";
 import OverLoardMainDashboard from "../components/admin/AdminDashboard/OverloardMainDashBoard.js";
 import AdminDashboard from "../components/admin/AdminDashboard/AdminDashboard.js";
+import StudentBuildWeekView from "../components/students/StudentDashBoard/StudentBuildWeekView";
+import { list } from "postcss";
 
-const Root = ({ history }) => {
+const Root = (props, { history, match }) => {
   const {
     user,
     setUser,
-    role,
-    setRole,
     email,
     setEmail,
     password,
-    setPassword
+    setPassword,
+    role,
+    setRole,
+    currentBuildWeekURL,
+    setCurrentBuildWeekURL
   } = useContext(UserContext);
 
   useEffect(() => {
+    // In case of student clicking on URL from Overlord, this will grab the build week they are accessing
+    // and place it in UserContext so that it can be pushed to after they log in
+    let buildWeek = `${props.history.location.pathname}`;
+    if (buildWeek.charAt(0) === "/") {
+      buildWeek = buildWeek.substring(1);
+    }
+    let listOfBuildWeeks = [];
+    db.collection("build_weeks")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          listOfBuildWeeks.push(doc.data().buildWeekName);
+        });
+        const result = listOfBuildWeeks.filter(item => {
+          return item === buildWeek;
+        });
+        setCurrentBuildWeekURL(result[0]);
+      });
+
+    // Checks if student is already logged in
     firebase.auth().onAuthStateChanged(user => {
+      // If it's a build week (matches one in the DB)
+      // add to UserContext
+      // Go to Build week in User Context
       if (user) {
         checkIfAdmin(user.email);
         const { displayName, uid } = user;
@@ -61,6 +88,7 @@ const Root = ({ history }) => {
         if (!isAdmin) {
           setEmail(userEmail);
           setRole("student");
+          // set build week
         }
       });
   };
@@ -76,7 +104,9 @@ const Root = ({ history }) => {
           email,
           setEmail,
           password,
-          setPassword
+          setPassword,
+          currentBuildWeekURL,
+          setCurrentBuildWeekURL
         }}
       >
         <Switch>
@@ -91,7 +121,7 @@ const Root = ({ history }) => {
               />
               <Route
                 exact
-                path="/admin/:BuildWeek"
+                path="/admin/:buildWeek"
                 component={AdminDashboard}
               />
             </>
@@ -99,6 +129,10 @@ const Root = ({ history }) => {
           {role === "student" ? (
             <>
               <Route path="/student/dashboard" component={StudentDashBoard} />
+              <Route
+                path="/student/:buildWeek"
+                component={StudentBuildWeekView}
+              />
             </>
           ) : null}
 
