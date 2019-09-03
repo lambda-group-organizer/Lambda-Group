@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Input } from "semantic-ui-react";
-import { db } from "../logic/firebase.js";
+import { db } from "../../../logic/firebase";
 import CSVReader from "react-csv-reader";
 
 const AddBuildWeek = props => {
@@ -15,8 +15,17 @@ const AddBuildWeek = props => {
     SetBuildWeekName(spaceLessInput);
   };
 
+
   const addBuildWeek = async e => {
     e.preventDefault();
+    if (buildWeekName === undefined || buildWeekName === "") {
+      setError("Must Provide A Name!")
+      return;
+    } else if (CSVData.length === 0) {
+      setError('Must Provide A CSV File!')
+      return
+    }
+    console.log("TARGET: ", e.target.value)
     setLoading(true);
     const check = db.collection("build_weeks").doc(`${buildWeekName}`);
     const giveMe = await check.get();
