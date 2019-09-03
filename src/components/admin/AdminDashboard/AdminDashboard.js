@@ -1,7 +1,7 @@
 // Modules
 import React, { useState, useEffect } from "react";
 import firebase, { db } from "../../../logic/firebase.js";
-import { Button, Header, Form, Icon } from "semantic-ui-react";
+import { Button, Header, Form, Icon, Card } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 
@@ -11,7 +11,7 @@ import AdminProjectView from "./AdminProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 
 // CSS
-import './AdminProjectView.css';
+// import './AdminProjectView.css';
 
 const Dashboard = props => {
   const [projects, setProjects] = useState([]);
@@ -72,16 +72,18 @@ const Dashboard = props => {
           />
         </div>
       </div>
-      <div className="projects-wrapper">
+      <Card.Group>
       {filteredProjects &&
         filteredProjects.map(project => {
           return (
-            <div key={project.project.uid} className="card-wrapper">
+            // <div key={project.project.uid} className="card-wrapper">
+            // </div>
+            // <Card.Content>
               <AdminProjectView project={project} />
-            </div>
+            // </Card.Content>
           );
         })}
-      </div>
+      </Card.Group>
     </div>
   );
 };
