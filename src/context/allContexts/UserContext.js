@@ -8,6 +8,7 @@ export function UserProvider(props) {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [currentBuildWeekURL, setCurrentBuildWeekURL] = useState(null);
+  const [projectRole, setProjectRole] = useState("")
 
   return (
     <UserContext.Provider
@@ -21,7 +22,9 @@ export function UserProvider(props) {
         role,
         setRole,
         currentBuildWeekURL,
-        setCurrentBuildWeekURL
+        setCurrentBuildWeekURL,
+        projectRole,
+        setProjectRole
       }}
     >
       {props.children}

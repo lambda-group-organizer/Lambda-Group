@@ -29,7 +29,9 @@ const Root = (props, { history, match }) => {
     role,
     setRole,
     currentBuildWeekURL,
-    setCurrentBuildWeekURL
+    setCurrentBuildWeekURL,
+    projectRole,
+    setProjectRole
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -106,7 +108,9 @@ const Root = (props, { history, match }) => {
           password,
           setPassword,
           currentBuildWeekURL,
-          setCurrentBuildWeekURL
+          setCurrentBuildWeekURL,
+          projectRole,
+          setProjectRole
         }}
       >
         <Switch>
