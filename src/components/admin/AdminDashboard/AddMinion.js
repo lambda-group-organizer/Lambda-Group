@@ -57,7 +57,7 @@ const AddMinion = props => {
 
   const makeOverloard = (s, role) => {
     db.collection('admin')
-      .doc(`${s.name}`)
+      .doc(`${s.email}`)
       .set({
         displayName: s.name,
         email: s.email,
@@ -98,7 +98,7 @@ const AddMinion = props => {
               <Button onClick={() => makeOverloard(s, 'overlord')}>
                 Make a Admin!
               </Button>
-              <Button onClick={() => makeOverloard(s, 'admin')}>
+              <Button onClick={() => makeOverloard(s, 'minion')}>
                 Make a Smaller Admin!
               </Button>
             </div>
