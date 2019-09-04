@@ -93,7 +93,7 @@ const StudentProjectView = ({ project: { project } }) => {
         {project.productType}{" "}
         <Button onClick={() => handleJoinProject(project)}>+Join</Button>
       </Card.Content>
-      <p>{project.androidDeveloper}</p>
+      {/* <p>{project.androidDeveloper}</p>
       <p>{project.dataEngineer}</p>
       <p>{project.frontEndDeveloper}</p>
       <p>{project.FrontEndFrameWorkDeveloper}</p>
@@ -102,7 +102,7 @@ const StudentProjectView = ({ project: { project } }) => {
       <p>{project.uXDesigner}</p>
       <p>Team members . map</p>
       <p>{project.webBackEndDeveloper}</p>
-      <p>{project.WebUiDeveloper}</p>
+      <p>{project.WebUiDeveloper}</p> */}
     </Card>
   );
 };
