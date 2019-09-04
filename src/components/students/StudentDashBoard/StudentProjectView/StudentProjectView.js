@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from "react";
-import { Card, Button, Header, Icon } from "semantic-ui-react";
-import { UserContext } from "../../../../context/allContexts";
-import { db } from "../../../../logic/firebase";
+import React, {useContext, useEffect} from 'react';
+import {Card, Button, Header, Icon} from 'semantic-ui-react';
+import {UserContext} from '../../../../context/allContexts';
+import {db} from '../../../../logic/firebase';
 
-import "./StudentProjectView.module.scss";
+import './StudentProjectView.module.scss';
 
-const StudentProjectView = ({ project: { project } }) => {
+const StudentProjectView = ({project: {project}}) => {
   const {
     user,
     setUser,
@@ -20,15 +20,15 @@ const StudentProjectView = ({ project: { project } }) => {
     projectRole,
     setProjectRole,
     currentSelectedProject,
-    setCurrentSelectedProject
+    setCurrentSelectedProject,
   } = useContext(UserContext);
 
   const handleJoinProject = async project => {
     // reference project in DB
     const projectRef = db
-      .collection("build_weeks")
+      .collection('build_weeks')
       .doc(currentBuildWeekURL)
-      .collection("projects")
+      .collection('projects')
       .doc(project.uid);
     // Get the data for the user's desired role that project from DB
     const projectData = await projectRef.get();
@@ -45,24 +45,24 @@ const StudentProjectView = ({ project: { project } }) => {
           project: {
             availableRoles: {
               [projectRole]: {
-                names: [...projectRoleData.names, user.displayName]
-              }
-            }
-          }
+                names: [...projectRoleData.names, user.displayName],
+              },
+            },
+          },
         },
-        { merge: true }
+        {merge: true},
       );
 
       // Add project to user's data on DB
-      const userRef = db.collection("students").doc(user.uid);
+      const userRef = db.collection('students').doc(user.uid);
       let data = await userRef.set(
-        { buildWeeks: { [currentBuildWeekURL]: { project: project.title } } },
-        { merge: true }
+        {buildWeeks: {[currentBuildWeekURL]: {project: project.title}}},
+        {merge: true},
       );
       setCurrentSelectedProject(project.title);
     } else {
       alert(
-        `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
+        `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`,
       );
     }
     // const projectData = await projectRef.set({availableRoles: {[projectRole]: {names: []}}}, {merge: true})
@@ -74,20 +74,27 @@ const StudentProjectView = ({ project: { project } }) => {
       <Card.Content
         header={
           project.title.length > 25
-            ? project.title.slice(0, 25) + "..."
+            ? project.title.slice(0, 25) + '...'
             : project.title
         }
         className="cardHeader"
       />
       <Card.Content>
         {project.description.length > 200
-          ? project.description.slice(0, 200) + "..."
+          ? project.description.slice(0, 200) + '...'
           : project.description}
       </Card.Content>
-      <Card.Content>
-        {project.productType}{" "}
-        <Button onClick={() => handleJoinProject(project)}>+Join</Button>
-      </Card.Content>
+      {currentSelectedProject !== project.title && (
+        <Card.Content>
+          {project.productType}{' '}
+          <Button onClick={() => handleJoinProject(project)}>+Join</Button>
+        </Card.Content>
+      )}
+      {currentSelectedProject === project.title && (
+        <Card.Content style={{backgroundColor: 'green', color: 'white'}}>
+          Signed up!
+        </Card.Content>
+      )}
       {/* <p>{project.androidDeveloper}</p>
       <p>{project.dataEngineer}</p>
       <p>{project.frontEndDeveloper}</p>
