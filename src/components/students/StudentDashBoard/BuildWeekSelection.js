@@ -1,15 +1,15 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {db} from '../../../logic/firebase.js';
-import {Link} from 'react-router-dom';
-import {Button, Header} from 'semantic-ui-react';
-import {UserContext} from '../../../context/allContexts';
+import React, { useState, useEffect, useContext } from "react";
+import { db } from "../../../logic/firebase.js";
+import { Link } from "react-router-dom";
+import { Button, Header } from "semantic-ui-react";
+import { UserContext } from "../../../context/allContexts";
 
 const BuildWeekSelection = props => {
-  const {setCurrentBuildWeekURL} = useContext(UserContext);
+  const { setCurrentBuildWeekURL } = useContext(UserContext);
   const [hackathons, setHackathons] = useState([]);
   useEffect(() => {
     let urls = [];
-    db.collection('build_weeks')
+    db.collection("build_weeks")
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -29,14 +29,16 @@ const BuildWeekSelection = props => {
 
   return (
     <div>
+      <Header as="h2">Pick a build week</Header>
       {hackathons &&
         hackathons.map(hack => {
-          console.log('hack', hack);
+          console.log("hack", hack);
           return (
             <Button
               key={hack}
               color="blue"
-              onClick={() => handleBuildWeekSelection(hack)}>
+              onClick={() => handleBuildWeekSelection(hack)}
+            >
               {hack}
             </Button>
           );

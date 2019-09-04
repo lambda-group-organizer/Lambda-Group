@@ -1,26 +1,23 @@
-import React, {useState, useEffect, useContext} from 'react';
-import DashBoardHeader from '../../globalComponents/DashBoardHeader.js';
-import BuildWeekSelection from './BuildWeekSelection.js';
-import {Header} from 'semantic-ui-react';
-import SelectProjectRole from '../SelectProjectRole/SelectProjectRole.js';
-import { UserContext } from '../../../context/allContexts'
+import React, { useState, useEffect, useContext } from "react";
+import DashBoardHeader from "../../globalComponents/DashBoardHeader.js";
+import BuildWeekSelection from "./BuildWeekSelection.js";
+import SelectProjectRole from "../SelectProjectRole/SelectProjectRole.js";
+import { UserContext } from "../../../context/allContexts";
 
 const StudentDashBoard = props => {
   const { currentBuildWeekURL } = useContext(UserContext);
-  console.log(currentBuildWeekURL)
+  console.log(currentBuildWeekURL);
 
   return (
     <>
       <DashBoardHeader />
-      <Header as="h2">Pick a build week</Header>
-    {!currentBuildWeekURL && <BuildWeekSelection />}
-    {currentBuildWeekURL && <SelectProjectRole />}
+      {!currentBuildWeekURL && <BuildWeekSelection />}
+      {currentBuildWeekURL && <SelectProjectRole />}
     </>
   );
 };
 
 export default StudentDashBoard;
-
 
 // function formatLinksName(item) {
 // ALTERNATIVE OPTION BUT WORSE ON PERFORMANCE

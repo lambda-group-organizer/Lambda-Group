@@ -1,77 +1,97 @@
-import React, {useState, useContext} from 'react';
-import { Button } from 'semantic-ui-react';
-import {UserContext } from '../../../context/allContexts'
-import { db } from '../../../logic/firebase.js';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import { Button } from "semantic-ui-react";
+import { UserContext } from "../../../context/allContexts";
+import { db } from "../../../logic/firebase.js";
+import { withRouter } from "react-router-dom";
 
-const SelectProjectRole = ( { history } ) => {
-  const { projectRole, setProjectRole, user, currentBuildWeekURL } = useContext(UserContext);
+const SelectProjectRole = ({ history }) => {
+  const {
+    projectRole,
+    setProjectRole,
+    user,
+    currentBuildWeekURL,
+    setCurrentBuildWeekURL
+  } = useContext(UserContext);
 
   const possibleRoles = [
     {
       title: "Android Developer",
-      selection: 'androidDeveloper'
+      selection: "androidDeveloper"
     },
     {
       title: "Data Engineer",
-      selection: 'dataEngineer'
+      selection: "dataEngineer"
     },
     {
       title: "Front End Developer",
-      selection: 'frontEndDeveloper'
+      selection: "frontEndDeveloper"
     },
     {
       title: "Front End Frame Work Developer",
-      selection: 'FrontEndFrameWorkDeveloper'
+      selection: "FrontEndFrameWorkDeveloper"
     },
     {
       title: "Machine Learning Engineer",
-      selection: 'machineLearningEngineer'
+      selection: "machineLearningEngineer"
     },
     {
       title: "Project Lead",
-      selection: 'projectLead'
+      selection: "projectLead"
     },
     {
       title: "UX Designer",
-      selection: 'uXDesigner'
+      selection: "uXDesigner"
     },
     {
       title: "Web Back End Developer",
-      selection: 'webBackEndDeveloper'
+      selection: "webBackEndDeveloper"
     },
     {
       title: "Web UI Developer",
-      selection: 'WebUiDeveloper'
-    },
-  ]
-  const [roles] = useState(possibleRoles)
+      selection: "WebUiDeveloper"
+    }
+  ];
+  const [roles] = useState(possibleRoles);
 
-  const addProjectRoleToContext = (whichRole) => {
-    setProjectRole(whichRole)
+  const addProjectRoleToContext = whichRole => {
+    setProjectRole(whichRole);
     addProjectRoleToFirestore(whichRole);
-  }
+  };
 
-  const addProjectRoleToFirestore = (projectRole) => {
-    console.log('user: ', user);
-    console.log('projectRole: ', projectRole)
-    db.collection('students').doc(user.uid).set({
-      currentBuildWeekURL: {
+  const addProjectRoleToFirestore = projectRole => {
+    console.log("user: ", user);
+    console.log("projectRole: ", projectRole);
+    const data = {
+      [currentBuildWeekURL]: {
         projectRole: projectRole,
         project: ""
       }
-    }, { merge: true })
-    history.push(`/student/buildweek/${currentBuildWeekURL}`)
-  }
+    };
+
+    db.collection("students")
+      .doc(user.uid)
+      .set(data, { merge: true });
+    history.push(`/student/buildweek/${currentBuildWeekURL}`);
+  };
 
   return (
     <div>
       <h1>Whats Your Role For This Build Week / Hackathon?</h1>
-    {roles.map(role => {
-      return (
-        <Button onClick={() => addProjectRoleToContext(role.selection)} color="green" key={role.title}>{role.title}</Button>
-      )
-    })}
+      {roles.map(role => {
+        return (
+          <Button
+            onClick={() => addProjectRoleToContext(role.selection)}
+            color="green"
+            key={role.title}
+          >
+            {role.title}
+          </Button>
+        );
+      })}
+      <p>
+        Back to build week selection{" "}
+        <Button onClick={() => setCurrentBuildWeekURL(null)}>Back</Button>
+      </p>
     </div>
   );
 };
