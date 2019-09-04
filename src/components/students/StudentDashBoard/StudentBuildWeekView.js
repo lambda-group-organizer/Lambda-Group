@@ -7,7 +7,7 @@ import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 
 // Components
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
-import StudentProjectView from "./StudentProjectView";
+import StudentProjectView from "./StudentProjectView/StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
 import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
@@ -62,14 +62,16 @@ const StudentBuildWeekView = props => {
           />
         </div>
       </div>
-      {filteredProjects &&
-        filteredProjects.map(project => {
-          return (
-            <div key={project.project.uid}>
-              <StudentProjectView project={project} />
-            </div>
-          );
-        })}
+      <Card.Group>
+        {filteredProjects &&
+          filteredProjects.map(project => {
+            return (
+              <div key={project.project.uid}>
+                <StudentProjectView project={project} />
+              </div>
+            );
+          })}
+      </Card.Group>
     </div>
   );
 };
