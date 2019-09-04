@@ -18,7 +18,7 @@ import AdminDashboard from "../components/admin/AdminDashboard/AdminDashboard.js
 import StudentBuildWeekView from "../components/students/StudentDashBoard/StudentBuildWeekView";
 import { list } from "postcss";
 
-const Root = (props, { history, match }) => {
+const Root = (props) => {
   const {
     user,
     setUser,
@@ -34,12 +34,25 @@ const Root = (props, { history, match }) => {
     setProjectRole
   } = useContext(UserContext);
 
+function formatLinksName(item) {
+// ALTERNATIVE OPTION BUT WORSE ON PERFORMANCE
+//retun item.split('/').pop(-1);
+ return item.toString().match(/\/([^\/]+)\/?$/)[1];
+//   \/ match a slash
+//   (  start of a captured group within the match
+//   [^\/] match a non-slash character
+//   + match one of more of the non-slash characters
+//   )  end of the captured group
+//   \/? allow one optional / at the end of the string
+//   $  match to the end of the string
+ }
+
   useEffect(() => {
     // In case of student clicking on URL from Overlord, this will grab the build week they are accessing
     // and place it in UserContext so that it can be pushed to after they log in
     let buildWeek = `${props.history.location.pathname}`;
-    if (buildWeek.charAt(0) === "/") {
-      buildWeek = buildWeek.substring(1);
+    if (buildWeek !== "/") {
+      buildWeek = formatLinksName(buildWeek)
     }
     let listOfBuildWeeks = [];
     db.collection("build_weeks")
@@ -64,7 +77,7 @@ const Root = (props, { history, match }) => {
         const { displayName, uid } = user;
         setUser({ displayName, uid });
       } else {
-        history.push("/");
+        props.history.push("/");
       }
     });
   }, []);

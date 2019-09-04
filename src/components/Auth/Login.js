@@ -78,11 +78,7 @@ const Login = ({ history }) => {
     } else if (role === "student") {
       // Push to student's pick a build week associated with context
       // else push to /student/dashboard to pick a build week
-      if (currentBuildWeekURL) {
-        history.push(`/student/buildweek/${currentBuildWeekURL}`);
-      } else {
-        history.push("/student/dashboard");
-      }
+        history.push(`/student/dashboard`);
     } else {
       history.push("/");
     }
