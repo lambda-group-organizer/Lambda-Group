@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Card, Button, Header, Icon } from "semantic-ui-react";
 import { UserContext } from "../../../../context/allContexts";
 import { db } from "../../../../logic/firebase";
@@ -22,11 +22,6 @@ const StudentProjectView = ({ project: { project } }) => {
     currentSelectedProject,
     setCurrentSelectedProject
   } = useContext(UserContext);
-
-  // useEffect(() => {
-  //   // TODO: go get student's current project role on mount
-
-  // })
 
   const handleJoinProject = async project => {
     // reference project in DB
