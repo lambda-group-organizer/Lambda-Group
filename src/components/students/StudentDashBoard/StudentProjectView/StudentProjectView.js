@@ -23,16 +23,55 @@ const StudentProjectView = ({ project: { project } }) => {
     setCurrentSelectedProject
   } = useContext(UserContext);
 
-  const handleJoinProject = async project => {
-    setCurrentSelectedProject(project.title);
-    const userRef = db.collection("students").doc(user.uid);
-    let data = await userRef.set(
-      { buildWeeks: { [currentBuildWeekURL]: { project: project.title } } },
-      { merge: true }
-    );
-    // data = data.data();
+  // useEffect(() => {
+  //   // TODO: go get student's current project role on mount
 
-    console.log(data);
+  // })
+
+  const handleJoinProject = async project => {
+    // reference project in DB
+    const projectRef = db
+      .collection("build_weeks")
+      .doc(currentBuildWeekURL)
+      .collection("projects")
+      .doc(project.uid);
+    // Get the data for the user's desired role that project from DB
+    const projectData = await projectRef.get();
+    let projectRoleData = await projectData.data().project.availableRoles[
+      projectRole
+    ];
+    console.log(projectRoleData);
+    // check if there is room in that project for user
+    if (projectRoleData.names.length < project[projectRole]) {
+      console.log(projectRoleData.names);
+      // Add user to project's data on DB
+      await projectRef.set(
+        {
+          project: {
+            availableRoles: {
+              [projectRole]: {
+                names: [...projectRoleData.names, user.displayName]
+              }
+            }
+          }
+        },
+        { merge: true }
+      );
+
+      // Add project to user's data on DB
+      const userRef = db.collection("students").doc(user.uid);
+      let data = await userRef.set(
+        { buildWeeks: { [currentBuildWeekURL]: { project: project.title } } },
+        { merge: true }
+      );
+      setCurrentSelectedProject(project.title);
+    } else {
+      alert(
+        `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
+      );
+    }
+    // const projectData = await projectRef.set({availableRoles: {[projectRole]: {names: []}}}, {merge: true})
+    // data = data.data(); "Frontend Developer"
   };
 
   return (
@@ -54,7 +93,7 @@ const StudentProjectView = ({ project: { project } }) => {
         {project.productType}{" "}
         <Button onClick={() => handleJoinProject(project)}>+Join</Button>
       </Card.Content>
-      {/* <p>{project.androidDeveloper}</p>
+      <p>{project.androidDeveloper}</p>
       <p>{project.dataEngineer}</p>
       <p>{project.frontEndDeveloper}</p>
       <p>{project.FrontEndFrameWorkDeveloper}</p>
@@ -63,7 +102,7 @@ const StudentProjectView = ({ project: { project } }) => {
       <p>{project.uXDesigner}</p>
       <p>Team members . map</p>
       <p>{project.webBackEndDeveloper}</p>
-      <p>{project.WebUiDeveloper}</p> */}
+      <p>{project.WebUiDeveloper}</p>
     </Card>
   );
 };
