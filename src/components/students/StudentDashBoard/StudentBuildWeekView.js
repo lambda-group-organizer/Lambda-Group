@@ -1,10 +1,10 @@
 // Modules
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import firebase, { db } from "../../../logic/firebase.js";
 import { Button, Card, Header, Form, Icon } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
-
+import { UserContext } from "../../../context/allContexts";
 // Components
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
 import StudentProjectView from "./StudentProjectView/StudentProjectView";
@@ -13,6 +13,7 @@ import "../../../Dashboard/Dashboard.css";
 import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
 
 const StudentBuildWeekView = props => {
+  const { user, currentBuildWeekURL, setProjectRole } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
 
@@ -26,8 +27,16 @@ const StudentBuildWeekView = props => {
     setProjects(tempProjects);
     setFilteredProjects(tempProjects);
   };
+
+  const getStudentRole = async () => {
+    const userRef = db.collection("students").doc(user.uid);
+    let data = await userRef.get();
+    setProjectRole(data.data().buildWeeks[currentBuildWeekURL].projectRole);
+  };
+
   useEffect(() => {
     fetchProjects();
+    getStudentRole();
   }, []);
 
   function handleFuzzySearch(e) {
