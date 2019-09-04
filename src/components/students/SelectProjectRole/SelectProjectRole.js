@@ -62,9 +62,11 @@ const SelectProjectRole = ({ history }) => {
     console.log("user: ", user);
     console.log("projectRole: ", projectRole);
     const data = {
-      [currentBuildWeekURL]: {
-        projectRole: projectRole,
-        project: ""
+      buildWeeks: {
+        [currentBuildWeekURL]: {
+          projectRole: projectRole,
+          project: ""
+        }
       }
     };
 
