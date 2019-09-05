@@ -13,7 +13,7 @@ import "../../../Dashboard/Dashboard.css";
 import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
 
 const StudentBuildWeekView = props => {
-  const { user, currentBuildWeekURL, setProjectRole } = useContext(UserContext);
+  const { user, currentBuildWeekURL, setProjectRole, setCurrentSelectedProject, setCurrentSelectedProjectUid } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
 
@@ -32,6 +32,9 @@ const StudentBuildWeekView = props => {
     const userRef = db.collection("students").doc(user.uid);
     let data = await userRef.get();
     setProjectRole(data.data().buildWeeks[currentBuildWeekURL].projectRole);
+    setCurrentSelectedProject(data.data().buildWeeks[currentBuildWeekURL].project)
+    setCurrentSelectedProjectUid(data.data().buildWeeks[currentBuildWeekURL].projectUid)
+    //console.log("data.data()", data.data())
   };
 
   useEffect(() => {

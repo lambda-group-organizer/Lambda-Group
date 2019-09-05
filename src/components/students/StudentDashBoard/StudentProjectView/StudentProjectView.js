@@ -21,11 +21,16 @@ const StudentProjectView = ({project: {project}}) => {
     setProjectRole,
     currentSelectedProject,
     setCurrentSelectedProject,
-    setLoading
+    setLoading,
+    setCurrentSelectedProjectUid
   } = useContext(UserContext);
+
 
   const handleJoinProject = async project => {
     setLoading(true)
+    if (currentSelectedProject !== "") {
+      const oldProjRef = db.collection('build_weeks').doc(currentBuildWeekURL).collection('projects')
+    }
     // reference project in DB
     const projectRef = db
       .collection('build_weeks')
@@ -58,10 +63,11 @@ const StudentProjectView = ({project: {project}}) => {
       // Add project to user's data on DB
       const userRef = db.collection('students').doc(user.uid);
       let data = await userRef.set(
-        {buildWeeks: {[currentBuildWeekURL]: {project: project.title}}},
+        {buildWeeks: {[currentBuildWeekURL]: {project: project.title, projectUid: project.uid}}},
         {merge: true},
       );
       setCurrentSelectedProject(project.title);
+      setCurrentSelectedProjectUid(project.uid)
     } else {
       alert(
         `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`,

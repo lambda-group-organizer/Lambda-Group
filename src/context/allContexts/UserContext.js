@@ -11,6 +11,7 @@ export function UserProvider(props) {
   const [currentBuildWeekURL, setCurrentBuildWeekURL] = useState(null);
   const [projectRole, setProjectRole] = useState("");
   const [currentSelectedProject, setCurrentSelectedProject] = useState("");
+  const [currentSelectedProjectUid, setCurrentSelectedProjectUid] = useState("")
   const [loading, setLoading] = useState(false)
 
   return (
@@ -32,6 +33,9 @@ export function UserProvider(props) {
         setCurrentSelectedProject,
         loading,
         setLoading,
+        currentSelectedProjectUid,
+        setCurrentSelectedProjectUid,
+
       }}
     >
       {props.children}
