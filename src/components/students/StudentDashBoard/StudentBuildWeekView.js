@@ -13,7 +13,7 @@ import "../../../Dashboard/Dashboard.css";
 import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
 
 const StudentBuildWeekView = props => {
-  const { user, currentBuildWeekURL, setProjectRole } = useContext(UserContext);
+  const { user, currentBuildWeekURL, setProjectRole, projectRole } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
 
@@ -35,6 +35,10 @@ const StudentBuildWeekView = props => {
   };
 
   useEffect(() => {
+    //testing here
+    if (!user || !projectRole) {
+      props.history.push("/")
+    }
     fetchProjects();
     getStudentRole();
   }, []);

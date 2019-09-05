@@ -2,9 +2,10 @@ import React, { useEffect, useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 // import UserContext from "../context/UserContext";
 //import { AdminContext } from "../context/allContexts";
+import { ContextProvider } from '../context/providerComposer.js';
 import firebase, { db } from "../logic/firebase";
 import { withRouter } from "react-router-dom";
-import { UserContext } from "../context/allContexts";
+import { UserContext, SpinnerContext } from "../context/allContexts";
 
 //import Dashboard from '../Dashboard/Dashboard';
 import StudentDashBoard from "../components/students/StudentDashBoard/StudentDashBoard.js";
@@ -20,21 +21,14 @@ import { list } from "postcss";
 
 const Root = props => {
   const {
-    user,
     setUser,
-    email,
     setEmail,
-    password,
-    setPassword,
     role,
     setRole,
-    currentBuildWeekURL,
     setCurrentBuildWeekURL,
-    projectRole,
-    setProjectRole,
-    currentSelectedProject,
-    setCurrentSelectedProject
   } = useContext(UserContext);
+
+  const { loading } = useContext(SpinnerContext)
 
   function formatLinksName(item) {
     // ALTERNATIVE OPTION BUT WORSE ON PERFORMANCE
@@ -70,7 +64,9 @@ const Root = props => {
       });
 
     // Checks if student is already logged in
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(async user => {
+      window.user = await user;
+      console.log(user)
       // If it's a build week (matches one in the DB)
       // add to UserContext
       // Go to Build week in User Context
@@ -112,24 +108,7 @@ const Root = props => {
 
   return (
     <>
-      <UserContext.Provider
-        value={{
-          user,
-          setUser,
-          setRole,
-          role,
-          email,
-          setEmail,
-          password,
-          setPassword,
-          currentBuildWeekURL,
-          setCurrentBuildWeekURL,
-          projectRole,
-          setProjectRole,
-          currentSelectedProject,
-          setCurrentSelectedProject
-        }}
-      >
+      <ContextProvider>
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/register" component={Register} />
@@ -165,7 +144,7 @@ const Root = props => {
           {/* <Route path="/student/StudentLogin" component={StudentLogin} /> */}
           {/* <Route path="/student/:buildWeek" component={StudentBuildWeekLink} /> */}
         </Switch>
-      </UserContext.Provider>
+      </ContextProvider>
     </>
   );
 };

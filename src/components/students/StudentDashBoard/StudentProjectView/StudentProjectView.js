@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {Card, Button, Header, Icon} from 'semantic-ui-react';
-import {UserContext} from '../../../../context/allContexts';
+import {UserContext, SpinnerContext} from '../../../../context/allContexts';
 import {db} from '../../../../logic/firebase';
 
 import './StudentProjectView.module.scss';
@@ -23,7 +23,10 @@ const StudentProjectView = ({project: {project}}) => {
     setCurrentSelectedProject,
   } = useContext(UserContext);
 
+  const { loading, setLoading, showSpinner } = useContext(SpinnerContext)
+
   const handleJoinProject = async project => {
+    setLoading(true)
     // reference project in DB
     const projectRef = db
       .collection('build_weeks')
@@ -60,6 +63,7 @@ const StudentProjectView = ({project: {project}}) => {
         {merge: true},
       );
       setCurrentSelectedProject(project.title);
+      setLoading(false)
     } else {
       alert(
         `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`,
@@ -67,7 +71,12 @@ const StudentProjectView = ({project: {project}}) => {
     }
     // const projectData = await projectRef.set({availableRoles: {[projectRole]: {names: []}}}, {merge: true})
     // data = data.data(); "Frontend Developer"
+    setLoading(false)
   };
+
+  useEffect(() => {
+    showSpinner(loading)
+  }, [loading])
 
   return (
     <Card key={project.uid} raised={true} centered={true}>
@@ -90,11 +99,13 @@ const StudentProjectView = ({project: {project}}) => {
           <Button onClick={() => handleJoinProject(project)}>+Join</Button>
         </Card.Content>
       )}
+    {loading && showSpinner(loading)}
       {currentSelectedProject === project.title && (
         <Card.Content style={{backgroundColor: 'green', color: 'white'}}>
           Signed up!
         </Card.Content>
       )}
+
       {/* <p>{project.androidDeveloper}</p>
       <p>{project.dataEngineer}</p>
       <p>{project.frontEndDeveloper}</p>
