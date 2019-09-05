@@ -1,0 +1,58 @@
+.modalContainer {
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(33, 33, 33, 0.33);
+  z-index: 100;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  padding: 40px;
+}
+
+.modal {
+  place-items: center;
+  background-color: #323232;
+  max-width: 80%;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 30% 30% 40%;
+  // grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: 40px 1fr 40px;
+  grid-template-areas:
+    "title . team"
+    "description description team"
+    "buttons buttons team";
+
+  .modalTitle {
+    background-color: green;
+    grid-area: title;
+    height: 100%;
+    width: 100%;
+  }
+
+  .modalMainBody {
+    background-color: orange;
+    grid-area: description;
+  }
+
+  .modalTeamMembers {
+    background-color: blue;
+    grid-area: team;
+    display: flex;
+    justify-content: flex-start;
+    aling-items: flex-start;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 10%;
+  }
+
+  .modalSignup {
+    background-color: yellow;
+    grid-area: buttons;
+  }
+}

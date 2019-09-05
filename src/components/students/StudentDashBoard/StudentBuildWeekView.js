@@ -11,11 +11,21 @@ import StudentProjectView from "./StudentProjectView/StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
 import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
+import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
 
 const StudentBuildWeekView = props => {
-  const { user, currentBuildWeekURL, setProjectRole, setCurrentSelectedProject, setCurrentSelectedProjectUid } = useContext(UserContext);
+  // state from context
+  const {
+    user,
+    currentBuildWeekURL,
+    setProjectRole,
+    setCurrentSelectedProject,
+    setCurrentSelectedProjectUid
+  } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
+  // Local state
+  const [projectModalData, setProjectModalData] = useState(null);
 
   const signOut = () => {
     firebase.auth().signOut();
@@ -32,8 +42,12 @@ const StudentBuildWeekView = props => {
     const userRef = db.collection("students").doc(user.uid);
     let data = await userRef.get();
     setProjectRole(data.data().buildWeeks[currentBuildWeekURL].projectRole);
-    setCurrentSelectedProject(data.data().buildWeeks[currentBuildWeekURL].project)
-    setCurrentSelectedProjectUid(data.data().buildWeeks[currentBuildWeekURL].projectUid)
+    setCurrentSelectedProject(
+      data.data().buildWeeks[currentBuildWeekURL].project
+    );
+    setCurrentSelectedProjectUid(
+      data.data().buildWeeks[currentBuildWeekURL].projectUid
+    );
     //console.log("data.data()", data.data())
   };
 
@@ -59,6 +73,12 @@ const StudentBuildWeekView = props => {
 
   return (
     <div style={{ textAlign: "center" }}>
+      {projectModalData && (
+        <ProjectViewModal
+          setProjectModalData={setProjectModalData}
+          projectModalData={projectModalData}
+        />
+      )}
       <DashBoardHeader />
       <div className="displayContainer">
         <LoginAnimation />
@@ -79,7 +99,10 @@ const StudentBuildWeekView = props => {
           filteredProjects.map(project => {
             return (
               <div key={project.project.uid}>
-                <StudentProjectView project={project} />
+                <StudentProjectView
+                  project={project}
+                  setProjectModalData={setProjectModalData}
+                />
               </div>
             );
           })}
