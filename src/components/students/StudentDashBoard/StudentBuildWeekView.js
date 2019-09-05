@@ -34,6 +34,7 @@ const StudentBuildWeekView = props => {
   const fetchProjects = async () => {
     const { buildWeek } = props.match.params;
     let tempProjects = await fetchBuildWeekProjects(buildWeek);
+    console.log(tempProjects);
     setProjects(tempProjects);
     setFilteredProjects(tempProjects);
   };
