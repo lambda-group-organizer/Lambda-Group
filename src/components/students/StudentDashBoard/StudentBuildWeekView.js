@@ -36,9 +36,9 @@ const StudentBuildWeekView = props => {
 
   useEffect(() => {
     //testing here
-    if (!user || !projectRole) {
-      props.history.push("/")
-    }
+    //if (!user || !projectRole) {
+      //props.history.push("/")
+    //}
     fetchProjects();
     getStudentRole();
   }, []);

@@ -54,6 +54,7 @@ const SelectProjectRole = ({ history }) => {
   const [roles] = useState(possibleRoles);
 
   const addProjectRoleToContext = whichRole => {
+    console.log("SHOWME: ", whichRole)
     setProjectRole(whichRole);
     addProjectRoleToFirestore(whichRole);
   };
