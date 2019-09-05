@@ -25,6 +25,11 @@ const StudentProjectView = ({project: {project}}) => {
     setCurrentSelectedProjectUid
   } = useContext(UserContext);
 
+  //function showStudents() {
+    //console.log(user)
+  //TODO: Hook this up to show signed up
+  //}
+
 
   const handleJoinProject = async project => {
     setLoading(true)
@@ -68,6 +73,7 @@ const StudentProjectView = ({project: {project}}) => {
       );
       setCurrentSelectedProject(project.title);
       setCurrentSelectedProjectUid(project.uid)
+      //showStudents()
     } else {
       alert(
         `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`,
@@ -77,6 +83,7 @@ const StudentProjectView = ({project: {project}}) => {
     // data = data.data(); "Frontend Developer"
     setLoading(false)
   };
+
 
   return (
     <Card key={project.uid} raised={true} centered={true}>
