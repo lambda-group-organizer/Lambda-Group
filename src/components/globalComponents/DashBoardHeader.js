@@ -3,9 +3,10 @@ import {Button, Icon, Header,} from 'semantic-ui-react';
 import firebase from '../../logic/firebase.js';
 import  { UserContext }  from '../../context/allContexts'
 import { withRouter } from 'react-router-dom'
+import Spinner from '../globalComponents/Spinner/Spinner.js';
 
 const DashBoardHeader = props => {
-    const { setRole, setUser } = useContext(UserContext)
+    const { setRole, setUser, loading } = useContext(UserContext)
     const signOut = () => {
         setRole(null)
         setUser(null)
@@ -21,6 +22,7 @@ const DashBoardHeader = props => {
         backgroundColor: '#ba112e',
         marginBottom: '40px',
       }}>
+        {loading && <Spinner />}
       <Header as="h1" inverted style={{marginTop: '25px'}}>
         {/* <Icon color="white" name="chevron up"/> */}
         <Icon name="chevron up" style={{color: 'white'}} />

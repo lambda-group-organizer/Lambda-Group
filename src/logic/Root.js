@@ -33,7 +33,11 @@ const Root = props => {
     projectRole,
     setProjectRole,
     currentSelectedProject,
-    setCurrentSelectedProject
+    setCurrentSelectedProject,
+    loading,
+    setLoading,
+    currentSelectedProjectUid,
+    setCurrentSelectedProjectUid
   } = useContext(UserContext);
 
   function formatLinksName(item) {
@@ -127,7 +131,11 @@ const Root = props => {
           projectRole,
           setProjectRole,
           currentSelectedProject,
-          setCurrentSelectedProject
+          setCurrentSelectedProject,
+          loading,
+          setLoading,
+          currentSelectedProjectUid,
+          setCurrentSelectedProjectUid
         }}
       >
         <Switch>
