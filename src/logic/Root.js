@@ -33,7 +33,9 @@ const Root = props => {
     projectRole,
     setProjectRole,
     currentSelectedProject,
-    setCurrentSelectedProject
+    setCurrentSelectedProject,
+    loading,
+    setLoading
   } = useContext(UserContext);
 
   function formatLinksName(item) {
@@ -127,7 +129,9 @@ const Root = props => {
           projectRole,
           setProjectRole,
           currentSelectedProject,
-          setCurrentSelectedProject
+          setCurrentSelectedProject,
+          loading,
+          setLoading
         }}
       >
         <Switch>

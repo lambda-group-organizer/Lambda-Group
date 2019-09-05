@@ -21,9 +21,11 @@ const StudentProjectView = ({project: {project}}) => {
     setProjectRole,
     currentSelectedProject,
     setCurrentSelectedProject,
+    setLoading
   } = useContext(UserContext);
 
   const handleJoinProject = async project => {
+    setLoading(true)
     // reference project in DB
     const projectRef = db
       .collection('build_weeks')
@@ -67,6 +69,7 @@ const StudentProjectView = ({project: {project}}) => {
     }
     // const projectData = await projectRef.set({availableRoles: {[projectRole]: {names: []}}}, {merge: true})
     // data = data.data(); "Frontend Developer"
+    setLoading(false)
   };
 
   return (
