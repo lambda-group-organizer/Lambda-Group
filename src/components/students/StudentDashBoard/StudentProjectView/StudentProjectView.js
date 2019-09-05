@@ -52,26 +52,6 @@ const StudentProjectView = ({project: {project}}) => {
 
         oldProjRef.set(oldProjectData);
       }
-      //let oldProjData = await oldProjRef.get();
-      //oldProjData.project.availableRoles[projectRole]
-      //oldProjData = oldProjData.data().project.availableRoles[projectRole];
-      //console.log('oldProjData: ', oldProjData.names);
-      //if (oldProjData.names.length > 0) {
-      //let updatedProj = oldProjData.names.filter(n => n.email !== user.email);
-      //console.log('updatedProj: ', updatedProj);
-      //oldProjRef.set(
-      //{
-      //project: {
-      //availableRoles: {
-      //[projectRole]: {
-      //names: [...updatedProj],
-      //},
-      //},
-      //},
-      //},
-      //{merge: true},
-      //);
-      //}
     }
     // reference project in DB
     const projectRef = db
@@ -84,10 +64,8 @@ const StudentProjectView = ({project: {project}}) => {
     let projectRoleData = await projectData.data().project.availableRoles[
       projectRole
     ];
-    //console.log(projectRoleData);
     // check if there is room in that project for user
     if (projectRoleData.names.length < project[projectRole]) {
-      console.log(projectRoleData.names);
       // Add user to project's data on DB
       await projectRef.set(
         {
