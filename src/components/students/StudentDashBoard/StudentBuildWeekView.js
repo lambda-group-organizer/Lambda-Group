@@ -4,13 +4,13 @@ import firebase, { db } from "../../../logic/firebase.js";
 import { Button, Card, Header, Form, Icon } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
-import { UserContext } from "../../../context/allContexts";
+import { UserContext, BuildWeekContext } from "../../../context/allContexts";
 // Components
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
 import StudentProjectView from "./StudentProjectView/StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
-import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
+// import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
 
 const StudentBuildWeekView = props => {
@@ -22,7 +22,9 @@ const StudentBuildWeekView = props => {
     setCurrentSelectedProject,
     setCurrentSelectedProjectUid
   } = useContext(UserContext);
-  const [projects, setProjects] = useState([]);
+
+  const { projectsContext, setProjectsContext } = useContext(BuildWeekContext);
+  // const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
   // Local state
   const [projectModalData, setProjectModalData] = useState(null);
@@ -31,13 +33,44 @@ const StudentBuildWeekView = props => {
     firebase.auth().signOut();
   };
 
+  const fetchBuildWeekProjects = async buildWeek => {
+    console.log("PROJECTS CONTEXT: ", projectsContext);
+    debugger;
+    let changeType = "";
+    let collection = await db
+      .collection("build_weeks")
+      .doc(`${buildWeek}`)
+      .collection("projects");
+    let observer = collection.onSnapshot(querySnapshot => {
+      let data = querySnapshot.docChanges().map(change => {
+        console.log(change.type);
+        changeType = change.type;
+        return change.doc.data();
+      });
+      console.log(data[0]);
+      if (changeType === "modified") {
+        console.log("MODIFIED IF");
+        console.log(projectsContext);
+        let newProjects = projectsContext.map(tempProject => {
+          console.log("TEMP PROJECT: ", tempProject);
+          if (data[0].uid === tempProject.uid) {
+            console.log(data);
+            return data[0];
+          } else {
+            return tempProject;
+          }
+        });
+        setProjectsContext(newProjects);
+      } else {
+        setProjectsContext(data);
+      }
+    });
+  };
+
   const fetchProjects = async () => {
     const { buildWeek } = props.match.params;
-    let tempProjects = await fetchBuildWeekProjects(buildWeek);
-    console.log(tempProjects);
-    setProjects(tempProjects);
-    setFilteredProjects(tempProjects);
-    console.log("UPDATED PROJECTS");
+    fetchBuildWeekProjects(buildWeek, projectsContext);
+    console.log("PROJECTS UPDATED");
   };
 
   const getStudentRole = async () => {
@@ -59,16 +92,20 @@ const StudentBuildWeekView = props => {
     getStudentRole();
   }, []);
 
+  useEffect(() => {
+    setFilteredProjects(projectsContext);
+  }, [projectsContext]);
+
   function handleFuzzySearch(e) {
     // console.log(projects);
     // Fuzzy search for students involved, title, description, productType(ios, web, etc)
     let searchResults = fuzzySearch(
-      projects,
+      projectsContext,
       ["project.title", "project.description", "project.productType"],
       e
     );
     if (e.target.value === "") {
-      setFilteredProjects(projects);
+      setFilteredProjects(projectsContext);
     } else {
       setFilteredProjects(searchResults);
     }

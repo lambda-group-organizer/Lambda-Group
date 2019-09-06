@@ -1,4 +1,5 @@
 import React, { useState, createContext } from "react";
+import { db } from "../../logic/firebase";
 
 export const BuildWeekContext = createContext();
 
