@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { Card, Button, Header, Icon } from "semantic-ui-react";
-import { UserContext } from "../../../../context/allContexts";
-import { db } from "../../../../logic/firebase";
+import { UserContext } from "../../../context/allContexts";
+import { db } from "../../../logic/firebase";
 
-import "./StudentProjectView.module.scss";
+import styles from "./ProjectViewModal.module.scss";
 
-const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
+const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
   const {
     user,
     setUser,
@@ -32,6 +32,7 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
   //}
 
   const handleJoinProject = async project => {
+    console.log(project);
     setLoading(true);
     if (currentSelectedProject !== "") {
       let oldProjRef = await db
@@ -104,45 +105,36 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
         `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
       );
     }
-    // const projectData = await projectRef.set({availableRoles: {[projectRole]: {names: []}}}, {merge: true})
-    // data = data.data(); "Frontend Developer"
     setLoading(false);
   };
 
   return (
-    <Card key={project.uid} raised={true} centered={true}>
-      <Card.Content
-        header={
-          project.title.length > 25
-            ? project.title.slice(0, 25) + "..."
-            : project.title
-        }
-        className="cardHeader"
-      />
-      <Card.Content>
-        {project.description.length > 200
-          ? project.description.slice(0, 200) + "..."
-          : project.description}
-      </Card.Content>
-      {currentSelectedProject !== project.title && (
-        <Card.Content>
-          {project.productType}{" "}
-          <Button onClick={() => handleJoinProject(project)}>+Join</Button>
-        </Card.Content>
-      )}
-      {currentSelectedProject === project.title && (
-        <Card.Content style={{ backgroundColor: "green", color: "white" }}>
-          Signed up!
-        </Card.Content>
-      )}
-      <div
-        style={{ height: "50px", width: "100%", backgroundColor: "cyan" }}
-        onClick={() => setProjectModalData(project)}
-      >
-        See more
+    <div
+      className={styles.modalContainer}
+      onClick={() => setProjectModalData(null)}
+    >
+      <div className={styles.modal} onClick={e => e.stopPropagation()}>
+        <div className={styles.modalTitle}>
+          <h3>{projectModalData.title}</h3>
+        </div>
+        <div className={styles.modalMainBody}>
+          {projectModalData.description}
+        </div>
+        <div className={styles.modalTeamMembers}>Team Members</div>
+        <div className={styles.modalSignup}>
+          <Button
+            color="green"
+            onClick={() => handleJoinProject(projectModalData)}
+          >
+            Sign up
+          </Button>
+          <Button onClick={() => setProjectModalData(null)} color="red">
+            Exit
+          </Button>
+        </div>
       </div>
-    </Card>
+    </div>
   );
 };
 
-export default StudentProjectView;
+export default StudentProjectViewModal;

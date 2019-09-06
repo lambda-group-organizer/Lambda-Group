@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import firebase, { db } from "../logic/firebase";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../context/allContexts";
-
+import { ContextProvider } from "../context/providerComposer";
 //import Dashboard from '../Dashboard/Dashboard';
 import StudentDashBoard from "../components/students/StudentDashBoard/StudentDashBoard.js";
 // import StudentBuildWeekLink from "../components/students/StudentBuildWeekLink/StudentBuildWeekLink.js";
@@ -116,64 +116,33 @@ const Root = props => {
 
   return (
     <>
-      <UserContext.Provider
-        value={{
-          user,
-          setUser,
-          setRole,
-          role,
-          email,
-          setEmail,
-          password,
-          setPassword,
-          currentBuildWeekURL,
-          setCurrentBuildWeekURL,
-          projectRole,
-          setProjectRole,
-          currentSelectedProject,
-          setCurrentSelectedProject,
-          loading,
-          setLoading,
-          currentSelectedProjectUid,
-          setCurrentSelectedProjectUid
-        }}
-      >
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/register" component={Register} />
-          {role === "minion" || role === "overlord" ? (
-            <>
-              <Route
-                exact
-                path="/overlord"
-                component={OverLoardMainDashboard}
-              />
-              <Route
-                exact
-                path="/admin/:buildWeek"
-                component={AdminDashboard}
-              />
-            </>
-          ) : null}
-          {role === "student" ? (
-            <>
-              <Route
-                exact
-                path="/student/dashboard"
-                component={StudentDashBoard}
-              />
-              <Route
-                exact
-                path="/student/buildweek/:buildWeek"
-                component={StudentBuildWeekView}
-              />
-            </>
-          ) : null}
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/register" component={Register} />
+        {role === "minion" || role === "overlord" ? (
+          <>
+            <Route exact path="/overlord" component={OverLoardMainDashboard} />
+            <Route exact path="/admin/:buildWeek" component={AdminDashboard} />
+          </>
+        ) : null}
+        {role === "student" ? (
+          <>
+            <Route
+              exact
+              path="/student/dashboard"
+              component={StudentDashBoard}
+            />
+            <Route
+              exact
+              path="/student/buildweek/:buildWeek"
+              component={StudentBuildWeekView}
+            />
+          </>
+        ) : null}
 
-          {/* <Route path="/student/StudentLogin" component={StudentLogin} /> */}
-          {/* <Route path="/student/:buildWeek" component={StudentBuildWeekLink} /> */}
-        </Switch>
-      </UserContext.Provider>
+        {/* <Route path="/student/StudentLogin" component={StudentLogin} /> */}
+        {/* <Route path="/student/:buildWeek" component={StudentBuildWeekLink} /> */}
+      </Switch>
     </>
   );
 };
