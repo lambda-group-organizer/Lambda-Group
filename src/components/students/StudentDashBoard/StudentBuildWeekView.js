@@ -37,12 +37,14 @@ const StudentBuildWeekView = props => {
     console.log(tempProjects);
     setProjects(tempProjects);
     setFilteredProjects(tempProjects);
+    console.log("UPDATED PROJECTS");
   };
 
   const getStudentRole = async () => {
     const userRef = db.collection("students").doc(user.uid);
     let data = await userRef.get();
     setProjectRole(data.data().buildWeeks[currentBuildWeekURL].projectRole);
+    console.log(data.data().buildWeeks[currentBuildWeekURL].project);
     setCurrentSelectedProject(
       data.data().buildWeeks[currentBuildWeekURL].project
     );
@@ -58,7 +60,7 @@ const StudentBuildWeekView = props => {
   }, []);
 
   function handleFuzzySearch(e) {
-    console.log(projects);
+    // console.log(projects);
     // Fuzzy search for students involved, title, description, productType(ios, web, etc)
     let searchResults = fuzzySearch(
       projects,

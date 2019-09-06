@@ -8,7 +8,7 @@ const fetchBuildWeekProjects = async buildWeek => {
     .collection("projects")
     .onSnapshot(snapshot => {
       snapshot.docChanges().forEach(function(change) {
-        console.log(change.doc.data());
+        // console.log(change.doc.data());
         listOfProjects.push(change.doc.data());
       });
     });

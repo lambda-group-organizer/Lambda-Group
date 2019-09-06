@@ -9,6 +9,7 @@ const SelectProjectRole = ({ history }) => {
     projectRole,
     setProjectRole,
     user,
+    currentSelectedProject,
     currentBuildWeekURL,
     setCurrentBuildWeekURL
   } = useContext(UserContext);
@@ -56,24 +57,39 @@ const SelectProjectRole = ({ history }) => {
   const addProjectRoleToContext = whichRole => {
     setProjectRole(whichRole);
     addProjectRoleToFirestore(whichRole);
+    console.log("ROLE SET");
   };
 
   const addProjectRoleToFirestore = projectRole => {
     console.log("user: ", user);
     console.log("projectRole: ", projectRole);
-    const data = {
-      buildWeeks: {
-        [currentBuildWeekURL]: {
-          projectRole: projectRole,
-          project: ""
+    // TODO: Call to DB and get current project
+    let data;
+    console.log(currentSelectedProject);
+    if (currentSelectedProject !== "") {
+      data = {
+        buildWeeks: {
+          [currentBuildWeekURL]: {
+            projectRole: projectRole,
+            project: currentSelectedProject
+          }
         }
-      }
-    };
+      };
+    } else {
+      data = {
+        buildWeeks: {
+          [currentBuildWeekURL]: {
+            projectRole: projectRole,
+            project: ""
+          }
+        }
+      };
+    }
 
     db.collection("students")
       .doc(user.uid)
-      .set(data, { merge: true });
-    history.push(`/student/buildweek/${currentBuildWeekURL}`);
+      .set(data, { merge: true })
+      .then(history.push(`/student/buildweek/${currentBuildWeekURL}`));
   };
 
   return (

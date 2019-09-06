@@ -1,5 +1,5 @@
 import React, { useState, createContext } from "react";
-import Spinner from '../../components/globalComponents/Spinner/Spinner.js'
+import Spinner from "../../components/globalComponents/Spinner/Spinner.js";
 
 export const UserContext = createContext();
 
@@ -11,8 +11,10 @@ export function UserProvider(props) {
   const [currentBuildWeekURL, setCurrentBuildWeekURL] = useState(null);
   const [projectRole, setProjectRole] = useState("");
   const [currentSelectedProject, setCurrentSelectedProject] = useState("");
-  const [currentSelectedProjectUid, setCurrentSelectedProjectUid] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [currentSelectedProjectUid, setCurrentSelectedProjectUid] = useState(
+    ""
+  );
+  const [loading, setLoading] = useState(false);
 
   return (
     <UserContext.Provider
@@ -34,8 +36,7 @@ export function UserProvider(props) {
         loading,
         setLoading,
         currentSelectedProjectUid,
-        setCurrentSelectedProjectUid,
-
+        setCurrentSelectedProjectUid
       }}
     >
       {props.children}
