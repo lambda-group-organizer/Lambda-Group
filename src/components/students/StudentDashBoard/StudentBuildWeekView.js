@@ -11,6 +11,7 @@ import StudentProjectView from "./StudentProjectView/StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
+import MapLegend from '../../../components/students/StudentDashBoard/StudentProjectView/MapLegend/MapLegend.js';
 
 const StudentBuildWeekView = props => {
   // state from context
@@ -91,6 +92,7 @@ const StudentBuildWeekView = props => {
           />
         </div>
       </div>
+      {/*<MapLegend />*/}
       <Card.Group>
         {filteredProjects &&
           filteredProjects.map(project => {

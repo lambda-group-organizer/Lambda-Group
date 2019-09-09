@@ -3,7 +3,7 @@ import {Card, Button, Header, Icon} from 'semantic-ui-react';
 import {UserContext} from '../../../../context/allContexts';
 import {db} from '../../../../logic/firebase';
 
-import './StudentProjectView.module.scss';
+import styles from './StudentProjectView.module.scss';
 
 const StudentProjectView = ({project: {project}, setProjectModalData}) => {
   const {
@@ -122,7 +122,7 @@ const StudentProjectView = ({project: {project}, setProjectModalData}) => {
             ? project.title.slice(0, 25) + '...'
             : project.title
         }
-        className="cardHeader"
+        className={styles.cardHeader}
       />
       <Card.Content>
         {/* TODO: MUST REFACTOR THIS LATER*/}
@@ -132,37 +132,37 @@ const StudentProjectView = ({project: {project}, setProjectModalData}) => {
         </Card.Content>
         <Card.Content>
         {project.availableRoles.androidDeveloper.names.map(({name, email}) => (
-          <span key={email}>{name}</span>
+          <span className={styles.span} key={email}>{name}</span>
         ))}
         {project.availableRoles.dataEngineer.names.map(({name, email}) => (
-          <span key={email}>{name}</span>
+          <span className={styles.span} key={email}>{name}</span>
         ))}
         {project.availableRoles.frontEndDeveloper.names.map(({name, email}) => (
-          <span key={email}>{name}</span>
+          <span className={styles.span} key={email}>{name}</span>
         ))}
         {project.availableRoles.frontEndFrameWorkDeveloper.names.map(
           ({name, email}) => (
-            <span key={email}>{name}</span>
+            <span className={styles.span} key={email}>{name}</span>
           ),
         )}
         {project.availableRoles.machineLearningEngineer.names.map(
           ({name, email}) => (
-            <span key={email}>{name}</span>
+            <span className={styles.span} key={email}>{name}</span>
           ),
         )}
         {project.availableRoles.projectLead.names.map(({name, email}) => (
-          <span key={email}>{name}</span>
+          <span className={styles.span} key={email}>{name}</span>
         ))}
         {project.availableRoles.uXDesigner.names.map(({name, email}) => (
-          <span key={email}>{name}</span>
+          <span className={styles.span} key={email}>{name}</span>
         ))}
         {project.availableRoles.webBackEndDeveloper.names.map(
           ({name, email}) => (
-            <span key={email}>{name}</span>
+            <span className={styles.span} key={email}>{name}</span>
           ),
         )}
         {project.availableRoles.webUiDeveloper.names.map(({name, email}) => (
-          <span key={email}>{name}</span>
+          <span className={styles.span} key={email}>{name}</span>
         ))}
       </Card.Content>
       {currentSelectedProject !== project.title && (
