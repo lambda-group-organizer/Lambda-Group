@@ -1,11 +1,11 @@
-import React, {useContext, useEffect} from 'react';
-import {Card, Button, Header, Icon} from 'semantic-ui-react';
-import {UserContext} from '../../../../context/allContexts';
-import {db} from '../../../../logic/firebase';
+import React, { useContext, useEffect } from "react";
+import { Card, Button, Header, Icon } from "semantic-ui-react";
+import { UserContext } from "../../../../context/allContexts";
+import { db } from "../../../../logic/firebase";
 
-import styles from './StudentProjectView.module.scss';
+import styles from "./StudentProjectView.module.scss";
 
-const StudentProjectView = ({project: {project}, setProjectModalData}) => {
+const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
   const {
     user,
     setUser,
@@ -23,7 +23,7 @@ const StudentProjectView = ({project: {project}, setProjectModalData}) => {
     setCurrentSelectedProject,
     setLoading,
     currentSelectedProjectUid,
-    setCurrentSelectedProjectUid,
+    setCurrentSelectedProjectUid
   } = useContext(UserContext);
 
   //function showStudents() {
@@ -33,11 +33,11 @@ const StudentProjectView = ({project: {project}, setProjectModalData}) => {
 
   const handleJoinProject = async project => {
     setLoading(true);
-    if (currentSelectedProject !== '') {
+    if (currentSelectedProject !== "") {
       let oldProjRef = await db
-        .collection('build_weeks')
+        .collection("build_weeks")
         .doc(currentBuildWeekURL)
-        .collection('projects')
+        .collection("projects")
         .doc(currentSelectedProjectUid);
       let oldProjectData = await oldProjRef.get();
       oldProjectData = oldProjectData.data();
@@ -55,9 +55,9 @@ const StudentProjectView = ({project: {project}, setProjectModalData}) => {
     }
     // reference project in DB
     const projectRef = db
-      .collection('build_weeks')
+      .collection("build_weeks")
       .doc(currentBuildWeekURL)
-      .collection('projects')
+      .collection("projects")
       .doc(project.uid);
     // Get the data for the user's desired role that project from DB
     const projectData = await projectRef.get();
@@ -74,34 +74,34 @@ const StudentProjectView = ({project: {project}, setProjectModalData}) => {
               [projectRole]: {
                 names: [
                   ...projectRoleData.names,
-                  {name: user.displayName, email: email},
-                ],
-              },
-            },
-          },
+                  { name: user.displayName, email: email }
+                ]
+              }
+            }
+          }
         },
-        {merge: true},
+        { merge: true }
       );
 
       // Add project to user's data on DB
-      const userRef = db.collection('students').doc(user.uid);
+      const userRef = db.collection("students").doc(user.uid);
       let data = await userRef.set(
         {
           buildWeeks: {
             [currentBuildWeekURL]: {
               project: project.title,
-              projectUid: project.uid,
-            },
-          },
+              projectUid: project.uid
+            }
+          }
         },
-        {merge: true},
+        { merge: true }
       );
       setCurrentSelectedProject(project.title);
       setCurrentSelectedProjectUid(project.uid);
       //showStudents()
     } else {
       alert(
-        `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`,
+        `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
       );
     }
     // const projectData = await projectRef.set({availableRoles: {[projectRole]: {names: []}}}, {merge: true})
@@ -119,66 +119,94 @@ const StudentProjectView = ({project: {project}, setProjectModalData}) => {
       <Card.Content
         header={
           project.title.length > 25
-            ? project.title.slice(0, 25) + '...'
+            ? project.title.slice(0, 25) + "..."
             : project.title
         }
         className={styles.cardHeader}
       />
       <Card.Content>
         {/* TODO: MUST REFACTOR THIS LATER*/}
-        {project.description.length > 200
-          ? project.description.slice(0, 200) + '...'
-          : project.description}
-        </Card.Content>
-        <Card.Content>
-        {project.availableRoles.androidDeveloper.names.map(({name, email}) => (
-          <span className={styles.span} key={email}>{name}</span>
+        {project.pitch.length > 200
+          ? project.pitch.slice(0, 200) + "..."
+          : project.pitch}
+      </Card.Content>
+      <Card.Content>
+        {project.availableRoles.androidDeveloper.names.map(
+          ({ name, email }) => (
+            <span className={styles.span} key={email}>
+              {name}
+            </span>
+          )
+        )}
+        {project.availableRoles.iosDeveloper.names.map(({ name, email }) => (
+          <span className={styles.span} key={email}>
+            {name}
+          </span>
         ))}
-        {project.availableRoles.dataEngineer.names.map(({name, email}) => (
-          <span className={styles.span} key={email}>{name}</span>
+        {project.availableRoles.dataEngineer.names.map(({ name, email }) => (
+          <span className={styles.span} key={email}>
+            {name}
+          </span>
         ))}
-        {project.availableRoles.frontEndDeveloper.names.map(({name, email}) => (
-          <span className={styles.span} key={email}>{name}</span>
-        ))}
+        {project.availableRoles.frontEndDeveloper.names.map(
+          ({ name, email }) => (
+            <span className={styles.span} key={email}>
+              {name}
+            </span>
+          )
+        )}
         {project.availableRoles.frontEndFrameWorkDeveloper.names.map(
-          ({name, email}) => (
-            <span className={styles.span} key={email}>{name}</span>
-          ),
+          ({ name, email }) => (
+            <span className={styles.span} key={email}>
+              {name}
+            </span>
+          )
         )}
         {project.availableRoles.machineLearningEngineer.names.map(
-          ({name, email}) => (
-            <span className={styles.span} key={email}>{name}</span>
-          ),
+          ({ name, email }) => (
+            <span className={styles.span} key={email}>
+              {name}
+            </span>
+          )
         )}
-        {project.availableRoles.projectLead.names.map(({name, email}) => (
-          <span className={styles.span} key={email}>{name}</span>
+        {project.availableRoles.projectLead.names.map(({ name, email }) => (
+          <span className={styles.span} key={email}>
+            {name}
+          </span>
         ))}
-        {project.availableRoles.uXDesigner.names.map(({name, email}) => (
-          <span className={styles.span} key={email}>{name}</span>
+        {project.availableRoles.uXDesigner.names.map(({ name, email }) => (
+          <span className={styles.span} key={email}>
+            {name}
+          </span>
         ))}
         {project.availableRoles.webBackEndDeveloper.names.map(
-          ({name, email}) => (
-            <span className={styles.span} key={email}>{name}</span>
-          ),
+          ({ name, email }) => (
+            <span className={styles.span} key={email}>
+              {name}
+            </span>
+          )
         )}
-        {project.availableRoles.webUiDeveloper.names.map(({name, email}) => (
-          <span className={styles.span} key={email}>{name}</span>
+        {project.availableRoles.webUiDeveloper.names.map(({ name, email }) => (
+          <span className={styles.span} key={email}>
+            {name}
+          </span>
         ))}
       </Card.Content>
       {currentSelectedProject !== project.title && (
         <Card.Content>
-          {project.productType}{' '}
+          {project.productType}{" "}
           <Button onClick={() => handleJoinProject(project)}>+Join</Button>
         </Card.Content>
       )}
       {currentSelectedProject === project.title && (
-        <Card.Content style={{backgroundColor: 'green', color: 'white'}}>
+        <Card.Content style={{ backgroundColor: "green", color: "white" }}>
           Signed up!
         </Card.Content>
       )}
       <div
-        style={{height: '50px', width: '100%', backgroundColor: 'cyan'}}
-        onClick={() => setProjectModalData(project)}>
+        style={{ height: "50px", width: "100%", backgroundColor: "cyan" }}
+        onClick={() => setProjectModalData(project)}
+      >
         See more
       </div>
     </Card>

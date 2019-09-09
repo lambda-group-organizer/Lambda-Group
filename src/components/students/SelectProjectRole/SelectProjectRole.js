@@ -20,6 +20,10 @@ const SelectProjectRole = ({ history }) => {
       selection: "androidDeveloper"
     },
     {
+      title: "iOS Developer",
+      selection: "iosDeveloper"
+    },
+    {
       title: "Data Engineer",
       selection: "dataEngineer"
     },
