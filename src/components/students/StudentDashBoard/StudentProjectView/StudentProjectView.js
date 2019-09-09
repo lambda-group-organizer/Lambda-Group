@@ -125,7 +125,7 @@ const StudentProjectView = ({project: {project}, setProjectModalData}) => {
         className="cardHeader"
       />
       <Card.Content>
-        {/* MUST REFACTOR THIS LATER*/}
+        {/* TODO: MUST REFACTOR THIS LATER*/}
         {project.description.length > 200
           ? project.description.slice(0, 200) + '...'
           : project.description}
