@@ -81,15 +81,20 @@ const Dashboard = props => {
           />
         </div>
       </div>
-      {filteredProjects &&
-        filteredProjects.map(project => {
-          console.log("FILTERED PROJECTS");
-          return (
-            <div key={project.project.uid}>
-              <AdminProjectView project={project} />
-            </div>
-          );
-        })}
+      <Card.Group>
+        {filteredProjects &&
+          filteredProjects.map(project => {
+            console.log("FILTERED PROJECTS");
+            return (
+              <div key={project.project.uid}>
+                <AdminProjectView
+                  project={project}
+                  setProjectModalData={setProjectModalData}
+                />
+              </div>
+            );
+          })}
+      </Card.Group>
     </div>
   );
 };

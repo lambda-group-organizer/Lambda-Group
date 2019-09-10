@@ -5,6 +5,8 @@ import { db } from "../../../../logic/firebase";
 
 import styles from "./StudentProjectView.module.scss";
 
+// TODO: Add minion powers to this file with conditional rendering for minion role
+
 const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
   const {
     user,
