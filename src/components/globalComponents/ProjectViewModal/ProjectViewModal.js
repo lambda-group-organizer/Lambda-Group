@@ -1,11 +1,12 @@
-import React, { useContext, useEffect } from "react";
-import { Card, Button, Header, Icon } from "semantic-ui-react";
-import { UserContext } from "../../../context/allContexts";
-import { db } from "../../../logic/firebase";
+import React, {useContext, useEffect} from 'react';
+import {Card, Button, Header, Icon} from 'semantic-ui-react';
+import {UserContext} from '../../../context/allContexts';
+import {db} from '../../../logic/firebase';
+import {FaPlusSquare} from 'react-icons/fa';
 
-import styles from "./ProjectViewModal.module.scss";
+import styles from './ProjectViewModal.module.scss';
 
-const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
+const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
   const {
     user,
     setUser,
@@ -23,7 +24,7 @@ const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
     setCurrentSelectedProject,
     setLoading,
     currentSelectedProjectUid,
-    setCurrentSelectedProjectUid
+    setCurrentSelectedProjectUid,
   } = useContext(UserContext);
 
   //function showStudents() {
@@ -34,11 +35,11 @@ const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
   const handleJoinProject = async project => {
     console.log(project);
     setLoading(true);
-    if (currentSelectedProject !== "") {
+    if (currentSelectedProject !== '') {
       let oldProjRef = await db
-        .collection("build_weeks")
+        .collection('build_weeks')
         .doc(currentBuildWeekURL)
-        .collection("projects")
+        .collection('projects')
         .doc(currentSelectedProjectUid);
       let oldProjectData = await oldProjRef.get();
       oldProjectData = oldProjectData.data();
@@ -56,9 +57,9 @@ const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
     }
     // reference project in DB
     const projectRef = db
-      .collection("build_weeks")
+      .collection('build_weeks')
       .doc(currentBuildWeekURL)
-      .collection("projects")
+      .collection('projects')
       .doc(project.uid);
     // Get the data for the user's desired role that project from DB
     const projectData = await projectRef.get();
@@ -75,44 +76,61 @@ const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
               [projectRole]: {
                 names: [
                   ...projectRoleData.names,
-                  { name: user.displayName, email: email }
-                ]
-              }
-            }
-          }
+                  {name: user.displayName, email: email},
+                ],
+              },
+            },
+          },
         },
-        { merge: true }
+        {merge: true},
       );
 
       // Add project to user's data on DB
-      const userRef = db.collection("students").doc(user.uid);
+      const userRef = db.collection('students').doc(user.uid);
       let data = await userRef.set(
         {
           buildWeeks: {
             [currentBuildWeekURL]: {
               project: project.title,
-              projectUid: project.uid
-            }
-          }
+              projectUid: project.uid,
+            },
+          },
         },
-        { merge: true }
+        {merge: true},
       );
       setCurrentSelectedProject(project.title);
       setCurrentSelectedProjectUid(project.uid);
       //showStudents()
     } else {
       alert(
-        `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
+        `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`,
       );
     }
     setLoading(false);
   };
 
+  const handleAddRole = async roleToAdd => {
+    //console.log(roleToAdd);
+    //console.log(projectModalData.uid)
+    //console.log(currentBuildWeekURL)
+    let limit = parseInt(projectModalData[roleToAdd]);
+    limit++;
+    await db
+      .doc(
+        `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`,
+      )
+      .set(
+        {
+          project: {[roleToAdd]: limit},
+        },
+        {merge: true},
+      );
+  };
+
   return (
     <div
       className={styles.modalContainer}
-      onClick={() => setProjectModalData(null)}
-    >
+      onClick={() => setProjectModalData(null)}>
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
         <div className={styles.modalTitle}>
           <h3>{projectModalData.title}</h3>
@@ -125,113 +143,44 @@ const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
         <div className={styles.modalTeamMembers}>
           <h3>Team Members</h3>
           <ul>
-            <li>
-              Android Developers:
-              {projectModalData.availableRoles.androidDeveloper.names.map(
-                ({ name, email }) => (
-                  <p className={styles.span} key={email}>
-                    {name}
-                  </p>
-                )
-              )}
-            </li>
-            <li>
-              iOS Developers
-              {projectModalData.availableRoles.iosDeveloper.names.map(
-                ({ name, email }) => (
-                  <p className={styles.span} key={email}>
-                    {name}
-                  </p>
-                )
-              )}
-            </li>
-            <li>
-              Data Engineer
-              {projectModalData.availableRoles.dataEngineer.names.map(
-                ({ name, email }) => (
-                  <p className={styles.span} key={email}>
-                    {name}
-                  </p>
-                )
-              )}
-            </li>
-            <li>
-              Front End Developer:
-              {projectModalData.availableRoles.frontEndDeveloper.names.map(
-                ({ name, email }) => (
-                  <p className={styles.span} key={email}>
-                    {name}
-                  </p>
-                )
-              )}
-            </li>
-            <li>
-              Front End Frame Work Developer
-              {projectModalData.availableRoles.frontEndFrameWorkDeveloper.names.map(
-                ({ name, email }) => (
-                  <p className={styles.span} key={email}>
-                    {name}
-                  </p>
-                )
-              )}
-            </li>
-            <li>
-              Machine Learning Engineer
-              {projectModalData.availableRoles.machineLearningEngineer.names.map(
-                ({ name, email }) => (
-                  <p className={styles.span} key={email}>
-                    {name}
-                  </p>
-                )
-              )}
-            </li>
-            <li>
-              Project Lead
-              {projectModalData.availableRoles.projectLead.names.map(
-                ({ name, email }) => (
-                  <p className={styles.span} key={email}>
-                    {name}
-                  </p>
-                )
-              )}
-            </li>
-            <li>
-              UX Designer
-              {projectModalData.availableRoles.uXDesigner.names.map(
-                ({ name, email }) => (
-                  <p className={styles.span} key={email}>
-                    {name}
-                  </p>
-                )
-              )}
-            </li>
-            <li>
-              Web Backend Developer
-              {projectModalData.availableRoles.webBackEndDeveloper.names.map(
-                ({ name, email }) => (
-                  <p className={styles.span} key={email}>
-                    {name}
-                  </p>
-                )
-              )}
-            </li>
-            <li>
-              Web UI Developer
-              {projectModalData.availableRoles.webUiDeveloper.names.map(
-                ({ name, email }) => (
-                  <p className={styles.span} key={email}>
-                    {name}
-                  </p>
-                )
-              )}
-            </li>
+            {Object.keys(projectModalData.availableRoles).map(allRoles => {
+              return (
+                <li key={allRoles}>
+                  {allRoles} (max - {projectModalData[allRoles]}){' '}
+                  {role !== 'student' ? (
+                    <FaPlusSquare
+                      className={styles.icon}
+                      onClick={() => handleAddRole(allRoles)}
+                    />
+                  ) : null}
+                  {projectModalData.availableRoles[allRoles].names.map(r => {
+                    return (
+                      <>
+                        {/*ADD FUNCTION TO REMOVE STUDENT FROM PROJECT*/}
+                        {role !== 'student' ? (
+                          <Button color="red" animated="vertical">
+                            <Button.Content visible key={r.email}>
+                              {r.name}
+                            </Button.Content>
+                            <Button.Content hidden>
+                              <Icon name="remove user" />
+                            </Button.Content>
+                          </Button>
+                        ) : (
+                          <p key={r.email}>{r.name}</p>
+                        )}
+                      </>
+                    );
+                  })}
+                </li>
+              );
+            })}
           </ul>
         </div>
         <div className={styles.modalSignup}>
           <Button
             color="green"
-            onClick={() => handleJoinProject(projectModalData)}
-          >
+            onClick={() => handleJoinProject(projectModalData)}>
             Sign up
           </Button>
           <Button onClick={() => setProjectModalData(null)} color="red">

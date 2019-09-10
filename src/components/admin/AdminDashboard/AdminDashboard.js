@@ -24,9 +24,9 @@ const Dashboard = props => {
   // Local state
   const [projectModalData, setProjectModalData] = useState(null);
 
-  const signOut = () => {
-    firebase.auth().signOut();
-  };
+  // const signOut = () => {
+  //   firebase.auth().signOut();
+  // };
 
   const fetchProjects = async () => {
     const { buildWeek } = props.match.params;
