@@ -18,6 +18,8 @@ import AdminDashboard from "../components/admin/AdminDashboard/AdminDashboard.js
 import StudentBuildWeekView from "../components/students/StudentDashBoard/StudentBuildWeekView";
 import { list } from "postcss";
 
+// TODO: Change routes so that minions get the same routes as students
+
 const Root = props => {
   const {
     user,
