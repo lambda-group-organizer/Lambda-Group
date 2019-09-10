@@ -3,39 +3,39 @@ import styles from './MapLegend.module.scss'
 
 const mapLegend = [
   {
-    role : 'androidDeveloper',
+    role : 'Android Dev',
     color: '#66ff99',
   },
   {
-    role : 'dataEngineer',
+    role : 'Data Engineer',
     color: '#ff6600',
   },
   {
-    role : 'frontEndDeveloper',
+    role : 'Front-end Dev',
     color: '#9966ff',
   },
   {
-    role : 'frontEndFrameWorkDeveloper',
+    role : 'Front-end Frame',
     color: '#ff3300',
   },
   {
-    role : 'machineLearningEngineer',
+    role : 'Machine Learning',
     color: '#ff3399',
   },
   {
-    role : 'projectLead',
+    role : 'Project Lead',
     color: '#ffff00',
   },
   {
-    role : 'uXDesigner',
+    role : 'UX Designer',
     color: '#669999',
   },
   {
-    role : 'webBackEndDeveloper',
+    role : 'Web Back-end Dev',
     color: '#0000ff',
   },
   {
-    role : 'webUiDeveloper',
+    role : 'Web UI Dev',
     color: '#600666',
   },
 ]
@@ -45,12 +45,12 @@ const MapLegend = () => {
   return (
     <div className={styles.legendContainer}>
       <div className={styles.mapTitle}>Role Legend</div>
-      <div className={styles.single}>
+      <div className={styles.singleContainer}>
         {legend.map(single => (
-          <>
+          <div className={styles.single}>
             <h3 className={styles.role}>{single.role}</h3>
-            <div style={{color: `${single.color}`}}>color</div>
-        </>
+              <div className={styles.dot} style={{backgroundColor: `${single.color}`}}></div>
+        </div>
         ))}
       </div>
     </div>
