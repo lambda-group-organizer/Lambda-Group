@@ -12,6 +12,7 @@ import AdminProjectView from "./AdminProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
 import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
+import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
 
 const Dashboard = props => {
   const {
@@ -66,6 +67,12 @@ const Dashboard = props => {
 
   return (
     <div style={{ textAlign: "center" }}>
+      {projectModalData && (
+        <ProjectViewModal
+          setProjectModalData={setProjectModalData}
+          projectModalData={projectModalData}
+        />
+      )}
       <DashBoardHeader />
       <div className="displayContainer">
         <LoginAnimation />
