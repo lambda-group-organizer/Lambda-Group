@@ -101,7 +101,7 @@ const StudentBuildWeekView = props => {
             size="big"
             icon="filter"
             iconPosition="left"
-            placeholder="Fuzzy Search Projects"
+            placeholder="Search by Project title, type or student name"
           />
         </div>
       </div>
