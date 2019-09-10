@@ -146,17 +146,32 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
             {Object.keys(projectModalData.availableRoles).map(allRoles => {
               return (
                 <li key={allRoles}>
-                  {allRoles} {" "}
-                  (max - {projectModalData[allRoles]})
-                  {" "}
-                {console.log(allRoles)}
-                {role !== 'student' ? <FaPlusSquare
-                    className={styles.icon}
-                    onClick={() => handleAddRole(allRoles)}
-                    /> : null}
-                  {projectModalData.availableRoles[allRoles].names.map(r => (
-                    <p key={r.email}>{r.name}</p>
-                  ))}
+                  {allRoles} (max - {projectModalData[allRoles]}){' '}
+                  {role !== 'student' ? (
+                    <FaPlusSquare
+                      className={styles.icon}
+                      onClick={() => handleAddRole(allRoles)}
+                    />
+                  ) : null}
+                  {projectModalData.availableRoles[allRoles].names.map(r => {
+                    return (
+                      <>
+                        {/*ADD FUNCTION TO REMOVE STUDENT FROM PROJECT*/}
+                        {role !== 'student' ? (
+                          <Button color="red" animated="vertical">
+                            <Button.Content visible key={r.email}>
+                              {r.name}
+                            </Button.Content>
+                            <Button.Content hidden>
+                              <Icon name="remove user" />
+                            </Button.Content>
+                          </Button>
+                        ) : (
+                          <p key={r.email}>{r.name}</p>
+                        )}
+                      </>
+                    );
+                  })}
                 </li>
               );
             })}
