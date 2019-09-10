@@ -1,36 +1,8 @@
-// import React from "react";
-// import { Card, Button, Header, Icon } from "semantic-ui-react";
-// import {db} from '../../../'
-
-// const AdminProjectView = ({ project: { project }, setProjectModalData  }) => {
-//   return (
-//     <Card key={project.uid}>
-//       <p>{project.title}</p>
-//       <p>{project.androidDeveloper}</p>
-//       <p>{project.dataEngineer}</p>
-//       <p>{project.designLinks_dataSets}</p>
-//       <p>{project.frontEndDeveloper}</p>
-//       <p>{project.FrontEndFrameWorkDeveloper}</p>
-//       <p>{project.machineLearningEngineer}</p>
-//       <p>{project.productType}</p>
-//       <p>{project.projectLead}</p>
-//       <p>{project.uXDesigner}</p>
-//       <p>Team members . map</p>
-//       <p>{project.description}</p>
-//       <p>{project.webBackEndDeveloper}</p>
-//       <p>{project.WebUiDeveloper}</p>
-//     </Card>
-//   );
-// };
-
-// export default AdminProjectView;
-
 import React, { useContext, useEffect } from "react";
 import { Card, Button, Header, Icon } from "semantic-ui-react";
 import { UserContext } from "../../../context/allContexts";
 import { db } from "../../../logic/firebase";
 
-// import styles from "./StudentProjectView.module.scss";
 import styles from "../../students/StudentDashBoard/StudentProjectView/StudentProjectView.module.scss";
 
 const AdminProjectView = ({ project: { project }, setProjectModalData }) => {
