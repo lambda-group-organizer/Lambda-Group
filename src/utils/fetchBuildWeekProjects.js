@@ -2,8 +2,7 @@ import { db } from "../logic/firebase";
 
 const fetchBuildWeekProjects = async buildWeek => {
   let listOfProjects = [];
-  let projectsCollection = await db
-    .collection("build_weeks")
+  db.collection("build_weeks")
     .doc(`${buildWeek}`)
     .collection("projects")
     .onSnapshot(snapshot => {
