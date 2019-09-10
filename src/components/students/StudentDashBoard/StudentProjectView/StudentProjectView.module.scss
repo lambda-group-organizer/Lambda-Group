@@ -1,12 +1,17 @@
-.cardHeader {
-  margin-bottom: 2%;
-  font-size: 2.5rem;
-  min-height: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #ba112e !important;
-  color: white !important;
-  /* opacity: .7; */
-  padding: 5%;
+//.cardHeader {
+  //margin-bottom: 2%;
+  //font-size: 2.5rem;
+  //min-height: 3rem;
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  //background: #ba112e !important;
+  //color: white !important;
+  //[> opacity: .7; <]
+  //padding: 5%;
+//}
+
+.span {
+  margin: 0 5px;
+  text-transform: capitalize;
 }
