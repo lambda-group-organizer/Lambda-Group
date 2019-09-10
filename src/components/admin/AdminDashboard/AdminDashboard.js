@@ -15,20 +15,32 @@ import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
 const Dashboard = props => {
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
+  const [trigger, setTrigger] = useState(false)
 
-  const signOut = () => {
-    firebase.auth().signOut();
-  };
+  // const signOut = () => {
+  //   firebase.auth().signOut();
+  // };
 
   const fetchProjects = async () => {
     const { buildWeek } = props.match.params;
     let tempProjects = await fetchBuildWeekProjects(buildWeek);
+    console.log(tempProjects)
     setProjects(tempProjects);
     setFilteredProjects(tempProjects);
   };
+
+  //const updateState = async () => {
+    //let updated = await fetchProjects();
+    //setFilteredProjects(updated)
+  //}
+
   useEffect(() => {
-    fetchProjects();
+    fetchProjects()
   }, []);
+
+  //useEffect(() => {
+    //setFilteredProjects()
+  //}, [filteredProjects]);
 
   function handleFuzzySearch(e) {
     console.log(projects);
