@@ -143,17 +143,18 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
         <div className={styles.modalTeamMembers}>
           <h3>Team Members</h3>
           <ul>
-            {Object.keys(projectModalData.availableRoles).map(role => {
+            {Object.keys(projectModalData.availableRoles).map(allRoles => {
               return (
-                <li key={role}>
-                  {role} {" "}
-                  (max - {projectModalData[role]})
+                <li key={allRoles}>
+                  {allRoles} {" "}
+                  (max - {projectModalData[allRoles]})
                   {" "}
-                  <FaPlusSquare
+                {console.log(allRoles)}
+                {role !== 'student' ? <FaPlusSquare
                     className={styles.icon}
-                    onClick={() => handleAddRole(role)}
-                  />
-                  {projectModalData.availableRoles[role].names.map(r => (
+                    onClick={() => handleAddRole(allRoles)}
+                    /> : null}
+                  {projectModalData.availableRoles[allRoles].names.map(r => (
                     <p key={r.email}>{r.name}</p>
                   ))}
                 </li>
@@ -177,148 +178,3 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
 };
 
 export default StudentProjectViewModal;
-{
-  /*<li>
-  Android Developers (max - {projectModalData.androidDeveloper})
-  <FaPlusSquare
-    className={styles.icon}
-    onClick={() => handleAddRole('androidDeveloper')}
-  />
-  {projectModalData.availableRoles.androidDeveloper.names.map(
-    ({name, email}) => (
-      <p className={styles.span} key={email}>
-        {name}
-      </p>
-    ),
-  )}
-</li>
-<li>
-  iOS Developers (max - {projectModalData.iosDeveloper})
-  <FaPlusSquare
-    className={styles.icon}
-    onClick={() => handleAddRole('iosDeveloper')}
-  />
-  {projectModalData.availableRoles.iosDeveloper.names.map(
-    ({name, email}) => (
-      <p className={styles.span} key={email}>
-        {name}
-      </p>
-    ),
-  )}
-</li>
-<li>
-  Data Engineer (max - {projectModalData.dataEngineer})
-  <FaPlusSquare
-    className={styles.icon}
-    onClick={() => handleAddRole('dataEngineer')}
-  />
-  {projectModalData.availableRoles.dataEngineer.names.map(
-    ({name, email}) => (
-      <p className={styles.span} key={email}>
-        {name}
-      </p>
-    ),
-  )}
-</li>
-<li>
-  Front End Developer (max - {projectModalData.frontEndDeveloper})
-  <FaPlusSquare
-    className={styles.icon}
-    onClick={() => handleAddRole('frontEndDeveloper')}
-  />
-  {projectModalData.availableRoles.frontEndDeveloper.names.map(
-    ({name, email}) => (
-      <p className={styles.span} key={email}>
-        {name}
-      </p>
-    ),
-  )}
-</li>
-<li>
-  Front End Frame Work Developer (max -{' '}
-  {projectModalData.frontEndFrameWorkDeveloper})
-  <FaPlusSquare
-    className={styles.icon}
-    onClick={() => handleAddRole('frontEndFrameWorkDeveloper')}
-  />
-  {projectModalData.availableRoles.frontEndFrameWorkDeveloper.names.map(
-    ({name, email}) => (
-      <p className={styles.span} key={email}>
-        {name}
-      </p>
-    ),
-  )}
-</li>
-<li>
-  Machine Learning Engineer (max -{' '}
-  {projectModalData.machineLearningEngineer})
-  <FaPlusSquare
-    className={styles.icon}
-    onClick={() => handleAddRole('machineLearningEngineer')}
-  />
-  {projectModalData.availableRoles.machineLearningEngineer.names.map(
-    ({name, email}) => (
-      <p className={styles.span} key={email}>
-        {name}
-      </p>
-    ),
-  )}
-</li>
-<li>
-  Project Lead (max - {projectModalData.projectLead})
-  <FaPlusSquare
-    className={styles.icon}
-    onClick={() => handleAddRole('projectLead')}
-  />
-  {projectModalData.availableRoles.projectLead.names.map(
-    ({name, email}) => (
-      <p className={styles.span} key={email}>
-        {name}
-      </p>
-    ),
-  )}
-</li>
-<li>
-  UX Designer (max - {projectModalData.uXDesigner})
-  <FaPlusSquare
-    className={styles.icon}
-    onClick={() => handleAddRole('uXDesigner')}
-  />
-  {projectModalData.availableRoles.uXDesigner.names.map(
-    ({name, email}) => (
-      <p className={styles.span} key={email}>
-        {name}
-      </p>
-    ),
-  )}
-</li>
-<li>
-  Web Backend Developer (max -{' '}
-  {projectModalData.webBackEndDeveloper})
-  <FaPlusSquare
-    className={styles.icon}
-    onClick={() => handleAddRole('webBackEndDeveloper')}
-  />
-  {projectModalData.availableRoles.webBackEndDeveloper.names.map(
-    ({name, email}) => (
-      <p className={styles.span} key={email}>
-        {name}
-      </p>
-    ),
-  )}
-</li>
-<li>
-  Web UI Developer (max - {projectModalData.webUiDeveloper})
-  <FaPlusSquare
-    className={styles.icon}
-    onClick={() => handleAddRole('webUiDeveloper')}
-  />
-  {projectModalData.availableRoles.webUiDeveloper.names.map(
-    ({name, email}) => (
-      <p className={styles.span} key={email}>
-        {name}
-      </p>
-    ),
-  )}
-</li>*/
-}
