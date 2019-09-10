@@ -124,76 +124,108 @@ const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
         </div>
         <div className={styles.modalTeamMembers}>
           <h3>Team Members</h3>
-          {projectModalData.availableRoles.androidDeveloper.names.map(
-            ({ name, email }) => (
-              <span className={styles.span} key={email}>
-                {name}
-              </span>
-            )
-          )}
-          {projectModalData.availableRoles.iosDeveloper.names.map(
-            ({ name, email }) => (
-              <span className={styles.span} key={email}>
-                {name}
-              </span>
-            )
-          )}
-          {projectModalData.availableRoles.dataEngineer.names.map(
-            ({ name, email }) => (
-              <span className={styles.span} key={email}>
-                {name}
-              </span>
-            )
-          )}
-          {projectModalData.availableRoles.frontEndDeveloper.names.map(
-            ({ name, email }) => (
-              <span className={styles.span} key={email}>
-                {name}
-              </span>
-            )
-          )}
-          {projectModalData.availableRoles.frontEndFrameWorkDeveloper.names.map(
-            ({ name, email }) => (
-              <span className={styles.span} key={email}>
-                {name}
-              </span>
-            )
-          )}
-          {projectModalData.availableRoles.machineLearningEngineer.names.map(
-            ({ name, email }) => (
-              <span className={styles.span} key={email}>
-                {name}
-              </span>
-            )
-          )}
-          {projectModalData.availableRoles.projectLead.names.map(
-            ({ name, email }) => (
-              <span className={styles.span} key={email}>
-                {name}
-              </span>
-            )
-          )}
-          {projectModalData.availableRoles.uXDesigner.names.map(
-            ({ name, email }) => (
-              <span className={styles.span} key={email}>
-                {name}
-              </span>
-            )
-          )}
-          {projectModalData.availableRoles.webBackEndDeveloper.names.map(
-            ({ name, email }) => (
-              <span className={styles.span} key={email}>
-                {name}
-              </span>
-            )
-          )}
-          {projectModalData.availableRoles.webUiDeveloper.names.map(
-            ({ name, email }) => (
-              <span className={styles.span} key={email}>
-                {name}
-              </span>
-            )
-          )}
+          <ul>
+            <li>
+              Android Developers:
+              {projectModalData.availableRoles.androidDeveloper.names.map(
+                ({ name, email }) => (
+                  <p className={styles.span} key={email}>
+                    {name}
+                  </p>
+                )
+              )}
+            </li>
+            <li>
+              iOS Developers
+              {projectModalData.availableRoles.iosDeveloper.names.map(
+                ({ name, email }) => (
+                  <p className={styles.span} key={email}>
+                    {name}
+                  </p>
+                )
+              )}
+            </li>
+            <li>
+              Data Engineer
+              {projectModalData.availableRoles.dataEngineer.names.map(
+                ({ name, email }) => (
+                  <p className={styles.span} key={email}>
+                    {name}
+                  </p>
+                )
+              )}
+            </li>
+            <li>
+              Front End Developer:
+              {projectModalData.availableRoles.frontEndDeveloper.names.map(
+                ({ name, email }) => (
+                  <p className={styles.span} key={email}>
+                    {name}
+                  </p>
+                )
+              )}
+            </li>
+            <li>
+              Front End Frame Work Developer
+              {projectModalData.availableRoles.frontEndFrameWorkDeveloper.names.map(
+                ({ name, email }) => (
+                  <p className={styles.span} key={email}>
+                    {name}
+                  </p>
+                )
+              )}
+            </li>
+            <li>
+              Machine Learning Engineer
+              {projectModalData.availableRoles.machineLearningEngineer.names.map(
+                ({ name, email }) => (
+                  <p className={styles.span} key={email}>
+                    {name}
+                  </p>
+                )
+              )}
+            </li>
+            <li>
+              Project Lead
+              {projectModalData.availableRoles.projectLead.names.map(
+                ({ name, email }) => (
+                  <p className={styles.span} key={email}>
+                    {name}
+                  </p>
+                )
+              )}
+            </li>
+            <li>
+              UX Designer
+              {projectModalData.availableRoles.uXDesigner.names.map(
+                ({ name, email }) => (
+                  <p className={styles.span} key={email}>
+                    {name}
+                  </p>
+                )
+              )}
+            </li>
+            <li>
+              Web Backend Developer
+              {projectModalData.availableRoles.webBackEndDeveloper.names.map(
+                ({ name, email }) => (
+                  <p className={styles.span} key={email}>
+                    {name}
+                  </p>
+                )
+              )}
+            </li>
+            <li>
+              Web UI Developer
+              {projectModalData.availableRoles.webUiDeveloper.names.map(
+                ({ name, email }) => (
+                  <p className={styles.span} key={email}>
+                    {name}
+                  </p>
+                )
+              )}
+            </li>
+          </ul>
         </div>
         <div className={styles.modalSignup}>
           <Button

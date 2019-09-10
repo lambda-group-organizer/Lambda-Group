@@ -11,7 +11,7 @@ import StudentProjectView from "./StudentProjectView/StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
-import MapLegend from '../../../components/students/StudentDashBoard/StudentProjectView/MapLegend/MapLegend.js';
+import MapLegend from "../../../components/students/StudentDashBoard/StudentProjectView/MapLegend/MapLegend.js";
 
 const StudentBuildWeekView = props => {
   // state from context
@@ -20,14 +20,17 @@ const StudentBuildWeekView = props => {
     currentBuildWeekURL,
     setProjectRole,
     setCurrentSelectedProject,
-    setCurrentSelectedProjectUid,
+    setCurrentSelectedProjectUid
   } = useContext(UserContext);
 
-  const { projectsContext, setProjectsContext, fetchBuildWeekProjects } = useContext(BuildWeekContext);
+  const {
+    projectsContext,
+    setProjectsContext,
+    fetchBuildWeekProjects
+  } = useContext(BuildWeekContext);
   const [filteredProjects, setFilteredProjects] = useState([]);
   // Local state
   const [projectModalData, setProjectModalData] = useState(null);
-
 
   const fetchProjects = async () => {
     const { buildWeek } = props.match.params;
@@ -52,7 +55,17 @@ const StudentBuildWeekView = props => {
   }, []);
 
   useEffect(() => {
-      setFilteredProjects(projectsContext);
+    // when projects on the backend update, update all project cards
+    setFilteredProjects(projectsContext);
+
+    // update the project modal with new data only if it's open
+    if (projectModalData) {
+      projectsContext.map(contextProject => {
+        if (contextProject.project.uid === projectModalData.uid) {
+          setProjectModalData(contextProject.project);
+        }
+      });
+    }
   }, [projectsContext]);
 
   function handleFuzzySearch(e) {
