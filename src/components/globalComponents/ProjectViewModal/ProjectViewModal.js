@@ -222,12 +222,14 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
           </ul>
         </div>
         <div className={styles.modalSignup}>
-          <Button
-            color="green"
-            onClick={() => handleJoinProject(projectModalData)}
-          >
-            Sign up
-          </Button>
+          {role !== "overlord" ? (
+            <Button
+              color="green"
+              onClick={() => handleJoinProject(projectModalData)}
+            >
+              Sign up
+            </Button>
+          ) : null}
           <Button onClick={() => setProjectModalData(null)} color="red">
             Exit
           </Button>
