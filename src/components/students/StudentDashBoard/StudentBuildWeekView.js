@@ -106,7 +106,7 @@ const StudentBuildWeekView = props => {
           />
         </div>
       </div>
-      {/*<MapLegend /*/}>
+      {/*<MapLegend />*/}
       <Card.Group>
         {filteredProjects &&
           filteredProjects.map(project => {
