@@ -81,17 +81,17 @@ const AddBuildWeek = props => {
         teamMembers: []
       };
       if (index > 0 && project.title !== "") {
-        console.log(
-          project.webUiDeveloper,
-          project.frontEndDeveloper,
-          project.frontEndFrameWorkDeveloper,
-          project.webBackEndDeveloper,
-          project.uXDesigner,
-          project.projectLead,
-          project.androidDeveloper,
-          project.dataEngineer,
-          project.machineLearningEngineer
-        );
+        // console.log(
+        //   project.webUiDeveloper,
+        //   project.frontEndDeveloper,
+        //   project.frontEndFrameWorkDeveloper,
+        //   project.webBackEndDeveloper,
+        //   project.uXDesigner,
+        //   project.projectLead,
+        //   project.androidDeveloper,
+        //   project.dataEngineer,
+        //   project.machineLearningEngineer
+        // );
         db.collection("build_weeks")
           .doc(`${buildWeekName}`)
           .collection("projects")

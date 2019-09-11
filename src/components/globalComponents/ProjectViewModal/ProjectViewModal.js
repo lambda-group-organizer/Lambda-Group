@@ -6,7 +6,7 @@ import { FaPlusSquare } from "react-icons/fa";
 
 import styles from "./ProjectViewModal.module.scss";
 
-const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
+const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
   const {
     user,
     setUser,
@@ -158,21 +158,22 @@ const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                   ) : null}
                   {projectModalData.availableRoles[allRoles].names.map(r => {
                     return (
-                      <>
+                      <div key={r.email}>
                         {/*ADD FUNCTION TO REMOVE STUDENT FROM PROJECT*/}
                         {role !== "student" ? (
                           <Button color="red" animated="vertical">
-                            <Button.Content visible key={r.email}>
-                              {r.name}
-                            </Button.Content>
+                            <Button.Content visible>{r.name}</Button.Content>
                             <Button.Content hidden>
                               <Icon name="remove user" />
                             </Button.Content>
                           </Button>
                         ) : (
-                          <p key={r.email}>{r.name}</p>
+                          <p>
+                            {r.name}
+                            {r.email}
+                          </p>
                         )}
-                      </>
+                      </div>
                     );
                   })}
                 </li>
@@ -196,4 +197,4 @@ const StudentProjectViewModal = ({ projectModalData, setProjectModalData }) => {
   );
 };
 
-export default StudentProjectViewModal;
+export default ProjectViewModal;
