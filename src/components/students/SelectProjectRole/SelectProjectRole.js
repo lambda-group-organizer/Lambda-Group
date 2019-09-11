@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 const SelectProjectRole = ({ history }) => {
   const {
     projectRole,
+    email,
     setProjectRole,
     user,
     currentSelectedProject,
@@ -91,7 +92,7 @@ const SelectProjectRole = ({ history }) => {
     }
 
     db.collection("students")
-      .doc(user.uid)
+      .doc(email)
       .set(data, { merge: true })
       .then(history.push(`/student/buildweek/${currentBuildWeekURL}`));
   };

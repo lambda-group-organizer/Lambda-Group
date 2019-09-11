@@ -86,7 +86,7 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
       );
 
       // Add project to user's data on DB
-      const userRef = db.collection("students").doc(user.uid);
+      const userRef = db.collection("students").doc(email);
       let data = await userRef.set(
         {
           buildWeeks: {
