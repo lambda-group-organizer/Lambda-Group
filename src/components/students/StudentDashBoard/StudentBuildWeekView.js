@@ -17,6 +17,7 @@ const StudentBuildWeekView = props => {
   // state from context
   const {
     user,
+    email,
     currentBuildWeekURL,
     setProjectRole,
     setCurrentSelectedProject,
@@ -38,7 +39,7 @@ const StudentBuildWeekView = props => {
   };
 
   const getStudentRole = async () => {
-    const userRef = db.collection("students").doc(user.uid);
+    const userRef = db.collection("students").doc(email);
     let data = await userRef.get();
     setProjectRole(data.data().buildWeeks[currentBuildWeekURL].projectRole);
     setCurrentSelectedProject(
@@ -105,7 +106,7 @@ const StudentBuildWeekView = props => {
           />
         </div>
       </div>
-        {/*<MapLegend /*/}>
+      {/*<MapLegend /*/}>
       <Card.Group>
         {filteredProjects &&
           filteredProjects.map(project => {
