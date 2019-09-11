@@ -127,6 +127,36 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
       );
   };
 
+  const handleRemoveStudent = async (email, studentRole, namesList) => {
+    console.log(email, studentRole, namesList);
+    // remove student from project in project database
+
+    let newNames = namesList.filter(n => n.email !== email);
+
+    console.log(newNames);
+    console.log(
+      `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`
+    );
+
+    await db
+      .doc(
+        `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`
+      )
+      .update({
+        project: {
+          ...projectModalData,
+          availableRoles: {
+            ...projectModalData.availableRoles,
+            [studentRole]: {
+              ...projectModalData.availableRoles[studentRole],
+              names: [...newNames]
+            }
+          }
+        }
+      });
+    // remove project from student in student database
+  };
+
   return (
     <div
       className={styles.modalContainer}
@@ -161,7 +191,17 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                       <div key={r.email}>
                         {/*ADD FUNCTION TO REMOVE STUDENT FROM PROJECT*/}
                         {role !== "student" ? (
-                          <Button color="red" animated="vertical">
+                          <Button
+                            color="red"
+                            animated="vertical"
+                            onClick={() =>
+                              handleRemoveStudent(
+                                r.email,
+                                allRoles,
+                                projectModalData.availableRoles[allRoles].names
+                              )
+                            }
+                          >
                             <Button.Content visible>{r.name}</Button.Content>
                             <Button.Content hidden>
                               <Icon name="remove user" />
