@@ -26,89 +26,6 @@ const AdminProjectView = ({ project: { project }, setProjectModalData }) => {
     setCurrentSelectedProjectUid
   } = useContext(UserContext);
 
-  // const handleJoinProject = async project => {
-  //   setLoading(true);
-  //   if (currentSelectedProject !== "") {
-  //     let oldProjRef = await db
-  //       .collection("build_weeks")
-  //       .doc(currentBuildWeekURL)
-  //       .collection("projects")
-  //       .doc(currentSelectedProjectUid);
-  //     let oldProjectData = await oldProjRef.get();
-  //     oldProjectData = oldProjectData.data();
-  //     if (oldProjectData.project.availableRoles[projectRole].names.length > 0) {
-  //       let newOldProjectData = oldProjectData.project.availableRoles[
-  //         projectRole
-  //       ].names.filter(n => n.email !== email);
-
-  //       oldProjectData.project.availableRoles[
-  //         projectRole
-  //       ].names = newOldProjectData;
-
-  //       oldProjRef.set(oldProjectData);
-  //     }
-  //   }
-  //   // reference project in DB
-  //   const projectRef = db
-  //     .collection("build_weeks")
-  //     .doc(currentBuildWeekURL)
-  //     .collection("projects")
-  //     .doc(project.uid);
-  //   // Get the data for the user's desired role that project from DB
-  //   const projectData = await projectRef.get();
-  //   let projectRoleData = await projectData.data().project.availableRoles[
-  //     projectRole
-  //   ];
-  //   // check if there is room in that project for user
-  //   if (projectRoleData.names.length < project[projectRole]) {
-  //     // Add user to project's data on DB
-  //     await projectRef.set(
-  //       {
-  //         project: {
-  //           availableRoles: {
-  //             [projectRole]: {
-  //               names: [
-  //                 ...projectRoleData.names,
-  //                 { name: user.displayName, email: email }
-  //               ]
-  //             }
-  //           }
-  //         }
-  //       },
-  //       { merge: true }
-  //     );
-
-  //     // Add project to user's data on DB
-  //     const userRef = db.collection("students").doc(user.uid);
-  //     let data = await userRef.set(
-  //       {
-  //         buildWeeks: {
-  //           [currentBuildWeekURL]: {
-  //             project: project.title,
-  //             projectUid: project.uid
-  //           }
-  //         }
-  //       },
-  //       { merge: true }
-  //     );
-  //     setCurrentSelectedProject(project.title);
-  //     setCurrentSelectedProjectUid(project.uid);
-  //     //showStudents()
-  //   } else {
-  //     alert(
-  //       `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
-  //     );
-  //   }
-  //   // const projectData = await projectRef.set({availableRoles: {[projectRole]: {names: []}}}, {merge: true})
-  //   // data = data.data(); "Frontend Developer"
-  //   setLoading(false);
-  // };
-
-  //const fetchNames = (project) => {
-  //project.availableRoles.androidDeveloper.names.map(({name, email}) => (
-  //<span key={email}>{name}</span>
-  //))}
-
   return (
     <Card key={project.uid} raised={true} centered={true}>
       <Card.Content
@@ -126,6 +43,7 @@ const AdminProjectView = ({ project: { project }, setProjectModalData }) => {
           : project.pitch}
       </Card.Content>
       <Card.Content>
+        Team:
         {project.availableRoles.androidDeveloper.names.map(
           ({ name, email }) => (
             <span className={styles.span} key={email}>
