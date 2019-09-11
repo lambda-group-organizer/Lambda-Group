@@ -1,12 +1,12 @@
-import React, {useContext, useEffect} from 'react';
-import {Card, Button, Header, Icon} from 'semantic-ui-react';
-import {UserContext} from '../../../context/allContexts';
-import {db} from '../../../logic/firebase';
-import {FaPlusSquare} from 'react-icons/fa';
+import React, { useContext, useEffect } from "react";
+import { Card, Button, Header, Icon } from "semantic-ui-react";
+import { UserContext } from "../../../context/allContexts";
+import { db } from "../../../logic/firebase";
+import { FaPlusSquare } from "react-icons/fa";
 
-import styles from './ProjectViewModal.module.scss';
+import styles from "./ProjectViewModal.module.scss";
 
-const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
+const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
   const {
     user,
     setUser,
@@ -24,7 +24,7 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
     setCurrentSelectedProject,
     setLoading,
     currentSelectedProjectUid,
-    setCurrentSelectedProjectUid,
+    setCurrentSelectedProjectUid
   } = useContext(UserContext);
 
   //function showStudents() {
@@ -35,11 +35,11 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
   const handleJoinProject = async project => {
     console.log(project);
     setLoading(true);
-    if (currentSelectedProject !== '') {
+    if (currentSelectedProject !== "") {
       let oldProjRef = await db
-        .collection('build_weeks')
+        .collection("build_weeks")
         .doc(currentBuildWeekURL)
-        .collection('projects')
+        .collection("projects")
         .doc(currentSelectedProjectUid);
       let oldProjectData = await oldProjRef.get();
       oldProjectData = oldProjectData.data();
@@ -57,9 +57,9 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
     }
     // reference project in DB
     const projectRef = db
-      .collection('build_weeks')
+      .collection("build_weeks")
       .doc(currentBuildWeekURL)
-      .collection('projects')
+      .collection("projects")
       .doc(project.uid);
     // Get the data for the user's desired role that project from DB
     const projectData = await projectRef.get();
@@ -76,34 +76,34 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
               [projectRole]: {
                 names: [
                   ...projectRoleData.names,
-                  {name: user.displayName, email: email},
-                ],
-              },
-            },
-          },
+                  { name: user.displayName, email: email }
+                ]
+              }
+            }
+          }
         },
-        {merge: true},
+        { merge: true }
       );
 
       // Add project to user's data on DB
-      const userRef = db.collection('students').doc(user.uid);
+      const userRef = db.collection("students").doc(user.uid);
       let data = await userRef.set(
         {
           buildWeeks: {
             [currentBuildWeekURL]: {
               project: project.title,
-              projectUid: project.uid,
-            },
-          },
+              projectUid: project.uid
+            }
+          }
         },
-        {merge: true},
+        { merge: true }
       );
       setCurrentSelectedProject(project.title);
       setCurrentSelectedProjectUid(project.uid);
       //showStudents()
     } else {
       alert(
-        `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`,
+        `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
       );
     }
     setLoading(false);
@@ -117,20 +117,51 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
     limit++;
     await db
       .doc(
-        `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`,
+        `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`
       )
       .set(
         {
-          project: {[roleToAdd]: limit},
+          project: { [roleToAdd]: limit }
         },
-        {merge: true},
+        { merge: true }
       );
+  };
+
+  const handleRemoveStudent = async (email, studentRole, namesList) => {
+    console.log(email, studentRole, namesList);
+    // remove student from project in project database
+
+    let newNames = namesList.filter(n => n.email !== email);
+
+    console.log(newNames);
+    console.log(
+      `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`
+    );
+
+    await db
+      .doc(
+        `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`
+      )
+      .update({
+        project: {
+          ...projectModalData,
+          availableRoles: {
+            ...projectModalData.availableRoles,
+            [studentRole]: {
+              ...projectModalData.availableRoles[studentRole],
+              names: [...newNames]
+            }
+          }
+        }
+      });
+    // remove project from student in student database
   };
 
   return (
     <div
       className={styles.modalContainer}
-      onClick={() => setProjectModalData(null)}>
+      onClick={() => setProjectModalData(null)}
+    >
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
         <div className={styles.modalTitle}>
           <h3>{projectModalData.title}</h3>
@@ -146,30 +177,43 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
             {Object.keys(projectModalData.availableRoles).map(allRoles => {
               return (
                 <li key={allRoles}>
-                  {allRoles} (max - {projectModalData[allRoles]}){' '}
-                  {role !== 'student' ? (
+                  {allRoles} (max - {projectModalData[allRoles]}){" "}
+                  {role !== "student" ? (
                     <FaPlusSquare
                       className={styles.icon}
+                      // TODO: Fix handle add role
+                      // TODO: Add loading state for adding roles
                       onClick={() => handleAddRole(allRoles)}
                     />
                   ) : null}
                   {projectModalData.availableRoles[allRoles].names.map(r => {
                     return (
-                      <>
+                      <div key={r.email}>
                         {/*ADD FUNCTION TO REMOVE STUDENT FROM PROJECT*/}
-                        {role !== 'student' ? (
-                          <Button color="red" animated="vertical">
-                            <Button.Content visible key={r.email}>
-                              {r.name}
-                            </Button.Content>
+                        {role !== "student" ? (
+                          <Button
+                            color="red"
+                            animated="vertical"
+                            onClick={() =>
+                              handleRemoveStudent(
+                                r.email,
+                                allRoles,
+                                projectModalData.availableRoles[allRoles].names
+                              )
+                            }
+                          >
+                            <Button.Content visible>{r.name}</Button.Content>
                             <Button.Content hidden>
                               <Icon name="remove user" />
                             </Button.Content>
                           </Button>
                         ) : (
-                          <p key={r.email}>{r.name}</p>
+                          <p>
+                            {r.name}
+                            {r.email}
+                          </p>
                         )}
-                      </>
+                      </div>
                     );
                   })}
                 </li>
@@ -180,7 +224,8 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
         <div className={styles.modalSignup}>
           <Button
             color="green"
-            onClick={() => handleJoinProject(projectModalData)}>
+            onClick={() => handleJoinProject(projectModalData)}
+          >
             Sign up
           </Button>
           <Button onClick={() => setProjectModalData(null)} color="red">
@@ -192,4 +237,4 @@ const StudentProjectViewModal = ({projectModalData, setProjectModalData}) => {
   );
 };
 
-export default StudentProjectViewModal;
+export default ProjectViewModal;

@@ -40,7 +40,7 @@ const Register = ({ history }) => {
           });
 
           db.collection("students")
-            .doc(createdUser.user.uid)
+            .doc(createdUser.user.email)
             .set({
               uid: createdUser.user.uid,
               email: createdUser.user.email,

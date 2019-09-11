@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { db } from "../../../logic/firebase";
 import { Card, Button } from "semantic-ui-react";
-import Spinner from '../../globalComponents/Spinner/Spinner.js';
+import Spinner from "../../globalComponents/Spinner/Spinner.js";
+import { UserContext, BuildWeekContext } from "../../../context/allContexts";
 
 import CopyLink from "./CopyLink";
 
 const BuildWeeksList = props => {
+  const { setCurrentBuildWeekURL } = useContext(UserContext);
+
   const [listOfBuildWeeks, setListOfBuildWeeks] = useState([]);
-  const [triggerDeleteState, setTriggerDeleteState] = useState(false)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [triggerDeleteState, setTriggerDeleteState] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   //  ===================================== Populates list of build weeks ===================================== //
   //TODO: needs to run each time a build week is created
@@ -37,28 +40,40 @@ const BuildWeeksList = props => {
 
   function BuildWeekView(buildWeek) {
     console.log(props);
+    setCurrentBuildWeekURL(buildWeek);
     props.history.push(`/Admin/${buildWeek}`);
   }
 
-
   function removeBuildWeek(buildWeek) {
-    setIsDeleting(true)
-    db.collection('build_weeks').doc(`${buildWeek}`).collection('projects').get().then((snapshot) => {
-      snapshot.forEach(doc => {
-       db.collection('build_weeks').doc(`${buildWeek}`).collection('projects').doc(doc.data().project.uid).delete()
-      })
-        db.collection('build_weeks').doc(`${buildWeek}`).delete().then(function() {
-          setTriggerDeleteState(!triggerDeleteState)
-          setIsDeleting(false)
-        }).catch(err => {
-          console.error(err)
-        })
-      })
-}
+    setIsDeleting(true);
+    db.collection("build_weeks")
+      .doc(`${buildWeek}`)
+      .collection("projects")
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          db.collection("build_weeks")
+            .doc(`${buildWeek}`)
+            .collection("projects")
+            .doc(doc.data().project.uid)
+            .delete();
+        });
+        db.collection("build_weeks")
+          .doc(`${buildWeek}`)
+          .delete()
+          .then(function() {
+            setTriggerDeleteState(!triggerDeleteState);
+            setIsDeleting(false);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      });
+  }
 
   return (
     <div>
-    {isDeleting && <Spinner />}
+      {isDeleting && <Spinner />}
       <Card.Group>
         {listOfBuildWeeks &&
           listOfBuildWeeks.map(buildWeek => (
@@ -68,7 +83,11 @@ const BuildWeeksList = props => {
               </Card.Content>
               <Card.Content extra>
                 <div className="ui buttons">
-                  <Button onClick={() => removeBuildWeek(buildWeek)} basic color="red">
+                  <Button
+                    onClick={() => removeBuildWeek(buildWeek)}
+                    basic
+                    color="red"
+                  >
                     Delete
                   </Button>
                 </div>
