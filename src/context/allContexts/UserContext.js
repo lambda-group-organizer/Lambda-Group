@@ -1,5 +1,6 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useRef } from "react";
 import Spinner from "../../components/globalComponents/Spinner/Spinner.js";
+import { db } from "../../logic/firebase";
 
 export const UserContext = createContext();
 

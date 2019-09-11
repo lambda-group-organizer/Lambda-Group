@@ -47,6 +47,7 @@ const Login = ({ history }) => {
   // CHECK IF USER IS ADMIN
   const checkIfAdmin = async userEmail => {
     let adminList = [];
+
     await db
       .collection("admin")
       .get()
@@ -78,7 +79,7 @@ const Login = ({ history }) => {
     } else if (role === "student") {
       // Push to student's pick a build week associated with context
       // else push to /student/dashboard to pick a build week
-        history.push(`/student/dashboard`);
+      history.push(`/student/dashboard`);
     } else {
       history.push("/");
     }

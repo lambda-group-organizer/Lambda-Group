@@ -41,10 +41,12 @@ const StudentBuildWeekView = props => {
   const getStudentRole = async () => {
     const userRef = db.collection("students").doc(email);
     let data = await userRef.get();
+    console.log(data.data());
     setProjectRole(data.data().buildWeeks[currentBuildWeekURL].projectRole);
     setCurrentSelectedProject(
       data.data().buildWeeks[currentBuildWeekURL].project
     );
+    console.log(data.data().buildWeeks[currentBuildWeekURL].project);
     setCurrentSelectedProjectUid(
       data.data().buildWeeks[currentBuildWeekURL].projectUid
     );

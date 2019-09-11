@@ -6,8 +6,8 @@ import { withRouter } from "react-router-dom";
 
 const SelectProjectRole = ({ history }) => {
   const {
-    projectRole,
     email,
+    projectRole,
     setProjectRole,
     user,
     currentSelectedProject,
@@ -65,12 +65,58 @@ const SelectProjectRole = ({ history }) => {
     console.log("ROLE SET");
   };
 
-  const addProjectRoleToFirestore = projectRole => {
+  const addProjectRoleToFirestore = async projectRole => {
     console.log("user: ", user);
     console.log("projectRole: ", projectRole);
     // TODO: Call to DB and get current project
     let data;
+    let oldData = await db
+      .collection("students")
+      .doc(email)
+      .get();
+
+    oldData = oldData.data().buildWeeks[currentBuildWeekURL];
     console.log(currentSelectedProject);
+
+    // if currentrole !== old data role
+    console.log(oldData);
+    if (projectRole !== oldData.projectRole) {
+      // remove from previous project in project db
+      const projectsdbRef = db.doc(
+        `build_weeks/${currentBuildWeekURL}/projects/${oldData.projectUid}`
+      );
+
+      let oldProjectData = await projectsdbRef.get();
+      console.log(oldData.projectRole);
+      console.log(
+        oldProjectData.data().project.availableRoles[oldData.projectRole]
+      );
+
+      let namesList = oldProjectData.data().project.availableRoles[
+        oldData.projectRole
+      ].names;
+
+      console.log("namesList", newNamesList);
+      let newNamesList = namesList.filter(n => n.email !== email);
+      console.log("newNamesList", newNamesList);
+
+      projectsdbRef.update({
+        project: {
+          ...oldProjectData.data().project,
+          availableRoles: {
+            ...oldProjectData.data().project.availableRoles,
+            [oldData.projectRole]: {
+              ...oldProjectData.data().project.availableRoles[
+                oldData.projectRole
+              ],
+              names: [...newNamesList]
+            }
+          }
+        }
+      });
+      // alter current project in student project db
+    }
+
     if (currentSelectedProject !== "") {
       data = {
         buildWeeks: {

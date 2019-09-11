@@ -6,7 +6,7 @@ import { UserContext } from "../../../context/allContexts";
 
 const StudentDashBoard = props => {
   const { currentBuildWeekURL } = useContext(UserContext);
-  console.log(currentBuildWeekURL);
+  // console.log(currentBuildWeekURL);
 
   return (
     <>
