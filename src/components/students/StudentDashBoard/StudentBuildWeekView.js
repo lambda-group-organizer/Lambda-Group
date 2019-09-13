@@ -15,7 +15,7 @@ import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectVie
 
 const StudentBuildWeekView = props => {
   // state from context
-  const { email, currentBuildWeekURL } = useContext(UserContext);
+  const { email, currentBuildWeekURL, user } = useContext(UserContext);
 
   const { projectsContext, fetchBuildWeekProjects } = useContext(
     BuildWeekContext
@@ -30,14 +30,19 @@ const StudentBuildWeekView = props => {
   };
 
   const getStudentRole = async () => {
+    console.log("EMAIL: ", email);
     const userRef = db.collection("students").doc(email);
     let data = await userRef.get();
     console.log(data.data());
   };
 
   useEffect((buildWeek, projectsContext) => {
-    fetchProjects(buildWeek, projectsContext);
-    getStudentRole();
+    if (user) {
+      fetchProjects(buildWeek, projectsContext);
+      getStudentRole();
+    } else {
+      props.history.push("/");
+    }
   }, []);
 
   useEffect(() => {

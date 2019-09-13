@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
-import { withRouter } from "react-router-dom";
-import { db } from "../../../logic/firebase";
-import { Card, Button } from "semantic-ui-react";
-import Spinner from "../../globalComponents/Spinner/Spinner.js";
-import { UserContext } from "../../../context/allContexts";
+import React, {useState, useEffect, useContext} from 'react';
+import {withRouter} from 'react-router-dom';
+import {db} from '../../../logic/firebase';
+import {Card, Button} from 'semantic-ui-react';
+import Spinner from '../../globalComponents/Spinner/Spinner.js';
+import {UserContext} from '../../../context/allContexts';
 
-import CopyLink from "./CopyLink";
+import CopyLink from './CopyLink';
 
 const BuildWeeksList = props => {
-  const { setCurrentBuildWeekURL } = useContext(UserContext);
+  const {setCurrentBuildWeekURL} = useContext(UserContext);
 
   const [listOfBuildWeeks, setListOfBuildWeeks] = useState([]);
   const [triggerDeleteState, setTriggerDeleteState] = useState(false);
@@ -23,7 +23,7 @@ const BuildWeeksList = props => {
   // moving on for now.
   const fetchBuildWeeks = async () => {
     setListOfBuildWeeks([]);
-    let buildWeeksCollection = await db.collection("build_weeks").get();
+    let buildWeeksCollection = await db.collection('build_weeks').get();
     buildWeeksCollection.forEach(function(doc) {
       setListOfBuildWeeks(prevSetOfBuildWeeks => {
         return [...prevSetOfBuildWeeks, `${doc.id}`];
@@ -46,19 +46,19 @@ const BuildWeeksList = props => {
 
   function removeBuildWeek(buildWeek) {
     setIsDeleting(true);
-    db.collection("build_weeks")
+    db.collection('build_weeks')
       .doc(`${buildWeek}`)
-      .collection("projects")
+      .collection('projects')
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          db.collection("build_weeks")
+          db.collection('build_weeks')
             .doc(`${buildWeek}`)
-            .collection("projects")
+            .collection('projects')
             .doc(doc.data().project.uid)
             .delete();
         });
-        db.collection("build_weeks")
+        db.collection('build_weeks')
           .doc(`${buildWeek}`)
           .delete()
           .then(function() {
@@ -69,6 +69,10 @@ const BuildWeeksList = props => {
             console.error(err);
           });
       });
+  }
+
+  function exportCSV() {
+    console.log('firing export');
   }
 
   return (
@@ -86,8 +90,7 @@ const BuildWeeksList = props => {
                   <Button
                     onClick={() => removeBuildWeek(buildWeek)}
                     basic
-                    color="red"
-                  >
+                    color="red">
                     Delete
                   </Button>
                 </div>

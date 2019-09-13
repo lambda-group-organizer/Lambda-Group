@@ -65,10 +65,11 @@ const Root = props => {
       });
 
     // Checks if student is already logged in
-    firebase.auth().onAuthStateChanged(user => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       // If it's a build week (matches one in the DB)
       // add to UserContext
       // Go to Build week in User Context
+      console.log("onAuthStateChanged: ", user);
       if (user) {
         checkIfAdmin(user.email);
         const { displayName, uid } = user;
@@ -77,6 +78,7 @@ const Root = props => {
         props.history.push("/");
       }
     });
+    return () => unsubscribe();
   }, []);
 
   const checkIfAdmin = async userEmail => {
@@ -129,13 +131,13 @@ const Root = props => {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/register" component={Register} />
-        {role === "minion" || role === "overlord" ? (
+        {role === "overlord" ? (
           <>
             <Route exact path="/overlord" component={OverLoardMainDashboard} />
             <Route exact path="/admin/:buildWeek" component={AdminDashboard} />
           </>
         ) : null}
-        {role === "student" ? (
+        {role !== "overlord" ? (
           <>
             <Route
               exact

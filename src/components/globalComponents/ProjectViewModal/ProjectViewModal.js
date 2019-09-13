@@ -1,29 +1,29 @@
-import React, { useContext } from "react";
-import { Button, Icon } from "semantic-ui-react";
-import { UserContext } from "../../../context/allContexts";
-import { db } from "../../../logic/firebase";
-import { FaPlusSquare } from "react-icons/fa";
+import React, {useContext} from 'react';
+import {Button, Icon} from 'semantic-ui-react';
+import {UserContext} from '../../../context/allContexts';
+import {db} from '../../../logic/firebase';
+import {FaPlusSquare} from 'react-icons/fa';
 
-import styles from "./ProjectViewModal.module.scss";
+import styles from './ProjectViewModal.module.scss';
 
-const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
+const ProjectViewModal = ({projectModalData, setProjectModalData}) => {
   const {
     user,
     email,
     role,
     currentBuildWeekURL,
     userBuildWeeks,
-    setLoading
+    setLoading,
   } = useContext(UserContext);
 
   const handleJoinProject = async project => {
     console.log(project);
     setLoading(true);
-    if (userBuildWeeks[currentBuildWeekURL].project !== "") {
+    if (userBuildWeeks[currentBuildWeekURL].project !== '') {
       let oldProjRef = await db
-        .collection("build_weeks")
+        .collection('build_weeks')
         .doc(currentBuildWeekURL)
-        .collection("projects")
+        .collection('projects')
         .doc(userBuildWeeks[currentBuildWeekURL].projectUid);
       let oldProjectData = await oldProjRef.get();
       oldProjectData = oldProjectData.data();
@@ -45,9 +45,9 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
     }
     // reference project in DB
     const projectRef = db
-      .collection("build_weeks")
+      .collection('build_weeks')
       .doc(currentBuildWeekURL)
-      .collection("projects")
+      .collection('projects')
       .doc(project.uid);
     // Get the data for the user's desired role that project from DB
     const projectData = await projectRef.get();
@@ -67,31 +67,33 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
               [userBuildWeeks[currentBuildWeekURL].projectRole]: {
                 names: [
                   ...projectRoleData.names,
-                  { name: user.displayName, email: email }
-                ]
-              }
-            }
-          }
+                  {name: user.displayName, email: email},
+                ],
+              },
+            },
+          },
         },
-        { merge: true }
+        {merge: true},
       );
 
       // Add project to user's data on DB
-      const userRef = db.collection("students").doc(email);
+      const userRef = db.collection('students').doc(email);
       await userRef.set(
         {
           buildWeeks: {
             [currentBuildWeekURL]: {
               project: project.title,
-              projectUid: project.uid
-            }
-          }
+              projectUid: project.uid,
+            },
+          },
         },
-        { merge: true }
+        {merge: true},
       );
     } else {
       alert(
-        `SORRY NO MORE ${userBuildWeeks[currentBuildWeekURL].projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
+        `SORRY NO MORE ${
+          userBuildWeeks[currentBuildWeekURL].projectRole
+        }S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`,
       );
     }
     setLoading(false);
@@ -102,30 +104,43 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
     limit++;
     await db
       .doc(
-        `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`
+        `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`,
       )
       .set(
         {
-          project: { [roleToAdd]: limit }
+          project: {[roleToAdd]: limit},
         },
-        { merge: true }
+        {merge: true},
       );
   };
 
   const handleRemoveStudent = async (email, studentRole, namesList) => {
     console.log(email, studentRole, namesList);
     // remove student from project in project database
-
+    const studentRef = db.doc(`students/${email}`);
+    let studentToBeRemoved = await studentRef.get();
+    studentToBeRemoved = studentToBeRemoved.data()
+    studentRef.set({
+      ...studentToBeRemoved,
+      buildWeeks: {
+        ...studentToBeRemoved.buildWeeks,
+        [currentBuildWeekURL]: {
+          ...studentToBeRemoved.buildWeeks[currentBuildWeekURL],
+          project: '',
+          projectUid: '',
+        },
+      },
+    });
     let newNames = namesList.filter(n => n.email !== email);
 
     console.log(newNames);
     console.log(
-      `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`
+      `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`,
     );
 
     await db
       .doc(
-        `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`
+        `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`,
       )
       .update({
         project: {
@@ -134,10 +149,10 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
             ...projectModalData.availableRoles,
             [studentRole]: {
               ...projectModalData.availableRoles[studentRole],
-              names: [...newNames]
-            }
-          }
-        }
+              names: [...newNames],
+            },
+          },
+        },
       });
     // remove project from student in student database
   };
@@ -145,8 +160,7 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
   return (
     <div
       className={styles.modalContainer}
-      onClick={() => setProjectModalData(null)}
-    >
+      onClick={() => setProjectModalData(null)}>
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
         <div className={styles.modalTitle}>
           <h3>{projectModalData.title}</h3>
@@ -162,8 +176,8 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
             {Object.keys(projectModalData.availableRoles).map(allRoles => {
               return (
                 <li key={allRoles}>
-                  {allRoles} (max - {projectModalData[allRoles]}){" "}
-                  {role !== "student" ? (
+                  {allRoles} (max - {projectModalData[allRoles]}){' '}
+                  {role !== 'student' ? (
                     <FaPlusSquare
                       className={styles.icon}
                       // TODO: Fix handle add role
@@ -175,7 +189,7 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                     return (
                       <div key={r.email}>
                         {/*ADD FUNCTION TO REMOVE STUDENT FROM PROJECT*/}
-                        {role !== "student" ? (
+                        {role === 'overlord' ? (
                           <Button
                             color="red"
                             animated="vertical"
@@ -183,10 +197,9 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                               handleRemoveStudent(
                                 r.email,
                                 allRoles,
-                                projectModalData.availableRoles[allRoles].names
+                                projectModalData.availableRoles[allRoles].names,
                               )
-                            }
-                          >
+                            }>
                             <Button.Content visible>{r.name}</Button.Content>
                             <Button.Content hidden>
                               <Icon name="remove user" />
@@ -207,11 +220,10 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
           </ul>
         </div>
         <div className={styles.modalSignup}>
-          {role !== "overlord" ? (
+          {role !== 'overlord' ? (
             <Button
               color="green"
-              onClick={() => handleJoinProject(projectModalData)}
-            >
+              onClick={() => handleJoinProject(projectModalData)}>
               Sign up
             </Button>
           ) : null}

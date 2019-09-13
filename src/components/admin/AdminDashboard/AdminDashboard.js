@@ -4,6 +4,7 @@ import { Card, Form } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 import { BuildWeekContext } from "../../../context/allContexts";
+import ExportCSV from "../BuildWeeksList/ExportCSV.js";
 
 // Components
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
@@ -84,6 +85,7 @@ const Dashboard = props => {
             placeholder="Search by Project title, type or student name"
           />
         </div>
+        <ExportCSV />
       </div>
       <Card.Group>
         {filteredProjects &&

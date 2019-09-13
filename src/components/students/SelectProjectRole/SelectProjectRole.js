@@ -36,7 +36,7 @@ const SelectProjectRole = ({ history }) => {
     },
     {
       title: "Front End Frame Work Developer",
-      selection: "FrontEndFrameWorkDeveloper"
+      selection: "frontEndFrameWorkDeveloper"
     },
     {
       title: "Machine Learning Engineer",
@@ -56,7 +56,7 @@ const SelectProjectRole = ({ history }) => {
     },
     {
       title: "Web UI Developer",
-      selection: "WebUiDeveloper"
+      selection: "webUiDeveloper"
     }
   ];
   const [roles] = useState(possibleRoles);
