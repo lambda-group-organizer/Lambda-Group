@@ -12,19 +12,9 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
     email,
     role,
     currentBuildWeekURL,
-    // projectRole,
     userBuildWeeks,
-    // currentSelectedProject,
-    // setCurrentSelectedProject,
     setLoading
-    // currentSelectedProjectUid,
-    // setCurrentSelectedProjectUid
   } = useContext(UserContext);
-
-  //function showStudents() {
-  //console.log(user)
-  //TODO: Hook this up to show signed up
-  //}
 
   const handleJoinProject = async project => {
     console.log(project);
@@ -108,9 +98,6 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
   };
 
   const handleAddRole = async roleToAdd => {
-    //console.log(roleToAdd);
-    //console.log(projectModalData.uid)
-    //console.log(currentBuildWeekURL)
     let limit = parseInt(projectModalData[roleToAdd]);
     limit++;
     await db

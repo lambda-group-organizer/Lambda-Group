@@ -86,17 +86,6 @@ const AdminProjectView = ({ project: { project }, setProjectModalData }) => {
           </span>
         ))}
       </Card.Content>
-      {/* {currentSelectedProject !== project.title && (
-        <Card.Content>
-          {project.productType}{" "}
-          <Button onClick={() => handleJoinProject(project)}>+Join</Button>
-        </Card.Content>
-      )}
-      {currentSelectedProject === project.title && (
-        <Card.Content style={{ backgroundColor: "green", color: "white" }}>
-          Signed up!
-        </Card.Content>
-      )} */}
       <div
         style={{ height: "50px", width: "100%", backgroundColor: "cyan" }}
         onClick={() => setProjectModalData(project)}

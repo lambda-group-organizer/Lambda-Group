@@ -22,24 +22,11 @@ import StudentBuildWeekView from "../components/students/StudentDashBoard/Studen
 
 const Root = props => {
   const {
-    // user,
     setUser,
-    // email,
     setEmail,
-    // password,
-    // setPassword,
-    // loading,
-    // setLoading,
     role,
     setRole,
-    // currentBuildWeekURL,
     setCurrentBuildWeekURL,
-    // projectRole,
-    // setProjectRole,
-    // currentSelectedProject,
-    // setCurrentSelectedProject,
-    // currentSelectedProjectUid,
-    // setCurrentSelectedProjectUid,
     userBuildWeeks,
     setUserBuildWeeks
   } = useContext(UserContext);

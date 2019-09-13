@@ -9,13 +9,9 @@ const SelectProjectRole = ({ history }) => {
     email,
     userBuildWeeks,
     user,
-    setProjectRole,
-    currentSelectedProject,
     currentBuildWeekURL,
     setCurrentBuildWeekURL
   } = useContext(UserContext);
-
-  // const {project, projectRole, projectUid} = userBuildWeeks[currentBuildWeekURL];
 
   const { projectsContext, fetchBuildWeekProjects } = useContext(
     BuildWeekContext
@@ -74,7 +70,6 @@ const SelectProjectRole = ({ history }) => {
     console.log("user: ", user);
     console.log("projectRole: ", projectRole);
     let data;
-    console.log(currentSelectedProject);
 
     // If user is signing into a buildweek that they signed up for a project in previously as a different role,
     // remove them from the old project and clear out their project info from database
