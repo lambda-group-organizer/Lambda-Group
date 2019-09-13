@@ -189,7 +189,7 @@ const ProjectViewModal = ({projectModalData, setProjectModalData}) => {
                     return (
                       <div key={r.email}>
                         {/*ADD FUNCTION TO REMOVE STUDENT FROM PROJECT*/}
-                        {role !== 'student' ? (
+                        {role === 'overlord' ? (
                           <Button
                             color="red"
                             animated="vertical"
