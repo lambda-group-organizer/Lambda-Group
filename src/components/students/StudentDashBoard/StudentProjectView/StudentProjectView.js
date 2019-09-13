@@ -58,17 +58,19 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
       .doc(project.uid);
     // Get the data for the user's desired role that project from DB
     const projectData = await projectRef.get();
-    console.log(projectData.data())
+
+    console.log(projectData.data().project);
 
     let projectRoleData = await projectData.data().project.availableRoles[
       userBuildWeeks[currentBuildWeekURL].projectRole
     ];
-    console.log(projectRoleData)
+    console.log(projectRoleData);
     console.log(userBuildWeeks[currentBuildWeekURL].projectRole);
     // check if there is room in that project for user
+
     if (
       projectRoleData.names.length <
-      project[userBuildWeeks[currentBuildWeekURL].projectRole].names
+      project[userBuildWeeks[currentBuildWeekURL].projectRole]
     ) {
       // Add user to project's data on DB
       await projectRef.set(
