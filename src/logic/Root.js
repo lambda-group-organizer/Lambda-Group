@@ -5,41 +5,43 @@ import { Switch, Route } from "react-router-dom";
 import firebase, { db } from "../logic/firebase";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../context/allContexts";
-import { ContextProvider } from "../context/providerComposer";
+// import { ContextProvider } from "../context/providerComposer";
 //import Dashboard from '../Dashboard/Dashboard';
 import StudentDashBoard from "../components/students/StudentDashBoard/StudentDashBoard.js";
 // import StudentBuildWeekLink from "../components/students/StudentBuildWeekLink/StudentBuildWeekLink.js";
 import Login from "../components/Auth/Login";
 // import StudentLogin from "../components/Auth/StudentLogin";
 import Register from "../components/Auth/Register.js";
-import AddMinion from "../components/admin/AdminDashboard/AddMinion.js";
+// import AddMinion from "../components/admin/AdminDashboard/AddMinion.js";
 import OverLoardMainDashboard from "../components/admin/AdminDashboard/OverloardMainDashBoard.js";
 import AdminDashboard from "../components/admin/AdminDashboard/AdminDashboard.js";
 import StudentBuildWeekView from "../components/students/StudentDashBoard/StudentBuildWeekView";
-import { list } from "postcss";
+// import { list } from "postcss";
 
 // TODO: Change routes so that minions get the same routes as students
 
 const Root = props => {
   const {
-    user,
+    // user,
     setUser,
-    email,
+    // email,
     setEmail,
-    password,
-    setPassword,
+    // password,
+    // setPassword,
+    // loading,
+    // setLoading,
     role,
     setRole,
-    currentBuildWeekURL,
+    // currentBuildWeekURL,
     setCurrentBuildWeekURL,
-    projectRole,
-    setProjectRole,
-    currentSelectedProject,
-    setCurrentSelectedProject,
-    loading,
-    setLoading,
-    currentSelectedProjectUid,
-    setCurrentSelectedProjectUid
+    // projectRole,
+    // setProjectRole,
+    // currentSelectedProject,
+    // setCurrentSelectedProject,
+    // currentSelectedProjectUid,
+    // setCurrentSelectedProjectUid,
+    userBuildWeeks,
+    setUserBuildWeeks
   } = useContext(UserContext);
 
   function formatLinksName(item) {
@@ -105,15 +107,34 @@ const Root = props => {
             isAdmin = true;
             setEmail(admin.email);
             setRole(admin.role);
+            if (admin.role === "minion") {
+              // set all user info to context
+              fetchUserInfoFromDatabase(admin.email);
+            }
             return;
           }
         });
         if (!isAdmin) {
           setEmail(userEmail);
           setRole("student");
+          // set all user info to context
+          fetchUserInfoFromDatabase(userEmail);
           // set build week
         }
       });
+  };
+
+  // STOP THE MADDNESS function (socket with user info)
+  const fetchUserInfoFromDatabase = async userEmail => {
+    await db.doc(`students/${userEmail}`).onSnapshot(
+      docSnapshot => {
+        // Set user's buildweek info to state
+        setUserBuildWeeks(docSnapshot.data().buildWeeks); // test4
+      },
+      err => {
+        console.log(`Encountered error: ${err}`);
+      }
+    );
   };
 
   return (

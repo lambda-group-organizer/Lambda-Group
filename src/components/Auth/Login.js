@@ -17,16 +17,13 @@ import { db } from "../../logic/firebase.js";
 
 const Login = ({ history }) => {
   const {
-    user,
     setUser,
     email,
     setEmail,
     password,
     setPassword,
     role,
-    setRole,
-    currentBuildWeekURL,
-    setCurrentBuildWeekURL
+    setRole
   } = useContext(UserContext);
 
   const login = event => {
@@ -47,6 +44,7 @@ const Login = ({ history }) => {
   // CHECK IF USER IS ADMIN
   const checkIfAdmin = async userEmail => {
     let adminList = [];
+
     await db
       .collection("admin")
       .get()
@@ -78,7 +76,7 @@ const Login = ({ history }) => {
     } else if (role === "student") {
       // Push to student's pick a build week associated with context
       // else push to /student/dashboard to pick a build week
-        history.push(`/student/dashboard`);
+      history.push(`/student/dashboard`);
     } else {
       history.push("/");
     }

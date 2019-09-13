@@ -5,22 +5,22 @@ export const BuildWeekContext = createContext();
 
 export function BuildWeekProvider(props) {
   const [projectsContext, setProjectsContext] = useState([]);
-  const refTo_ProjContext = useRef()
-  refTo_ProjContext.current = projectsContext
+  const refTo_ProjContext = useRef();
+  refTo_ProjContext.current = projectsContext;
 
-  const fetchBuildWeekProjects = async ( buildWeek, projectsContext ) => {
+  const fetchBuildWeekProjects = async (buildWeek, projectsContext) => {
     let changeType = "";
     let collection = await db
       .collection("build_weeks")
       .doc(`${buildWeek}`)
       .collection("projects");
-    let observer = await collection.onSnapshot(querySnapshot => {
+    await collection.onSnapshot(querySnapshot => {
       let data = querySnapshot.docChanges().map(change => {
         changeType = change.type;
         return change.doc.data();
       });
       if (changeType === "modified") {
-        const updatedProj = [...refTo_ProjContext.current]
+        const updatedProj = [...refTo_ProjContext.current];
         let newProjects = updatedProj.map(tempProject => {
           if (data[0].project.uid === tempProject.project.uid) {
             return data[0];
@@ -29,12 +29,13 @@ export function BuildWeekProvider(props) {
           }
         });
         setProjectsContext(newProjects);
+        return null;
       } else {
         setProjectsContext(data);
+        return null;
       }
     });
   };
-
 
   return (
     <BuildWeekContext.Provider
@@ -48,6 +49,3 @@ export function BuildWeekProvider(props) {
     </BuildWeekContext.Provider>
   );
 }
-
-
-

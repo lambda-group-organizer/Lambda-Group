@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { db } from "../../../logic/firebase.js";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Button, Header } from "semantic-ui-react";
 import { UserContext } from "../../../context/allContexts";
 
@@ -13,10 +13,10 @@ const BuildWeekSelection = props => {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          console.log(doc.data());
+          // console.log(doc.data());
           urls.push(doc.data().buildWeekName);
         });
-        console.log(urls);
+        // console.log(urls);
         setHackathons(urls);
       });
   }, []);
@@ -32,7 +32,7 @@ const BuildWeekSelection = props => {
       <Header as="h2">Pick a build week</Header>
       {hackathons &&
         hackathons.map(hack => {
-          console.log("hack", hack);
+          // console.log("hack", hack);
           return (
             <Button
               key={hack}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import DashBoardHeader from "../../globalComponents/DashBoardHeader.js";
 import BuildWeekSelection from "./BuildWeekSelection.js";
 import SelectProjectRole from "../SelectProjectRole/SelectProjectRole.js";
@@ -6,7 +6,7 @@ import { UserContext } from "../../../context/allContexts";
 
 const StudentDashBoard = props => {
   const { currentBuildWeekURL } = useContext(UserContext);
-  console.log(currentBuildWeekURL);
+  // console.log(currentBuildWeekURL);
 
   return (
     <>

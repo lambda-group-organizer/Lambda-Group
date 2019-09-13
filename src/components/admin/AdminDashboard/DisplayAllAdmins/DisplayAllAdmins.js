@@ -1,32 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import {db} from '../../../../logic/firebase.js';
-import './DisplayAllAdmins.css';
-import {Button, Header, Card, List} from 'semantic-ui-react';
+import React, { useState, useEffect } from "react";
+import { db } from "../../../../logic/firebase.js";
+import "./DisplayAllAdmins.css";
+import { Button, Card } from "semantic-ui-react";
 
-const DisplayAllAdmins = ({triggerAdminFunc, setTriggerAdminFunc}) => {
+const DisplayAllAdmins = ({ triggerAdminFunc, setTriggerAdminFunc }) => {
   const [overlords, setOverlords] = useState([]);
   const [minions, setMinions] = useState([]);
 
   const fetchAdmins = async () => {
-    console.log('fetch admins running!')
+    console.log("fetch admins running!");
     let overLoardArr = [];
     let minionArr = [];
     await db
-      .collection('admin')
+      .collection("admin")
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           const adminData = {
             name: doc.data().displayName,
             email: doc.data().email,
-            role: doc.data().role,
+            role: doc.data().role
           };
-          if (adminData.role === 'overlord') {
+          if (adminData.role === "overlord") {
             overLoardArr.push(adminData);
-            return overLoardArr
+            return overLoardArr;
           } else {
             minionArr.push(adminData);
-            return minionArr
+            return minionArr;
           }
         });
         setMinions(minionArr);
@@ -39,21 +39,21 @@ const DisplayAllAdmins = ({triggerAdminFunc, setTriggerAdminFunc}) => {
   }, [triggerAdminFunc]);
 
   const removeAdmin = user => {
-    db.collection('admin')
+    db.collection("admin")
       .doc(`${user.email}`)
       .delete()
       .then(function() {
-        console.log('DELETED');
-        setTriggerAdminFunc(!triggerAdminFunc)
+        console.log("DELETED");
+        setTriggerAdminFunc(!triggerAdminFunc);
       })
       .catch(err => {
         console.error(err);
       });
   };
 
-  const updatePermissions = (user) => {
-    console.log(user)
-  }
+  const updatePermissions = user => {
+    console.log(user);
+  };
 
   return (
     <>
@@ -68,9 +68,11 @@ const DisplayAllAdmins = ({triggerAdminFunc, setTriggerAdminFunc}) => {
                   <Button.Group>
                     <Button onClick={() => removeAdmin(o)} color="red">
                       Remove
-                    </Button>{' '}
+                    </Button>{" "}
                     <Button.Or />
-              <Button onClick={() => updatePermissions(o)} color="blue">Make Team Lead</Button>
+                    <Button onClick={() => updatePermissions(o)} color="blue">
+                      Make Team Lead
+                    </Button>
                   </Button.Group>
                 </Card.Content>
               </Card>

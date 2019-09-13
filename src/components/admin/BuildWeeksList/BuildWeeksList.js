@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { db } from "../../../logic/firebase";
 import { Card, Button } from "semantic-ui-react";
 import Spinner from "../../globalComponents/Spinner/Spinner.js";
-import { UserContext, BuildWeekContext } from "../../../context/allContexts";
+import { UserContext } from "../../../context/allContexts";
 
 import CopyLink from "./CopyLink";
 

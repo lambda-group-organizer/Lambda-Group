@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { Card, Button, Header, Icon } from "semantic-ui-react";
+import React, { useContext } from "react";
+import { Card, Button } from "semantic-ui-react";
 import { UserContext } from "../../../../context/allContexts";
 import { db } from "../../../../logic/firebase";
 
@@ -10,22 +10,10 @@ import styles from "./StudentProjectView.module.scss";
 const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
   const {
     user,
-    setUser,
     email,
-    setEmail,
-    password,
-    setPassword,
-    role,
-    setRole,
     currentBuildWeekURL,
-    setCurrentBuildWeekURL,
-    projectRole,
-    setProjectRole,
-    currentSelectedProject,
-    setCurrentSelectedProject,
-    setLoading,
-    currentSelectedProjectUid,
-    setCurrentSelectedProjectUid
+    userBuildWeeks,
+    setLoading
   } = useContext(UserContext);
 
   //function showStudents() {
@@ -35,21 +23,28 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
 
   const handleJoinProject = async project => {
     setLoading(true);
-    if (currentSelectedProject !== "") {
+    if (
+      userBuildWeeks[currentBuildWeekURL] &&
+      userBuildWeeks[currentBuildWeekURL].project !== ""
+    ) {
       let oldProjRef = await db
         .collection("build_weeks")
         .doc(currentBuildWeekURL)
         .collection("projects")
-        .doc(currentSelectedProjectUid);
+        .doc(userBuildWeeks[currentBuildWeekURL].projectUid);
       let oldProjectData = await oldProjRef.get();
       oldProjectData = oldProjectData.data();
-      if (oldProjectData.project.availableRoles[projectRole].names.length > 0) {
+      if (
+        oldProjectData.project.availableRoles[
+          userBuildWeeks[currentBuildWeekURL].projectRole
+        ].names.length > 0
+      ) {
         let newOldProjectData = oldProjectData.project.availableRoles[
-          projectRole
+          userBuildWeeks[currentBuildWeekURL].projectRole
         ].names.filter(n => n.email !== email);
 
         oldProjectData.project.availableRoles[
-          projectRole
+          userBuildWeeks[currentBuildWeekURL].projectRole
         ].names = newOldProjectData;
 
         oldProjRef.set(oldProjectData);
@@ -63,17 +58,22 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
       .doc(project.uid);
     // Get the data for the user's desired role that project from DB
     const projectData = await projectRef.get();
+
     let projectRoleData = await projectData.data().project.availableRoles[
-      projectRole
+      userBuildWeeks[currentBuildWeekURL].projectRole
     ];
+    console.log(userBuildWeeks[currentBuildWeekURL].projectRole);
     // check if there is room in that project for user
-    if (projectRoleData.names.length < project[projectRole]) {
+    if (
+      projectRoleData.names.length <
+      project[userBuildWeeks[currentBuildWeekURL].projectRole]
+    ) {
       // Add user to project's data on DB
       await projectRef.set(
         {
           project: {
             availableRoles: {
-              [projectRole]: {
+              [userBuildWeeks[currentBuildWeekURL].projectRole]: {
                 names: [
                   ...projectRoleData.names,
                   { name: user.displayName, email: email }
@@ -87,7 +87,7 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
 
       // Add project to user's data on DB
       const userRef = db.collection("students").doc(email);
-      let data = await userRef.set(
+      await userRef.set(
         {
           buildWeeks: {
             [currentBuildWeekURL]: {
@@ -98,12 +98,12 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
         },
         { merge: true }
       );
-      setCurrentSelectedProject(project.title);
-      setCurrentSelectedProjectUid(project.uid);
+      // setCurrentSelectedProject(project.title);
+      // setCurrentSelectedProjectUid(project.uid);
       //showStudents()
     } else {
       alert(
-        `SORRY NO MORE ${projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
+        `SORRY NO MORE ${userBuildWeeks[currentBuildWeekURL].projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
       );
     }
     // const projectData = await projectRef.set({availableRoles: {[projectRole]: {names: []}}}, {merge: true})
@@ -194,13 +194,13 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
           </span>
         ))}
       </Card.Content>
-      {currentSelectedProject !== project.title && (
+      {userBuildWeeks[currentBuildWeekURL].project !== project.title && (
         <Card.Content>
           {project.productType}{" "}
           <Button onClick={() => handleJoinProject(project)}>+Join</Button>
         </Card.Content>
       )}
-      {currentSelectedProject === project.title && (
+      {userBuildWeeks[currentBuildWeekURL].project === project.title && (
         <Card.Content style={{ backgroundColor: "green", color: "white" }}>
           Signed up!
         </Card.Content>

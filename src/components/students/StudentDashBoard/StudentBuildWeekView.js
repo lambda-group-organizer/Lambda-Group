@@ -1,7 +1,7 @@
 // Modules
-import React, { useState, useEffect, useContext, useRef } from "react";
-import firebase, { db } from "../../../logic/firebase.js";
-import { Button, Card, Header, Form, Icon } from "semantic-ui-react";
+import React, { useState, useEffect, useContext } from "react";
+import { db } from "../../../logic/firebase.js";
+import { Card, Form } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 import { UserContext, BuildWeekContext } from "../../../context/allContexts";
@@ -11,12 +11,11 @@ import StudentProjectView from "./StudentProjectView/StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
-import MapLegend from "../../../components/students/StudentDashBoard/StudentProjectView/MapLegend/MapLegend.js";
+// import MapLegend from "../../../components/students/StudentDashBoard/StudentProjectView/MapLegend/MapLegend.js";
 
 const StudentBuildWeekView = props => {
   // state from context
   const {
-    user,
     email,
     currentBuildWeekURL,
     setProjectRole,
@@ -24,11 +23,9 @@ const StudentBuildWeekView = props => {
     setCurrentSelectedProjectUid
   } = useContext(UserContext);
 
-  const {
-    projectsContext,
-    setProjectsContext,
-    fetchBuildWeekProjects
-  } = useContext(BuildWeekContext);
+  const { projectsContext, fetchBuildWeekProjects } = useContext(
+    BuildWeekContext
+  );
   const [filteredProjects, setFilteredProjects] = useState([]);
   // Local state
   const [projectModalData, setProjectModalData] = useState(null);
@@ -41,10 +38,12 @@ const StudentBuildWeekView = props => {
   const getStudentRole = async () => {
     const userRef = db.collection("students").doc(email);
     let data = await userRef.get();
+    console.log(data.data());
     setProjectRole(data.data().buildWeeks[currentBuildWeekURL].projectRole);
     setCurrentSelectedProject(
       data.data().buildWeeks[currentBuildWeekURL].project
     );
+    console.log(data.data().buildWeeks[currentBuildWeekURL].project);
     setCurrentSelectedProjectUid(
       data.data().buildWeeks[currentBuildWeekURL].projectUid
     );
@@ -65,6 +64,7 @@ const StudentBuildWeekView = props => {
         if (contextProject.project.uid === projectModalData.uid) {
           setProjectModalData(contextProject.project);
         }
+        return null;
       });
     }
   }, [projectsContext]);

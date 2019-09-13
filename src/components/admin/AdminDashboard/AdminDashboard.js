@@ -1,7 +1,6 @@
 // Modules
 import React, { useState, useEffect, useContext } from "react";
-import firebase, { db } from "../../../logic/firebase.js";
-import { Button, Card, Header, Form, Icon } from "semantic-ui-react";
+import { Card, Form } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 import { BuildWeekContext } from "../../../context/allContexts";
@@ -11,15 +10,12 @@ import DashBoardHeader from "../../globalComponents/DashBoardHeader";
 import AdminProjectView from "./AdminProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
-import fetchBuildWeekProjects from "../../../utils/fetchBuildWeekProjects";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
 
 const Dashboard = props => {
-  const {
-    projectsContext,
-    setProjectsContext,
-    fetchBuildWeekProjects
-  } = useContext(BuildWeekContext);
+  const { projectsContext, fetchBuildWeekProjects } = useContext(
+    BuildWeekContext
+  );
   const [filteredProjects, setFilteredProjects] = useState([]);
   // Local state
   const [projectModalData, setProjectModalData] = useState(null);
@@ -47,6 +43,7 @@ const Dashboard = props => {
         if (contextProject.project.uid === projectModalData.uid) {
           setProjectModalData(contextProject.project);
         }
+        return null;
       });
     }
   }, [projectsContext]);
