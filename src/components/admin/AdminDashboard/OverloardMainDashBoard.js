@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import DashBoardHeader from "../../globalComponents/DashBoardHeader.js";
 import AddBuildWeeks from "./AddBuildWeeks.js";
 import BuildWeeksList from "../BuildWeeksList/BuildWeeksList.js";
-import { Link } from "react-router-dom";
 import AddMinion from "./AddMinion.js";
-import { Divider, Tab } from "semantic-ui-react";
+import { Tab } from "semantic-ui-react";
 
 import "./overlordMainDashBoard.css";
 
 const OverLoardMainDashboard = props => {
   // Needed update, setUpdate for state sync
   const [update, setUpdate] = useState(false);
-  const [showBuildWeekView, setShowBuildWeekView] = useState(true);
+  // const [showBuildWeekView, setShowBuildWeekView] = useState(true);
   const panes = [
     {
       menuItem: "Build Weeks",

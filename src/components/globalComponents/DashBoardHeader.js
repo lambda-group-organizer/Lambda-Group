@@ -11,19 +11,20 @@ const DashBoardHeader = props => {
     setPassword,
     setRole,
     setCurrentBuildWeekURL,
-    setProjectRole,
-    setCurrentSelectedProject,
-    loading,
-    setCurrentSelectedProjectUid
+    // setProjectRole,
+    // setCurrentSelectedProject,
+    loading
+    // setCurrentSelectedProjectUid
+    // setUserBuildWeeks
   } = useContext(UserContext);
   const signOut = () => {
     setRole(null);
     setUser(null);
     setPassword("");
     setCurrentBuildWeekURL(null);
-    setProjectRole("");
-    setCurrentSelectedProject("");
-    setCurrentSelectedProjectUid("");
+    // setProjectRole("");
+    // setCurrentSelectedProject("");
+    // setCurrentSelectedProjectUid("");
 
     firebase.auth().signOut();
     props.history.push("/");

@@ -17,16 +17,13 @@ import { db } from "../../logic/firebase.js";
 
 const Login = ({ history }) => {
   const {
-    user,
     setUser,
     email,
     setEmail,
     password,
     setPassword,
     role,
-    setRole,
-    currentBuildWeekURL,
-    setCurrentBuildWeekURL
+    setRole
   } = useContext(UserContext);
 
   const login = event => {

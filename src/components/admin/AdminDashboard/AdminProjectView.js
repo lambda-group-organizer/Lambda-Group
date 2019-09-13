@@ -1,30 +1,11 @@
-import React, { useContext, useEffect } from "react";
-import { Card, Button, Header, Icon } from "semantic-ui-react";
-import { UserContext } from "../../../context/allContexts";
-import { db } from "../../../logic/firebase";
+import React from "react";
+import { Card } from "semantic-ui-react";
+// import { UserContext } from "../../../context/allContexts";
 
 import styles from "../../students/StudentDashBoard/StudentProjectView/StudentProjectView.module.scss";
 
 const AdminProjectView = ({ project: { project }, setProjectModalData }) => {
-  const {
-    user,
-    setUser,
-    email,
-    setEmail,
-    password,
-    setPassword,
-    role,
-    setRole,
-    currentBuildWeekURL,
-    setCurrentBuildWeekURL,
-    projectRole,
-    setProjectRole,
-    currentSelectedProject,
-    setCurrentSelectedProject,
-    setLoading,
-    currentSelectedProjectUid,
-    setCurrentSelectedProjectUid
-  } = useContext(UserContext);
+  // const {} = useContext(UserContext);
 
   return (
     <Card key={project.uid} raised={true} centered={true}>
