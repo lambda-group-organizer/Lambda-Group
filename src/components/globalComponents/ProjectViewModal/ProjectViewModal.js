@@ -116,7 +116,7 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
     let limit = parseInt(projectModalData[roleToSubtract]);
     const numSignedUp =
       projectModalData.availableRoles[roleToSubtract].names.length;
-    if (numSignedUp < limit) {
+    if (numSignedUp < limit && limit > 0) {
       limit--;
       await db
         .doc(
@@ -128,6 +128,8 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
           },
           { merge: true }
         );
+    } else if (limit === 0) {
+      alert("Can't subtract any more");
     } else {
       alert("Please delete a user first");
     }
@@ -194,57 +196,63 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
           <h3>Team Members</h3>
           <ul>
             {Object.keys(projectModalData.availableRoles).map(allRoles => {
-              return (
-                <li key={allRoles}>
-                  {allRoles} (max - {projectModalData[allRoles]}){" "}
-                  {role !== "student" ? (
-                    <>
-                      <FaMinusSquare
-                        className={styles.icon}
-                        // TODO: Fix handle add role
-                        // TODO: Add loading state for adding roles
-                        onClick={() => handleSubtractRole(allRoles)}
-                      />
-                      <FaPlusSquare
-                        className={styles.icon}
-                        // TODO: Fix handle add role
-                        // TODO: Add loading state for adding roles
-                        onClick={() => handleAddRole(allRoles)}
-                      />
-                    </>
-                  ) : null}
-                  {projectModalData.availableRoles[allRoles].names.map(r => {
-                    return (
-                      <div key={r.email}>
-                        {/*ADD FUNCTION TO REMOVE STUDENT FROM PROJECT*/}
-                        {role === "overlord" ? (
-                          <Button
-                            color="red"
-                            animated="vertical"
-                            onClick={() =>
-                              handleRemoveStudent(
-                                r.email,
-                                allRoles,
-                                projectModalData.availableRoles[allRoles].names
-                              )
-                            }
-                          >
-                            <Button.Content visible>{r.name}</Button.Content>
-                            <Button.Content hidden>
-                              <Icon name="remove user" />
-                            </Button.Content>
-                          </Button>
-                        ) : (
-                          <p>
-                            {r.name}
-                            {r.email}
-                          </p>
-                        )}
-                      </div>
-                    );
-                  })}
-                </li>
-              );
+              console.log("allRoles: ", projectModalData[allRoles]);
+              if (role === "student" && projectModalData[allRoles] <= 0) {
+                return null;
+              } else {
+                return (
+                  <li key={allRoles}>
+                    {allRoles} (max - {projectModalData[allRoles]}){" "}
+                    {role !== "student" ? (
+                      <>
+                        <FaMinusSquare
+                          className={styles.icon}
+                          // TODO: Fix handle add role
+                          // TODO: Add loading state for adding roles
+                          onClick={() => handleSubtractRole(allRoles)}
+                        />
+                        <FaPlusSquare
+                          className={styles.icon}
+                          // TODO: Fix handle add role
+                          // TODO: Add loading state for adding roles
+                          onClick={() => handleAddRole(allRoles)}
+                        />
+                      </>
+                    ) : null}
+                    {projectModalData.availableRoles[allRoles].names.map(r => {
+                      return (
+                        <div key={r.email}>
+                          {/*ADD FUNCTION TO REMOVE STUDENT FROM PROJECT*/}
+                          {role === "overlord" ? (
+                            <Button
+                              color="red"
+                              animated="vertical"
+                              onClick={() =>
+                                handleRemoveStudent(
+                                  r.email,
+                                  allRoles,
+                                  projectModalData.availableRoles[allRoles]
+                                    .names
+                                )
+                              }
+                            >
+                              <Button.Content visible>{r.name}</Button.Content>
+                              <Button.Content hidden>
+                                <Icon name="remove user" />
+                              </Button.Content>
+                            </Button>
+                          ) : (
+                            <p>
+                              {r.name}
+                              {r.email}
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </li>
+                );
+              }
             })}
           </ul>
         </div>
