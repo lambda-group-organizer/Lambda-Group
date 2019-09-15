@@ -75,7 +75,7 @@ const SelectProjectRole = ({ history }) => {
       userBuildWeeks[currentBuildWeekURL].projectRole === "" ||
       userBuildWeeks[currentBuildWeekURL].projectRole !== projectRole
     ) {
-      // TODO: make a confirm here to double check they wish to proceed
+      // Double check they want to delete themselves from the project they previous sign up to with a different role
       if (
         userBuildWeeks &&
         userBuildWeeks[currentBuildWeekURL] &&
