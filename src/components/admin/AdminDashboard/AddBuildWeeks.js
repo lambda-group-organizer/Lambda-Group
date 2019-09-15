@@ -23,7 +23,6 @@ const AddBuildWeek = props => {
       setError("Must Provide A CSV File!");
       return;
     }
-    // setLoading(true);
     props.setCurrentLoadingBuildWeek(buildWeekName);
     console.log(buildWeekName);
     const check = db.collection("build_weeks").doc(`${buildWeekName}`);
@@ -78,8 +77,6 @@ const AddBuildWeek = props => {
         androidDeveloper: item[13],
         dataEngineer: item[14],
         machineLearningEngineer: item[15]
-        // TODO: If no problems, delete this
-        // teamMembers: []
       };
       if (index > 0 && project.title !== "") {
         db.collection("build_weeks")
@@ -112,7 +109,9 @@ const AddBuildWeek = props => {
               )
               .then(() => {
                 console.log("IF COMPARISON: ", index, CSVData.length);
+                // -3 is used because the CSV reader sends through a blank line at the end, we are also compensating for the first line that is the headers for the csv and the index starting at 0 instead of 1
                 if (index === CSVData.length - 3) {
+                  // *** important, don't change the -3, see above *** //
                   props.setCurrentLoadingBuildWeek(null);
                 }
               });
@@ -124,7 +123,6 @@ const AddBuildWeek = props => {
         return null;
       }
     });
-    // setLoading(false);
     props.setUpdate(!props.update);
   };
 

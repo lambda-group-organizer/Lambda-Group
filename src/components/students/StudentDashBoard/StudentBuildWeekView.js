@@ -64,7 +64,21 @@ const StudentBuildWeekView = props => {
     // Fuzzy search for students involved, title, description, productType(ios, web, etc)
     let searchResults = fuzzySearch(
       projectsContext,
-      ["project.title", "project.description", "project.productType"],
+      [
+        "project.title",
+        "project.description",
+        "project.productType",
+        "project.availableRoles.androidDeveloper.names.name",
+        "project.availableRoles.iosDeveloper.names.name",
+        "project.availableRoles.dataEngineer.names.name",
+        "project.availableRoles.frontEndDeveloper.names.name",
+        "project.availableRoles.frontEndFrameWorkDeveloper.names.name",
+        "project.availableRoles.machineLearningEngineer.names.name",
+        "project.availableRoles.projectLead.names.name",
+        "project.availableRoles.uXDesigner.names.name",
+        "project.availableRoles.webBackEndDeveloper.names.name",
+        "project.availableRoles.webUiDeveloper.names.name"
+      ],
       e
     );
     if (e.target.value === "") {

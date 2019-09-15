@@ -16,12 +16,7 @@ const BuildWeeksList = props => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   //  ===================================== Populates list of build weeks ===================================== //
-  //TODO: needs to run each time a build week is created
-  // I've lifted the state up and tried multiple ways of dealing with this.
-  // the problem is right here. as it stands this is creating multiple cards
-  // when a new build week is added.  however I don't have another way to do
-  // this currently. freaking firebase.  going to have to bug fix this later.
-  // moving on for now.
+
   const fetchBuildWeeks = async () => {
     setListOfBuildWeeks([]);
     let buildWeeksCollection = await db.collection("build_weeks").get();
@@ -37,8 +32,7 @@ const BuildWeeksList = props => {
 
   //  ===================================== Push to Individual Build Week View ===================================== //
 
-  function BuildWeekView(buildWeek) {
-    console.log(props);
+  function goToBuildWeekView(buildWeek) {
     setCurrentBuildWeekURL(buildWeek);
     props.history.push(`/Admin/${buildWeek}`);
   }
@@ -81,7 +75,7 @@ const BuildWeeksList = props => {
                 <LocalSpinner />
               ) : (
                 <>
-                  <Card.Content onClick={() => BuildWeekView(buildWeek)}>
+                  <Card.Content onClick={() => goToBuildWeekView(buildWeek)}>
                     <Card.Header>{buildWeek}</Card.Header>
                   </Card.Content>
                   <Card.Content extra>
