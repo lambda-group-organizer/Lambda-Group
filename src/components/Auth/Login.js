@@ -44,7 +44,6 @@ const Login = ({ history }) => {
   // CHECK IF USER IS ADMIN
   const checkIfAdmin = async userEmail => {
     let adminList = [];
-
     await db
       .collection("admin")
       .get()

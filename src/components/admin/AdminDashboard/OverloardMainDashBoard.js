@@ -10,14 +10,21 @@ import "./overlordMainDashBoard.css";
 const OverLoardMainDashboard = props => {
   // Needed update, setUpdate for state sync
   const [update, setUpdate] = useState(false);
-  // const [showBuildWeekView, setShowBuildWeekView] = useState(true);
+  const [currentLoadingBuildWeek, setCurrentLoadingBuildWeek] = useState(null);
   const panes = [
     {
       menuItem: "Build Weeks",
       render: () => (
         <Tab.Pane attached={false}>
-          <AddBuildWeeks update={update} setUpdate={setUpdate} />
-          <BuildWeeksList update={update} />
+          <AddBuildWeeks
+            update={update}
+            setUpdate={setUpdate}
+            setCurrentLoadingBuildWeek={setCurrentLoadingBuildWeek}
+          />
+          <BuildWeeksList
+            update={update}
+            currentLoadingBuildWeek={currentLoadingBuildWeek}
+          />
         </Tab.Pane>
       )
     },

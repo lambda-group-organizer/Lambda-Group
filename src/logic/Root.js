@@ -1,24 +1,14 @@
 import React, { useEffect, useContext } from "react";
 import { Switch, Route } from "react-router-dom";
-// import UserContext from "../context/UserContext";
-//import { AdminContext } from "../context/allContexts";
 import firebase, { db } from "../logic/firebase";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../context/allContexts";
-// import { ContextProvider } from "../context/providerComposer";
-//import Dashboard from '../Dashboard/Dashboard';
 import StudentDashBoard from "../components/students/StudentDashBoard/StudentDashBoard.js";
-// import StudentBuildWeekLink from "../components/students/StudentBuildWeekLink/StudentBuildWeekLink.js";
 import Login from "../components/Auth/Login";
-// import StudentLogin from "../components/Auth/StudentLogin";
 import Register from "../components/Auth/Register.js";
-// import AddMinion from "../components/admin/AdminDashboard/AddMinion.js";
 import OverLoardMainDashboard from "../components/admin/AdminDashboard/OverloardMainDashBoard.js";
 import AdminDashboard from "../components/admin/AdminDashboard/AdminDashboard.js";
 import StudentBuildWeekView from "../components/students/StudentDashBoard/StudentBuildWeekView";
-// import { list } from "postcss";
-
-// TODO: Change routes so that minions get the same routes as students
 
 const Root = props => {
   const {
@@ -27,7 +17,6 @@ const Root = props => {
     role,
     setRole,
     setCurrentBuildWeekURL,
-    userBuildWeeks,
     setUserBuildWeeks
   } = useContext(UserContext);
 
@@ -113,12 +102,12 @@ const Root = props => {
       });
   };
 
-  // STOP THE MADDNESS function (socket with user info)
+  // STOP THE MADDNESS function (web socket with user info)
   const fetchUserInfoFromDatabase = async userEmail => {
     await db.doc(`students/${userEmail}`).onSnapshot(
       docSnapshot => {
         // Set user's buildweek info to state
-        setUserBuildWeeks(docSnapshot.data().buildWeeks); // test4
+        setUserBuildWeeks(docSnapshot.data().buildWeeks);
       },
       err => {
         console.log(`Encountered error: ${err}`);
@@ -151,9 +140,6 @@ const Root = props => {
             />
           </>
         ) : null}
-
-        {/* <Route path="/student/StudentLogin" component={StudentLogin} /> */}
-        {/* <Route path="/student/:buildWeek" component={StudentBuildWeekLink} /> */}
       </Switch>
     </>
   );
