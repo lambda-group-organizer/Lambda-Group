@@ -13,6 +13,7 @@ const DashBoardHeader = props => {
     setCurrentBuildWeekURL,
     loading
   } = useContext(UserContext);
+
   const signOut = () => {
     setRole(null);
     setUser(null);
@@ -39,9 +40,7 @@ const DashBoardHeader = props => {
       </Header>
       <Button
         inverted
-        // color="white"
         size="mini"
-        // className="mini ui negative basic button logoutButton"
         onClick={signOut}
         style={{ marginLeft: "1%", alignSelf: "center", color: "white" }}
       >

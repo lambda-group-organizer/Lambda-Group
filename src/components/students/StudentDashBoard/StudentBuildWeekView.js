@@ -5,6 +5,7 @@ import { Card, Form } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 import { UserContext, BuildWeekContext } from "../../../context/allContexts";
+
 // Components
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
 import StudentProjectView from "./StudentProjectView/StudentProjectView";
@@ -15,7 +16,7 @@ import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectVie
 
 const StudentBuildWeekView = props => {
   // state from context
-  const { email, currentBuildWeekURL, user } = useContext(UserContext);
+  const { email, user } = useContext(UserContext);
 
   const { projectsContext, fetchBuildWeekProjects } = useContext(
     BuildWeekContext
@@ -64,7 +65,21 @@ const StudentBuildWeekView = props => {
     // Fuzzy search for students involved, title, description, productType(ios, web, etc)
     let searchResults = fuzzySearch(
       projectsContext,
-      ["project.title", "project.description", "project.productType"],
+      [
+        "project.title",
+        "project.description",
+        "project.productType",
+        "project.availableRoles.androidDeveloper.names.name",
+        "project.availableRoles.iosDeveloper.names.name",
+        "project.availableRoles.dataEngineer.names.name",
+        "project.availableRoles.frontEndDeveloper.names.name",
+        "project.availableRoles.frontEndFrameWorkDeveloper.names.name",
+        "project.availableRoles.machineLearningEngineer.names.name",
+        "project.availableRoles.projectLead.names.name",
+        "project.availableRoles.uXDesigner.names.name",
+        "project.availableRoles.webBackEndDeveloper.names.name",
+        "project.availableRoles.webUiDeveloper.names.name"
+      ],
       e
     );
     if (e.target.value === "") {
