@@ -5,8 +5,6 @@ import { db } from "../../../../logic/firebase";
 
 import styles from "./StudentProjectView.module.scss";
 
-// TODO: Add minion powers to this file with conditional rendering for minion role
-
 const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
   const {
     user,
@@ -15,11 +13,6 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
     userBuildWeeks,
     setLoading
   } = useContext(UserContext);
-
-  //function showStudents() {
-  //console.log(user)
-  //TODO: Hook this up to show signed up
-  //}
 
   const handleJoinProject = async project => {
     setLoading(true);

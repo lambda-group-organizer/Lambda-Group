@@ -24,7 +24,6 @@ const AddBuildWeek = props => {
       return;
     }
     props.setCurrentLoadingBuildWeek(buildWeekName);
-    console.log(buildWeekName);
     const check = db.collection("build_weeks").doc(`${buildWeekName}`);
     const giveMe = await check.get();
     const exist = giveMe.data();

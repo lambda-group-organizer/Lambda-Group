@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import DisplayAllAdmins from "../AdminDashboard/DisplayAllAdmins/DisplayAllAdmins.js";
-//import firebase from '../../logic/firebase';
 import { db } from "../../../logic/firebase.js";
 import Fuse from "fuse.js";
+import fuzzySearch from "../../globalComponents/fuzzySearch";
 import { Form, Button } from "semantic-ui-react";
 
 const AddMinion = props => {
@@ -11,7 +11,6 @@ const AddMinion = props => {
   const [triggerAdminFunc, setTriggerAdminFunc] = useState(false);
 
   const fetchStudents = async () => {
-    console.log("running filtered students");
     let studentArr = [];
     await db
       .collection("students")
@@ -23,7 +22,6 @@ const AddMinion = props => {
             email: doc.data().email
           };
           studentArr.push(studentData);
-          console.log(studentData);
           return studentArr;
         });
         setStudents(studentArr);
@@ -36,18 +34,8 @@ const AddMinion = props => {
   }, []);
 
   const searchStudents = (studentArr, e) => {
-    console.log(studentArr);
-    let options = {
-      findAllMatches: true,
-      threshold: 0.6,
-      location: 0,
-      distance: 100,
-      maxPatternLength: 32,
-      minMatchCharLength: 1,
-      keys: ["name", "email"]
-    };
-    const fuse = new Fuse(studentArr, options);
-    const result = fuse.search(e.target.value);
+    const keys = ["name", "email"];
+    const result = fuzzySearch(studentArr, keys, e);
     if (e.target.value === "") {
       setFilteredStudents(students);
     } else {
@@ -64,7 +52,6 @@ const AddMinion = props => {
         role: role
       })
       .then(function() {
-        console.log("Granted Permissions!");
         setTriggerAdminFunc(!triggerAdminFunc);
       })
       .catch(err => {
@@ -74,7 +61,6 @@ const AddMinion = props => {
 
   return (
     <div>
-      <p>Add Minion</p>
       <DisplayAllAdmins
         triggerAdminFunc={triggerAdminFunc}
         setTriggerAdminFunc={setTriggerAdminFunc}
@@ -99,7 +85,7 @@ const AddMinion = props => {
                 Make a Admin!
               </Button>
               <Button onClick={() => makeOverloard(s, "minion")}>
-                Make a Smaller Admin!
+                Make Team Lead!
               </Button>
             </div>
           );

@@ -5,6 +5,7 @@ import { Card, Form } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import fuzzySearch from "../../../components/globalComponents/fuzzySearch";
 import { UserContext, BuildWeekContext } from "../../../context/allContexts";
+
 // Components
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
 import StudentProjectView from "./StudentProjectView/StudentProjectView";
@@ -15,7 +16,7 @@ import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectVie
 
 const StudentBuildWeekView = props => {
   // state from context
-  const { email, currentBuildWeekURL, user } = useContext(UserContext);
+  const { email, user } = useContext(UserContext);
 
   const { projectsContext, fetchBuildWeekProjects } = useContext(
     BuildWeekContext

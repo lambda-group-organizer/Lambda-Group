@@ -8,7 +8,6 @@ const SelectProjectRole = ({ history }) => {
   const {
     email,
     userBuildWeeks,
-    user,
     currentBuildWeekURL,
     setCurrentBuildWeekURL
   } = useContext(UserContext);
@@ -63,12 +62,9 @@ const SelectProjectRole = ({ history }) => {
 
   const addProjectRoleToContext = whichRole => {
     addProjectRoleToFirestore(whichRole);
-    console.log("ROLE SET");
   };
 
   const addProjectRoleToFirestore = async projectRole => {
-    console.log("user: ", user);
-    console.log("projectRole: ", projectRole);
     let data;
 
     // If user is signing into a buildweek that they signed up for a project in previously as a different role,
@@ -79,8 +75,11 @@ const SelectProjectRole = ({ history }) => {
       userBuildWeeks[currentBuildWeekURL].projectRole === "" ||
       userBuildWeeks[currentBuildWeekURL].projectRole !== projectRole
     ) {
-      // TODO: make an alert here to double check they wish to proceed
+      // TODO: make a confirm here to double check they wish to proceed
       if (
+        userBuildWeeks &&
+        userBuildWeeks[currentBuildWeekURL] &&
+        userBuildWeeks[currentBuildWeekURL].projectRole !== "" &&
         !window.confirm(
           "Are you sure?  If you signed up as a different role for this build week previously, you will be removed from that project!"
         )
@@ -98,18 +97,7 @@ const SelectProjectRole = ({ history }) => {
         // remove user from previous project in the build week
 
         // filter names from project context
-
-        console.log(projectsContext);
         let projectToChange = projectsContext.filter(project => {
-          console.log(
-            "====================================================================================="
-          );
-          console.log(project.project.uid);
-          console.log(userBuildWeeks[currentBuildWeekURL].projectUid);
-          console.log(
-            project.project.uid ===
-              userBuildWeeks[currentBuildWeekURL].projectUid
-          );
           return (
             project.project.uid ===
             userBuildWeeks[currentBuildWeekURL].projectUid
@@ -118,31 +106,12 @@ const SelectProjectRole = ({ history }) => {
 
         projectToChange = projectToChange[0];
 
-        console.log(
-          "Role to change from",
-          userBuildWeeks[currentBuildWeekURL].projectRole
-        );
         // filter student out of previous project's list of names for his/her role
         let newNames = projectToChange.project.availableRoles[
           userBuildWeeks[currentBuildWeekURL].projectRole
         ].names.filter(n => n.email !== email);
-        console.log(newNames);
 
         // remove student's name object from previous build week in DB
-        console.log("Data being sent: ", {
-          project: {
-            ...projectToChange.project,
-            availableRoles: {
-              ...projectToChange.project.availableRoles,
-              [userBuildWeeks[currentBuildWeekURL].projectRole]: {
-                ...projectToChange.project.availableRoles[
-                  userBuildWeeks[currentBuildWeekURL].projectRole
-                ],
-                names: [...newNames]
-              }
-            }
-          }
-        });
         await db
           .doc(
             // build_weeks/current_build_week/projects/<project_uid>
@@ -162,8 +131,8 @@ const SelectProjectRole = ({ history }) => {
               }
             }
           })
-          .then(() => console.log("finished updating"))
-          .catch(err => console.log("err: ", err));
+          .then(() => null)
+          .catch(err => console.error("err: ", err));
       }
 
       // Build data that goes into user side of database

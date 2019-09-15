@@ -17,7 +17,6 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
   } = useContext(UserContext);
 
   const handleJoinProject = async project => {
-    console.log(project);
     setLoading(true);
     if (userBuildWeeks[currentBuildWeekURL].project !== "") {
       let oldProjRef = await db
@@ -136,7 +135,6 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
   };
 
   const handleRemoveStudent = async (email, studentRole, namesList) => {
-    console.log(email, studentRole, namesList);
     // remove student from project in project database
     const studentRef = db.doc(`students/${email}`);
     let studentToBeRemoved = await studentRef.get();
@@ -153,11 +151,6 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
       }
     });
     let newNames = namesList.filter(n => n.email !== email);
-
-    console.log(newNames);
-    console.log(
-      `build_weeks/${currentBuildWeekURL}/projects/${projectModalData.uid}`
-    );
 
     await db
       .doc(
@@ -196,7 +189,6 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
           <h3>Team Members</h3>
           <ul>
             {Object.keys(projectModalData.availableRoles).map(allRoles => {
-              console.log("allRoles: ", projectModalData[allRoles]);
               if (role === "student" && projectModalData[allRoles] <= 0) {
                 return null;
               } else {
@@ -207,14 +199,10 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                       <>
                         <FaMinusSquare
                           className={styles.icon}
-                          // TODO: Fix handle add role
-                          // TODO: Add loading state for adding roles
                           onClick={() => handleSubtractRole(allRoles)}
                         />
                         <FaPlusSquare
                           className={styles.icon}
-                          // TODO: Fix handle add role
-                          // TODO: Add loading state for adding roles
                           onClick={() => handleAddRole(allRoles)}
                         />
                       </>
@@ -222,7 +210,6 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                     {projectModalData.availableRoles[allRoles].names.map(r => {
                       return (
                         <div key={r.email}>
-                          {/*ADD FUNCTION TO REMOVE STUDENT FROM PROJECT*/}
                           {role === "overlord" ? (
                             <Button
                               color="red"
