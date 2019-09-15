@@ -49,18 +49,14 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
       .doc(currentBuildWeekURL)
       .collection("projects")
       .doc(project.uid);
+
     // Get the data for the user's desired role that project from DB
     const projectData = await projectRef.get();
-
-    console.log(projectData.data().project);
-
     let projectRoleData = await projectData.data().project.availableRoles[
       userBuildWeeks[currentBuildWeekURL].projectRole
     ];
-    console.log(projectRoleData);
-    console.log(userBuildWeeks[currentBuildWeekURL].projectRole);
-    // check if there is room in that project for user
 
+    // check if there is room in that project for user
     if (
       projectRoleData.names.length <
       project[userBuildWeeks[currentBuildWeekURL].projectRole]
@@ -95,23 +91,14 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
         },
         { merge: true }
       );
-      // setCurrentSelectedProject(project.title);
-      // setCurrentSelectedProjectUid(project.uid);
-      //showStudents()
     } else {
+      // TODO: Make this alert pretty and not just a system alert
       alert(
-        `SORRY NO MORE ${userBuildWeeks[currentBuildWeekURL].projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
+        `Sorry no more ${userBuildWeeks[currentBuildWeekURL].projectRole}s slots left.  Please pick another project.`
       );
     }
-    // const projectData = await projectRef.set({availableRoles: {[projectRole]: {names: []}}}, {merge: true})
-    // data = data.data(); "Frontend Developer"
     setLoading(false);
   };
-
-  //const fetchNames = (project) => {
-  //project.availableRoles.androidDeveloper.names.map(({name, email}) => (
-  //<span key={email}>{name}</span>
-  //))}
 
   return (
     <Card key={project.uid} raised={true} centered={true}>
@@ -124,72 +111,22 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
         className={styles.cardHeader}
       />
       <Card.Content>
-        {/* TODO: MUST REFACTOR THIS LATER*/}
         {project.pitch.length > 200
           ? project.pitch.slice(0, 200) + "..."
           : project.pitch}
       </Card.Content>
       <Card.Content>
-        {project.availableRoles.androidDeveloper.names.map(
-          ({ name, email }) => (
-            <span className={styles.span} key={email}>
-              {name}
-            </span>
-          )
-        )}
-        {project.availableRoles.iosDeveloper.names.map(({ name, email }) => (
-          <span className={styles.span} key={email}>
-            {name}
-          </span>
-        ))}
-        {project.availableRoles.dataEngineer.names.map(({ name, email }) => (
-          <span className={styles.span} key={email}>
-            {name}
-          </span>
-        ))}
-        {project.availableRoles.frontEndDeveloper.names.map(
-          ({ name, email }) => (
-            <span className={styles.span} key={email}>
-              {name}
-            </span>
-          )
-        )}
-        {project.availableRoles.frontEndFrameWorkDeveloper.names.map(
-          ({ name, email }) => (
-            <span className={styles.span} key={email}>
-              {name}
-            </span>
-          )
-        )}
-        {project.availableRoles.machineLearningEngineer.names.map(
-          ({ name, email }) => (
-            <span className={styles.span} key={email}>
-              {name}
-            </span>
-          )
-        )}
-        {project.availableRoles.projectLead.names.map(({ name, email }) => (
-          <span className={styles.span} key={email}>
-            {name}
-          </span>
-        ))}
-        {project.availableRoles.uXDesigner.names.map(({ name, email }) => (
-          <span className={styles.span} key={email}>
-            {name}
-          </span>
-        ))}
-        {project.availableRoles.webBackEndDeveloper.names.map(
-          ({ name, email }) => (
-            <span className={styles.span} key={email}>
-              {name}
-            </span>
-          )
-        )}
-        {project.availableRoles.webUiDeveloper.names.map(({ name, email }) => (
-          <span className={styles.span} key={email}>
-            {name}
-          </span>
-        ))}
+        Team:
+        {Object.keys(project.availableRoles).map(projectRole => {
+          return project.availableRoles[projectRole].names.map(student => {
+            return (
+              <span className={styles.span} key={student.email}>
+                {/* TODO: Fix to be dots with two initials */}
+                {student.name[0]}
+              </span>
+            );
+          });
+        })}
       </Card.Content>
       {userBuildWeeks[currentBuildWeekURL].project !== project.title && (
         <Card.Content>
