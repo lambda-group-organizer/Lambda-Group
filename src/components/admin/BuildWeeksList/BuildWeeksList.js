@@ -1,14 +1,15 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {withRouter} from 'react-router-dom';
-import {db} from '../../../logic/firebase';
-import {Card, Button} from 'semantic-ui-react';
-import Spinner from '../../globalComponents/Spinner/Spinner.js';
-import {UserContext} from '../../../context/allContexts';
+import React, { useState, useEffect, useContext } from "react";
+import { withRouter } from "react-router-dom";
+import { db } from "../../../logic/firebase";
+import { Card, Button } from "semantic-ui-react";
+import Spinner from "../../globalComponents/Spinner/Spinner.js";
+import LocalSpinner from "../../globalComponents/Spinner/LocalSpinner.js";
+import { UserContext } from "../../../context/allContexts";
 
-import CopyLink from './CopyLink';
+import CopyLink from "./CopyLink";
 
 const BuildWeeksList = props => {
-  const {setCurrentBuildWeekURL} = useContext(UserContext);
+  const { setCurrentBuildWeekURL } = useContext(UserContext);
 
   const [listOfBuildWeeks, setListOfBuildWeeks] = useState([]);
   const [triggerDeleteState, setTriggerDeleteState] = useState(false);
@@ -23,18 +24,16 @@ const BuildWeeksList = props => {
   // moving on for now.
   const fetchBuildWeeks = async () => {
     setListOfBuildWeeks([]);
-    let buildWeeksCollection = await db.collection('build_weeks').get();
+    let buildWeeksCollection = await db.collection("build_weeks").get();
     buildWeeksCollection.forEach(function(doc) {
       setListOfBuildWeeks(prevSetOfBuildWeeks => {
         return [...prevSetOfBuildWeeks, `${doc.id}`];
       });
-      //console.log(doc.id, '=>', doc.data());
     });
   };
   useEffect(() => {
     fetchBuildWeeks();
   }, [props.update, triggerDeleteState]);
-  // }, []);
 
   //  ===================================== Push to Individual Build Week View ===================================== //
 
@@ -46,19 +45,19 @@ const BuildWeeksList = props => {
 
   function removeBuildWeek(buildWeek) {
     setIsDeleting(true);
-    db.collection('build_weeks')
+    db.collection("build_weeks")
       .doc(`${buildWeek}`)
-      .collection('projects')
+      .collection("projects")
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          db.collection('build_weeks')
+          db.collection("build_weeks")
             .doc(`${buildWeek}`)
-            .collection('projects')
+            .collection("projects")
             .doc(doc.data().project.uid)
             .delete();
         });
-        db.collection('build_weeks')
+        db.collection("build_weeks")
           .doc(`${buildWeek}`)
           .delete()
           .then(function() {
@@ -71,10 +70,6 @@ const BuildWeeksList = props => {
       });
   }
 
-  function exportCSV() {
-    console.log('firing export');
-  }
-
   return (
     <div>
       {isDeleting && <Spinner />}
@@ -82,20 +77,27 @@ const BuildWeeksList = props => {
         {listOfBuildWeeks &&
           listOfBuildWeeks.map(buildWeek => (
             <Card key={`${buildWeek}`}>
-              <Card.Content onClick={() => BuildWeekView(buildWeek)}>
-                <Card.Header>{buildWeek}</Card.Header>
-              </Card.Content>
-              <Card.Content extra>
-                <div className="ui buttons">
-                  <Button
-                    onClick={() => removeBuildWeek(buildWeek)}
-                    basic
-                    color="red">
-                    Delete
-                  </Button>
-                </div>
-              </Card.Content>
-              <CopyLink buildWeek={buildWeek} />
+              {props.currentLoadingBuildWeek === buildWeek ? (
+                <LocalSpinner />
+              ) : (
+                <>
+                  <Card.Content onClick={() => BuildWeekView(buildWeek)}>
+                    <Card.Header>{buildWeek}</Card.Header>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <div className="ui buttons">
+                      <Button
+                        onClick={() => removeBuildWeek(buildWeek)}
+                        basic
+                        color="red"
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </Card.Content>
+                  <CopyLink buildWeek={buildWeek} />
+                </>
+              )}
             </Card>
           ))}
       </Card.Group>

@@ -8,7 +8,6 @@ const AddBuildWeek = props => {
 
   const [buildWeekName, SetBuildWeekName] = useState("");
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const handleChange = e => {
     let spaceLessInput = e.target.value.replace(/ /g, "_");
@@ -24,8 +23,9 @@ const AddBuildWeek = props => {
       setError("Must Provide A CSV File!");
       return;
     }
-    console.log("TARGET: ", e.target.value);
-    setLoading(true);
+    // setLoading(true);
+    props.setCurrentLoadingBuildWeek(buildWeekName);
+    console.log(buildWeekName);
     const check = db.collection("build_weeks").doc(`${buildWeekName}`);
     const giveMe = await check.get();
     const exist = giveMe.data();
@@ -59,8 +59,8 @@ const AddBuildWeek = props => {
 
   const [CSVData, setCSVData] = useState([]);
 
-  const convertedProjects = () => {
-    CSVData.map((item, index) => {
+  const convertedProjects = async () => {
+    await CSVData.map((item, index) => {
       const project = {
         title: item[0],
         pitch: item[1],
@@ -77,69 +77,45 @@ const AddBuildWeek = props => {
         projectLead: item[12],
         androidDeveloper: item[13],
         dataEngineer: item[14],
-        machineLearningEngineer: item[15],
-        teamMembers: []
+        machineLearningEngineer: item[15]
+        // TODO: If no problems, delete this
+        // teamMembers: []
       };
       if (index > 0 && project.title !== "") {
-        // console.log(
-        //   project.webUiDeveloper,
-        //   project.frontEndDeveloper,
-        //   project.frontEndFrameWorkDeveloper,
-        //   project.webBackEndDeveloper,
-        //   project.uXDesigner,
-        //   project.projectLead,
-        //   project.androidDeveloper,
-        //   project.dataEngineer,
-        //   project.machineLearningEngineer
-        // );
         db.collection("build_weeks")
           .doc(`${buildWeekName}`)
           .collection("projects")
           .add({ project })
-          .then(ref => {
+          .then(async ref => {
             project.uid = ref.id;
-            ref.set(
-              {
-                project: {
-                  ...ref.project,
-                  uid: ref.id,
-                  availableRoles: {
-                    androidDeveloper: {
-                      names: [],
-                      limits: project.androidDeveloper
-                    },
-                    iosDeveloper: {
-                      names: [],
-                      limits: project.iosDeveloper
-                    },
-                    dataEngineer: { names: [], limits: project.dataEngineer },
-                    frontEndDeveloper: {
-                      names: [],
-                      limits: project.frontEndDeveloper
-                    },
-                    frontEndFrameWorkDeveloper: {
-                      names: [],
-                      limits: project.frontEndFrameWorkDeveloper
-                    },
-                    machineLearningEngineer: {
-                      names: [],
-                      limits: project.machineLearningEngineer
-                    },
-                    projectLead: { names: [], limits: project.projectLead },
-                    uXDesigner: { names: [], limits: project.uXDesigner },
-                    webBackEndDeveloper: {
-                      names: [],
-                      limits: project.webBackEndDeveloper
-                    },
-                    webUiDeveloper: {
-                      names: [],
-                      limits: project.webUiDeveloper
+            ref
+              .set(
+                {
+                  project: {
+                    ...ref.project,
+                    uid: ref.id,
+                    availableRoles: {
+                      androidDeveloper: { names: [] },
+                      iosDeveloper: { names: [] },
+                      dataEngineer: { names: [] },
+                      frontEndDeveloper: { names: [] },
+                      frontEndFrameWorkDeveloper: { names: [] },
+                      machineLearningEngineer: { names: [] },
+                      projectLead: { names: [] },
+                      uXDesigner: { names: [] },
+                      webBackEndDeveloper: { names: [] },
+                      webUiDeveloper: { names: [] }
                     }
                   }
+                },
+                { merge: true }
+              )
+              .then(() => {
+                console.log("IF COMPARISON: ", index, CSVData.length);
+                if (index === CSVData.length - 3) {
+                  props.setCurrentLoadingBuildWeek(null);
                 }
-              },
-              { merge: true }
-            );
+              });
           });
       }
       if (project.title !== "") {
@@ -148,7 +124,7 @@ const AddBuildWeek = props => {
         return null;
       }
     });
-    setLoading(false);
+    // setLoading(false);
     props.setUpdate(!props.update);
   };
 
@@ -169,13 +145,8 @@ const AddBuildWeek = props => {
         inputId="ObiWan"
         inputStyle={{ color: "red" }}
       />
-      <Button
-        type="submit"
-        loading={loading ? loading : null}
-        color="green"
-        disabled={loading}
-      >
-        Creat{loading ? "ing" : "e"} Build Week
+      <Button type="submit" color="green">
+        Create Build Week
       </Button>
       {error && <p>{error}</p>}
     </Form>

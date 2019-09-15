@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./Spinner.module.css";
+import styles from "./LocalSpinner.module.scss";
 
-const Spinner = props => {
+const LocalSpinner = props => {
   return (
     <div className={styles.loaderContainer}>
       <div className={styles.loader}> </div>
@@ -9,4 +9,4 @@ const Spinner = props => {
   );
 };
 
-export default Spinner;
+export default LocalSpinner;

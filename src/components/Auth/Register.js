@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-// import { StudentContext } from "../../context/allContexts";
 import { UserContext } from "../../context/allContexts";
 import firebase from "../../logic/firebase";
 import { db } from "../../logic/firebase.js";
@@ -46,14 +45,14 @@ const Register = ({ history }) => {
               email: createdUser.user.email,
               displayName,
               role: "student"
-            })
-            .then(ref => {
-              // console.log('Added document with ID: ', ref.uid);
             });
-
+          // .then(ref => {
+          //   // console.log('Added document with ID: ', ref.uid);
+          // });
           history.push("/student/dashboard");
         });
       })
+      // TODO: Show user it didn't work
       .catch(err => console.log(`error : ${err}`));
   };
 
@@ -121,8 +120,6 @@ const Register = ({ history }) => {
         </Button>
       </Form>
     </Segment>
-    // <div style={{ display: "flex", flexDirection: "column" }}>
-    // </div>
   );
 
   return (
