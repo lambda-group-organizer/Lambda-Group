@@ -8,7 +8,7 @@ import { Form, Button } from "semantic-ui-react";
 const AddMinion = props => {
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
-  const [triggerAdminFunc, setTriggerAdminFunc] = useState(false);
+  // const [triggerAdminFunc, setTriggerAdminFunc] = useState(false);
 
   const fetchStudents = async () => {
     let studentArr = [];
@@ -51,9 +51,9 @@ const AddMinion = props => {
         email: s.email,
         role: role
       })
-      .then(function() {
-        setTriggerAdminFunc(!triggerAdminFunc);
-      })
+      // .then(function() {
+      //   setTriggerAdminFunc(!triggerAdminFunc);
+      // })
       .catch(err => {
         console.error(err);
       });
@@ -62,8 +62,8 @@ const AddMinion = props => {
   return (
     <div>
       <DisplayAllAdmins
-        triggerAdminFunc={triggerAdminFunc}
-        setTriggerAdminFunc={setTriggerAdminFunc}
+      // triggerAdminFunc={triggerAdminFunc}
+      // setTriggerAdminFunc={setTriggerAdminFunc}
       />
       <Form.Input
         size="big"

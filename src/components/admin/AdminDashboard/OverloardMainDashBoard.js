@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DashBoardHeader from "../../globalComponents/DashBoardHeader.js";
-import AddBuildWeeks from "./AddBuildWeeks.js";
+import AddBuildWeeks from "./AddBuildWeeks/AddBuildWeeks";
 import BuildWeeksList from "../BuildWeeksList/BuildWeeksList.js";
 import AddMinion from "./AddMinion.js";
 import { Tab } from "semantic-ui-react";
