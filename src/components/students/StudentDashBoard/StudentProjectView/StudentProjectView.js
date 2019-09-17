@@ -107,12 +107,11 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
       centered={true}
       onClick={() => setProjectModalData(project)}
     >
-      <Card.Content style={{ backgroundColor: "#ba112e", color: "white" }}>
-        <Header
-          as="h3"
-          className={styles.cardHeader}
-          style={{ color: "white" }}
-        >
+      <Card.Content
+        className={styles.cardHeader}
+        style={{ backgroundColor: "#ba112e", color: "white" }}
+      >
+        <Header as="h3" style={{ color: "white" }}>
           {project.title.length > 25
             ? project.title.slice(0, 25) + "..."
             : project.title}
@@ -138,15 +137,17 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
       </Card.Content>
       {userBuildWeeks[currentBuildWeekURL].project !== project.title && (
         <Card.Content
+          extra
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center"
           }}
         >
-          <p>{project.productType}</p>
+          <p className={styles.productType}>{project.productType}</p>
           <Button
-            className={styles.joinButton}
+            // className={styles.joinButton}
+            id={StyleSheetList.joinButton}
             onClick={() => handleJoinProject(project)}
           >
             +Join
