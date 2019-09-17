@@ -122,7 +122,7 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
           ? project.pitch.slice(0, 200) + "..."
           : project.pitch}
       </Card.Content>
-      <Card.Content>
+      <Card.Content className={styles.team}>
         Team:
         {Object.keys(project.availableRoles).map(projectRole => {
           return project.availableRoles[projectRole].names.map(student => {
