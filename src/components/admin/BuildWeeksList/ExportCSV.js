@@ -72,6 +72,13 @@ const ExportCSV = ({ buildWeek }) => {
 
   return (
     <CSVLink
+      style={{
+        position: "fixed",
+        bottom: "10px",
+        right: "10px",
+        zIndex: "100"
+      }}
+      className="ui button primary"
       data={data}
       //onClick={() => exportCSV()}
       filename={`${currentBuildWeekURL}.csv`}

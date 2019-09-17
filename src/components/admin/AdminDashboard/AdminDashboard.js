@@ -12,6 +12,7 @@ import AdminProjectView from "./AdminProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
+import { FaFileExcel } from "react-icons/fa";
 
 const Dashboard = props => {
   const { projectsContext, fetchBuildWeekProjects } = useContext(
@@ -97,17 +98,22 @@ const Dashboard = props => {
         </div>
         <ExportCSV />
       </div>
-      <Card.Group>
+      <Card.Group
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly"
+        }}
+      >
         {filteredProjects &&
           filteredProjects.map(project => {
             console.log("FILTERED PROJECTS");
             return (
-              <div key={project.project.uid}>
-                <AdminProjectView
-                  project={project}
-                  setProjectModalData={setProjectModalData}
-                />
-              </div>
+              <AdminProjectView
+                key={project.project.uid}
+                project={project}
+                setProjectModalData={setProjectModalData}
+              />
             );
           })}
       </Card.Group>

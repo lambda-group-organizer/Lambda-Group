@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, Icon } from "semantic-ui-react";
+import { Button, Icon, Modal, Grid, List } from "semantic-ui-react";
 import { UserContext } from "../../../context/allContexts";
 import { db } from "../../../logic/firebase";
 import { FaPlusSquare, FaMinusSquare } from "react-icons/fa";
@@ -172,92 +172,125 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
   };
 
   return (
-    <div
-      className={styles.modalContainer}
-      onClick={() => setProjectModalData(null)}
+    <Modal
+      // className={styles.modalContainer}
+      open={projectModalData !== null}
+      // close={projectModalData === null}
+      onClose={() => setProjectModalData(null)}
     >
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
-        <div className={styles.modalTitle}>
-          <h3>{projectModalData.title}</h3>
-        </div>
-        <div className={styles.modalMainBody}>
-          <p>{projectModalData.pitch}</p>
-          <p>{projectModalData.mvp}</p>
-          <p>{projectModalData.stretch}</p>
-        </div>
-        <div className={styles.modalTeamMembers}>
-          <h3>Team Members</h3>
-          <ul>
-            {Object.keys(projectModalData.availableRoles).map(allRoles => {
-              if (role === "student" && projectModalData[allRoles] <= 0) {
-                return null;
-              } else {
-                return (
-                  <li key={allRoles}>
-                    {allRoles} (max - {projectModalData[allRoles]}){" "}
-                    {role !== "student" ? (
-                      <>
-                        <FaMinusSquare
-                          className={styles.icon}
-                          onClick={() => handleSubtractRole(allRoles)}
-                        />
-                        <FaPlusSquare
-                          className={styles.icon}
-                          onClick={() => handleAddRole(allRoles)}
-                        />
-                      </>
-                    ) : null}
-                    {projectModalData.availableRoles[allRoles].names.map(r => {
-                      return (
-                        <div key={r.email}>
-                          {role === "overlord" ? (
-                            <Button
-                              color="red"
-                              animated="vertical"
-                              onClick={() =>
-                                handleRemoveStudent(
-                                  r.email,
-                                  allRoles,
-                                  projectModalData.availableRoles[allRoles]
-                                    .names
-                                )
-                              }
-                            >
-                              <Button.Content visible>{r.name}</Button.Content>
-                              <Button.Content hidden>
-                                <Icon name="remove user" />
-                              </Button.Content>
-                            </Button>
-                          ) : (
-                            <p>
-                              {r.name}
-                              {r.email}
-                            </p>
+      <Modal.Header
+        className={styles.modalTitle}
+        style={{ textAlign: "center" }}
+      >
+        <h3>{projectModalData.title}</h3>
+      </Modal.Header>
+
+      <Modal.Content>
+        <Grid columns={2} relaxed="very">
+          <Grid.Column>
+            {/* <div className={styles.modalMainBody}> */}
+            <p>{projectModalData.pitch}</p>
+            <p>{projectModalData.mvp}</p>
+            <p>{projectModalData.stretch}</p>
+            {/* </div> */}
+          </Grid.Column>
+          <Grid.Column>
+            <div className={styles.modalTeamMembers}>
+              <h3>Team Members</h3>
+              <List celled>
+                {Object.keys(projectModalData.availableRoles).map(allRoles => {
+                  if (role === "student" && projectModalData[allRoles] <= 0) {
+                    return null;
+                  } else {
+                    return (
+                      <List.Item key={allRoles}>
+                        <List.Content
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                            flexWrap: "wrap"
+                          }}
+                        >
+                          <List.Header>
+                            {allRoles} (max - {projectModalData[allRoles]}){" "}
+                            {role !== "student" ? (
+                              <>
+                                <FaMinusSquare
+                                  className={styles.icon}
+                                  onClick={() => handleSubtractRole(allRoles)}
+                                />
+                                <FaPlusSquare
+                                  className={styles.icon}
+                                  onClick={() => handleAddRole(allRoles)}
+                                />
+                              </>
+                            ) : null}
+                          </List.Header>
+                          {projectModalData.availableRoles[allRoles].names.map(
+                            r => {
+                              return (
+                                <div key={r.email}>
+                                  {role === "overlord" ? (
+                                    <Button
+                                      color="red"
+                                      animated="vertical"
+                                      onClick={() =>
+                                        handleRemoveStudent(
+                                          r.email,
+                                          allRoles,
+                                          projectModalData.availableRoles[
+                                            allRoles
+                                          ].names
+                                        )
+                                      }
+                                    >
+                                      <Button.Content visible>
+                                        {r.name}
+                                      </Button.Content>
+                                      <Button.Content hidden>
+                                        <Icon name="remove user" />
+                                      </Button.Content>
+                                    </Button>
+                                  ) : (
+                                    <p>{r.name}</p>
+                                  )}
+                                </div>
+                              );
+                            }
                           )}
-                        </div>
-                      );
-                    })}
-                  </li>
-                );
-              }
-            })}
-          </ul>
-        </div>
-        <div className={styles.modalSignup}>
-          {role !== "overlord" ? (
-            <Button
-              color="green"
-              onClick={() => handleJoinProject(projectModalData)}
-            >
-              Sign up
-            </Button>
-          ) : null}
-          <Button onClick={() => setProjectModalData(null)} color="red">
-            Exit
+                        </List.Content>
+                      </List.Item>
+                    );
+                  }
+                })}
+              </List>
+            </div>
+          </Grid.Column>
+        </Grid>
+      </Modal.Content>
+      <div
+        className={styles.modalSignup}
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          marginBottom: "15px"
+        }}
+      >
+        {role !== "overlord" ? (
+          <Button
+            color="green"
+            onClick={() => handleJoinProject(projectModalData)}
+          >
+            Sign up
           </Button>
-        </div>
+        ) : null}
+        <Button onClick={() => setProjectModalData(null)} color="red">
+          Exit
+        </Button>
       </div>
-    </div>
+    </Modal>
   );
 };
 
