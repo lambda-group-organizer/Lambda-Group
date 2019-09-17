@@ -10,7 +10,7 @@ import { UserContext, BuildWeekContext } from "../../../context/allContexts";
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
 import StudentProjectView from "./StudentProjectView/StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
-import "../../../Dashboard/Dashboard.css";
+import "../../globalComponents/ProjectFuzzySearch/ProjectFuzzySearch.module.scss";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
 import MapLegend from "../../../components/students/StudentDashBoard/StudentProjectView/MapLegend/MapLegend.js";
 
@@ -96,9 +96,10 @@ const StudentBuildWeekView = props => {
         />
       )}
       <DashBoardHeader />
+      <MapLegend />
       <div className="displayContainer">
-        <LoginAnimation />
         <div>
+          <LoginAnimation />
           <Form.Input
             type="text"
             onChange={e => handleFuzzySearch(e)}
@@ -110,7 +111,6 @@ const StudentBuildWeekView = props => {
           />
         </div>
       </div>
-      <MapLegend />
       <Card.Group>
         {filteredProjects &&
           filteredProjects.map(project => {

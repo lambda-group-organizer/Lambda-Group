@@ -10,7 +10,7 @@ import ExportCSV from "../BuildWeeksList/ExportCSV.js";
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
 import AdminProjectView from "./AdminProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
-import "../../../Dashboard/Dashboard.css";
+import styles from "../../globalComponents/ProjectFuzzySearch/ProjectFuzzySearch.module.scss";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
 import { FaFileExcel } from "react-icons/fa";
 
@@ -82,21 +82,20 @@ const Dashboard = props => {
           projectModalData={projectModalData}
         />
       )}
+      <ExportCSV />
       <DashBoardHeader />
-      <div className="displayContainer">
+      <div className={styles.displayContainer}>
         <LoginAnimation />
-        <div>
-          <Form.Input
-            type="text"
-            onChange={e => handleFuzzySearch(e)}
-            focus
-            size="big"
-            icon="filter"
-            iconPosition="left"
-            placeholder="Search by Project title, type or student name"
-          />
-        </div>
-        <ExportCSV />
+        <Form.Input
+          type="text"
+          onChange={e => handleFuzzySearch(e)}
+          focus
+          size="big"
+          icon="filter"
+          color="red"
+          iconPosition="left"
+          placeholder="Search by Project title, type or student name"
+        />
       </div>
       <Card.Group
         style={{
