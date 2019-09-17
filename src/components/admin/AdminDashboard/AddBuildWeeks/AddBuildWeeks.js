@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Form, Button, Input } from "semantic-ui-react";
-import { db } from "../../../logic/firebase";
+import { db } from "../../../../logic/firebase";
 import CSVReader from "react-csv-reader";
+
+import styles from "./AddBuildWeeks.module.scss";
 
 const AddBuildWeek = props => {
   // ============================== Creating a Build Week ========================= //
@@ -126,27 +128,29 @@ const AddBuildWeek = props => {
   };
 
   return (
-    <Form onSubmit={e => addBuildWeek(e)}>
-      <Form.Field>
-        <Input
-          label="name"
-          value={buildWeekName}
-          onChange={handleChange}
-          placeholder="build week ... ?"
-        />
-      </Form.Field>
-      <CSVReader
-        cssClass="csv-reader-input"
-        label="Select CSV with projects"
-        onFileLoaded={data => setCSVData(data)}
-        inputId="ObiWan"
-        inputStyle={{ color: "red" }}
-      />
-      <Button type="submit" color="green">
-        Create Build Week
-      </Button>
-      {error && <p>{error}</p>}
-    </Form>
+    <>
+      <Form className={styles.csvForm} onSubmit={e => addBuildWeek(e)}>
+        <h4>Upload CSV to add projects</h4>
+        <Form.Field className={styles.formFields}>
+          <CSVReader
+            cssClass={`csv-reader-input ${styles.csvReaderInput}`}
+            // label="Add projects with CSV"
+            onFileLoaded={data => setCSVData(data)}
+            inputId="ObiWan"
+          />
+          <Input
+            label="name"
+            value={buildWeekName}
+            onChange={handleChange}
+            placeholder="build week ... ?"
+          />
+        </Form.Field>
+        <Button type="submit" color="green" className={styles.button}>
+          Create Build Week
+        </Button>
+        {error && <p>{error}</p>}
+      </Form>
+    </>
   );
 };
 

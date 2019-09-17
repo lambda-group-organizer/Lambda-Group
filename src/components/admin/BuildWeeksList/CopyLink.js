@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Card, Button } from "semantic-ui-react";
 import { db } from "../../../logic/firebase.js";
+import { styles } from "ansi-colors";
 //import { Z_FIXED } from "zlib";
 
 const CopyLink = props => {
@@ -41,11 +42,13 @@ const CopyLink = props => {
   return (
     <>
       {document.queryCommandSupported("copy") && (
-        <Card>
-          <Button color="blue" onClick={copyToClipboard}>
-            {copySuccess ? "Copied!" : "Copy URL"}
-          </Button>
-        </Card>
+        <Button
+          color="blue"
+          onClick={copyToClipboard}
+          // style={{ borderRadius: "6px" }}
+        >
+          {copySuccess ? "Copied!" : "Copy URL"}
+        </Button>
       )}
       <form style={{ overflow: "hidden", position: "relative" }}>
         <textarea
@@ -59,10 +62,6 @@ const CopyLink = props => {
           readOnly
         />
       </form>
-      {/* <Button onClick={copyLink}>Copy URL</Button>
-            {copySuccess ? 'Copied!' : null}
-            <textarea ref={textAreaRef} value={`http://localhost:3000/${props.buildWeek}`} readOnly style={{display: "none"}} /> */}
-      {/* <textArea ref={textAreaRef value=`https://https://lambda-group-organizer.firebaseapp.com/${buildWeek}`}/> */}
     </>
   );
 };

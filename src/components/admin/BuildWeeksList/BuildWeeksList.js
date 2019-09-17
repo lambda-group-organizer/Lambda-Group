@@ -7,6 +7,8 @@ import LocalSpinner from "../../globalComponents/Spinner/LocalSpinner.js";
 import { UserContext } from "../../../context/allContexts";
 
 import CopyLink from "./CopyLink";
+// import { styles } from "ansi-colors";
+import styles from "./BuildWeeksList.module.scss";
 
 const BuildWeeksList = props => {
   const { setCurrentBuildWeekURL } = useContext(UserContext);
@@ -67,29 +69,47 @@ const BuildWeeksList = props => {
   return (
     <div>
       {isDeleting && <Spinner />}
-      <Card.Group>
+      <Card.Group
+        style={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center"
+        }}
+      >
         {listOfBuildWeeks &&
           listOfBuildWeeks.map(buildWeek => (
-            <Card key={`${buildWeek}`}>
+            <Card key={`${buildWeek}`} style={{ width: "max-content" }}>
               {props.currentLoadingBuildWeek === buildWeek ? (
                 <LocalSpinner />
               ) : (
                 <>
-                  <Card.Content onClick={() => goToBuildWeekView(buildWeek)}>
+                  <Card.Content
+                    style={{ cursor: "pointer" }}
+                    onClick={() => goToBuildWeekView(buildWeek)}
+                  >
                     <Card.Header>{buildWeek}</Card.Header>
                   </Card.Content>
-                  <Card.Content extra>
+                  <Card.Content>
                     <div className="ui buttons">
+                      <CopyLink buildWeek={buildWeek} />
+                      <Button.Or className={styles.or} />
+                      <Button
+                        onClick={() => goToBuildWeekView(buildWeek)}
+                        color="green"
+                        // style={{ borderRadius: "6px" }}
+                      >
+                        View
+                      </Button>
+                      <Button.Or className={styles.or} />
                       <Button
                         onClick={() => removeBuildWeek(buildWeek)}
-                        basic
                         color="red"
+                        // style={{ borderRadius: "6px" }}
                       >
                         Delete
                       </Button>
                     </div>
                   </Card.Content>
-                  <CopyLink buildWeek={buildWeek} />
                 </>
               )}
             </Card>
