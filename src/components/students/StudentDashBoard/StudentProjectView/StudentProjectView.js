@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Card, Button } from "semantic-ui-react";
+import { Card, Button, Header } from "semantic-ui-react";
 import { UserContext } from "../../../../context/allContexts";
 import { db } from "../../../../logic/firebase";
 
@@ -101,16 +101,24 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
   };
 
   return (
-    <Card key={project.uid} raised={true} centered={true}>
-      <Card.Content
-        header={
-          project.title.length > 25
+    <Card
+      key={project.uid}
+      raised={true}
+      centered={true}
+      onClick={() => setProjectModalData(project)}
+    >
+      <Card.Content style={{ backgroundColor: "#ba112e", color: "white" }}>
+        <Header
+          as="h3"
+          className={styles.cardHeader}
+          style={{ color: "white" }}
+        >
+          {project.title.length > 25
             ? project.title.slice(0, 25) + "..."
-            : project.title
-        }
-        className={styles.cardHeader}
-      />
-      <Card.Content>
+            : project.title}
+        </Header>
+      </Card.Content>
+      <Card.Content style={{ color: "#323232" }}>
         {project.pitch.length > 200
           ? project.pitch.slice(0, 200) + "..."
           : project.pitch}
@@ -129,9 +137,20 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
         })}
       </Card.Content>
       {userBuildWeeks[currentBuildWeekURL].project !== project.title && (
-        <Card.Content>
-          {project.productType}{" "}
-          <Button onClick={() => handleJoinProject(project)}>+Join</Button>
+        <Card.Content
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
+          <p>{project.productType}</p>
+          <Button
+            className={styles.joinButton}
+            onClick={() => handleJoinProject(project)}
+          >
+            +Join
+          </Button>
         </Card.Content>
       )}
       {userBuildWeeks[currentBuildWeekURL].project === project.title && (
@@ -139,12 +158,6 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
           Signed up!
         </Card.Content>
       )}
-      <div
-        style={{ height: "50px", width: "100%", backgroundColor: "cyan" }}
-        onClick={() => setProjectModalData(project)}
-      >
-        See more
-      </div>
     </Card>
   );
 };

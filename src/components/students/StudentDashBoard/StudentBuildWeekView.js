@@ -12,7 +12,7 @@ import StudentProjectView from "./StudentProjectView/StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import "../../../Dashboard/Dashboard.css";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
- import MapLegend from "../../../components/students/StudentDashBoard/StudentProjectView/MapLegend/MapLegend.js";
+import MapLegend from "../../../components/students/StudentDashBoard/StudentProjectView/MapLegend/MapLegend.js";
 
 const StudentBuildWeekView = props => {
   // state from context
@@ -115,12 +115,11 @@ const StudentBuildWeekView = props => {
         {filteredProjects &&
           filteredProjects.map(project => {
             return (
-              <div key={project.project.uid}>
-                <StudentProjectView
-                  project={project}
-                  setProjectModalData={setProjectModalData}
-                />
-              </div>
+              <StudentProjectView
+                key={project.project.uid}
+                project={project}
+                setProjectModalData={setProjectModalData}
+              />
             );
           })}
       </Card.Group>
