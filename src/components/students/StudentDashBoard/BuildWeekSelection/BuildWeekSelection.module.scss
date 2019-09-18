@@ -1,28 +1,21 @@
+.header {
+  text-align: center;
+}
+
 .selectContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
   flex-wrap: wrap;
+  // flex-grow: 1;
   max-width: 500px;
   margin: 0 auto;
   margin-bottom: 60px;
   padding: 10px;
-  .role {
+  .buildWeek {
     padding: 15px;
     margin: 5px;
+    background-color: #ba112e !important;
   }
-}
-
-.back {
-  text-align: center;
-  width: max-content;
-  color: #ba112e !important;
-  background-color: white !important;
-  padding: 20px 0;
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-
-  border: 1px solid #ba112e !important;
 }

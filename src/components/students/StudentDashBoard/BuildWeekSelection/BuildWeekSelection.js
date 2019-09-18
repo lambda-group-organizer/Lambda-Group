@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { db } from "../../../logic/firebase.js";
+import { db } from "../../../../logic/firebase.js";
 import { Button, Header } from "semantic-ui-react";
-import { UserContext } from "../../../context/allContexts";
+import { UserContext } from "../../../../context/allContexts";
+import styles from "./BuildWeekSelection.module.scss";
 
 const BuildWeekSelection = props => {
   const { setCurrentBuildWeekURL } = useContext(UserContext);
@@ -25,19 +26,24 @@ const BuildWeekSelection = props => {
 
   return (
     <div>
-      <Header as="h2">Pick a build week</Header>
-      {hackathons &&
-        hackathons.map(hack => {
-          return (
-            <Button
-              key={hack}
-              color="blue"
-              onClick={() => handleBuildWeekSelection(hack)}
-            >
-              {hack}
-            </Button>
-          );
-        })}
+      <Header className={styles.header} as="h2">
+        Pick a build week
+      </Header>
+      <div className={styles.selectContainer}>
+        {hackathons &&
+          hackathons.map(hack => {
+            return (
+              <Button
+                className={styles.buildWeek}
+                key={hack}
+                color="blue"
+                onClick={() => handleBuildWeekSelection(hack)}
+              >
+                {hack.replace(/_/g, " ")}
+              </Button>
+            );
+          })}
+      </div>
     </div>
   );
 };

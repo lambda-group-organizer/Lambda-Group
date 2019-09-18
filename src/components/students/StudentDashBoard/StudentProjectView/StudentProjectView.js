@@ -2,6 +2,9 @@ import React, { useContext } from "react";
 import { Card, Button, Header } from "semantic-ui-react";
 import { UserContext } from "../../../../context/allContexts";
 import { db } from "../../../../logic/firebase";
+import projectRoleOptions, {
+  findProjectRoleOption
+} from "../../../../utils/projectRoleOptions";
 
 import styles from "./StudentProjectView.module.scss";
 
@@ -129,16 +132,31 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
       </Card.Content>
       <Card.Content className={styles.team}>
         Team:
-        {Object.keys(project.availableRoles).map(projectRole => {
-          return project.availableRoles[projectRole].names.map(student => {
-            return (
-              <span className={styles.span} key={student.email}>
-                {/* TODO: Fix to be dots with two initials */}
-                {student.name[0]}
-              </span>
-            );
-          });
-        })}
+        <div className={styles.dotContainer}>
+          {Object.keys(project.availableRoles).map(projectRole => {
+            return project.availableRoles[projectRole].names.map(student => {
+              return (
+                <div
+                  className={styles.teamMemberDiv}
+                  style={{
+                    backgroundColor: `${
+                      findProjectRoleOption(projectRole)[0].bgColor
+                    }`
+                  }}
+                >
+                  <span className={styles.span} key={student.email}>
+                    {console.log(
+                      "Project Role: ",
+                      findProjectRoleOption(projectRole)
+                    )}
+                    {/* TODO: Fix to be dots with two initials */}
+                    {student.name[0]}
+                  </span>
+                </div>
+              );
+            });
+          })}
+        </div>
       </Card.Content>
       {userBuildWeeks[currentBuildWeekURL].project !== project.title && (
         <Card.Content

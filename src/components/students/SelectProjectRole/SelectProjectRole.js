@@ -4,6 +4,7 @@ import { UserContext, BuildWeekContext } from "../../../context/allContexts";
 import { db } from "../../../logic/firebase.js";
 import { withRouter } from "react-router-dom";
 import styles from "./SelectProjectRole.module.scss";
+import possibleRoles from "../../../utils/projectRoleOptions";
 
 const SelectProjectRole = ({ history }) => {
   const {
@@ -17,48 +18,6 @@ const SelectProjectRole = ({ history }) => {
     BuildWeekContext
   );
 
-  const possibleRoles = [
-    {
-      title: "Android Developer",
-      selection: "androidDeveloper"
-    },
-    {
-      title: "iOS Developer",
-      selection: "iosDeveloper"
-    },
-    {
-      title: "Data Engineer",
-      selection: "dataEngineer"
-    },
-    {
-      title: "Front End Developer",
-      selection: "frontEndDeveloper"
-    },
-    {
-      title: "Front End Frame Work Developer",
-      selection: "frontEndFrameWorkDeveloper"
-    },
-    {
-      title: "Machine Learning Engineer",
-      selection: "machineLearningEngineer"
-    },
-    {
-      title: "Project Lead",
-      selection: "projectLead"
-    },
-    {
-      title: "UX Designer",
-      selection: "uXDesigner"
-    },
-    {
-      title: "Web Back End Developer",
-      selection: "webBackEndDeveloper"
-    },
-    {
-      title: "Web UI Developer",
-      selection: "webUiDeveloper"
-    }
-  ];
   const [roles] = useState(possibleRoles);
 
   const addProjectRoleToContext = whichRole => {
@@ -162,7 +121,7 @@ const SelectProjectRole = ({ history }) => {
   return (
     <div>
       <Header style={{ textAlign: "center" }} as="h2">
-        Whats Your Role For This Build Week / Hackathon?
+        Whats Your Role For {currentBuildWeekURL.replace(/_/g, " ")}?
       </Header>
       <div className={styles.selectContainer}>
         {roles.map(role => {
@@ -171,6 +130,7 @@ const SelectProjectRole = ({ history }) => {
               onClick={() => addProjectRoleToContext(role.selection)}
               color="green"
               className={styles.role}
+              style={{ backgroundColor: `${role.bgColor}` }}
               key={role.title}
             >
               {role.title}
