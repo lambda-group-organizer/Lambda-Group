@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import DashBoardHeader from "../../globalComponents/DashBoardHeader.js";
+import DashBoardHeader from "../../globalComponents/DashBoardHeader";
 import AddBuildWeeks from "./AddBuildWeeks/AddBuildWeeks";
-import BuildWeeksList from "../BuildWeeksList/BuildWeeksList.js";
-import AddMinion from "./AddMinion.js";
+import BuildWeeksList from "../BuildWeeksList/BuildWeeksList";
+import AddMinion from "./AddMinion/AddMinion";
 import { Tab } from "semantic-ui-react";
 
-import "./overlordMainDashBoard.css";
+import "./overlordMainDashBoard.scss";
 
 const OverLoardMainDashboard = props => {
   // Needed update, setUpdate for state sync
@@ -15,7 +15,10 @@ const OverLoardMainDashboard = props => {
     {
       menuItem: "Build Weeks",
       render: () => (
-        <Tab.Pane attached={false}>
+        <Tab.Pane
+          style={{ boxShadow: "None", border: "None" }}
+          attached={false}
+        >
           <AddBuildWeeks
             update={update}
             setUpdate={setUpdate}
@@ -31,7 +34,10 @@ const OverLoardMainDashboard = props => {
     {
       menuItem: "Administrators",
       render: () => (
-        <Tab.Pane attached={false}>
+        <Tab.Pane
+          style={{ boxShadow: "None", border: "None" }}
+          attached={false}
+        >
           <AddMinion />
         </Tab.Pane>
       )
@@ -48,6 +54,7 @@ const OverLoardMainDashboard = props => {
             attached: false,
             tabular: false
           }}
+          className="tab"
           panes={panes}
         />
       </div>

@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Header } from "semantic-ui-react";
 import { UserContext, BuildWeekContext } from "../../../context/allContexts";
 import { db } from "../../../logic/firebase.js";
 import { withRouter } from "react-router-dom";
+import styles from "./SelectProjectRole.module.scss";
 
 const SelectProjectRole = ({ history }) => {
   const {
@@ -160,22 +161,29 @@ const SelectProjectRole = ({ history }) => {
 
   return (
     <div>
-      <h1>Whats Your Role For This Build Week / Hackathon?</h1>
-      {roles.map(role => {
-        return (
-          <Button
-            onClick={() => addProjectRoleToContext(role.selection)}
-            color="green"
-            key={role.title}
-          >
-            {role.title}
-          </Button>
-        );
-      })}
-      <p>
-        Back to build week selection{" "}
-        <Button onClick={() => setCurrentBuildWeekURL(null)}>Back</Button>
-      </p>
+      <Header style={{ textAlign: "center" }} as="h2">
+        Whats Your Role For This Build Week / Hackathon?
+      </Header>
+      <div className={styles.selectContainer}>
+        {roles.map(role => {
+          return (
+            <Button
+              onClick={() => addProjectRoleToContext(role.selection)}
+              color="green"
+              className={styles.role}
+              key={role.title}
+            >
+              {role.title}
+            </Button>
+          );
+        })}
+      </div>
+      <Button
+        className={styles.back}
+        onClick={() => setCurrentBuildWeekURL(null)}
+      >
+        Back to select Build Week
+      </Button>
     </div>
   );
 };

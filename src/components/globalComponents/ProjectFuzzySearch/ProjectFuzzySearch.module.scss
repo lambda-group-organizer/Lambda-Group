@@ -102,13 +102,13 @@ body {
 }
 
 .displayContainer {
-  /*border: 2px solid blue;*/
-  display: flex;
-  flex-direction: row;
+  // display: flex;
+  // flex-direction: row;
   width: 100%;
-  justify-content: space-around;
-  align-items: center;
-  /* margin: 2% auto; */
+  padding: 40px !important;
+  .input {
+    width: 100% !important;
+  }
 }
 
 .csv-reader-input {

@@ -85,7 +85,7 @@ const Dashboard = props => {
       <ExportCSV />
       <DashBoardHeader />
       <div className={styles.displayContainer}>
-        <LoginAnimation />
+        {/* <LoginAnimation /> */}
         <Form.Input
           type="text"
           onChange={e => handleFuzzySearch(e)}

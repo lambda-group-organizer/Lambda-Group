@@ -14,7 +14,8 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
     setLoading
   } = useContext(UserContext);
 
-  const handleJoinProject = async project => {
+  const handleJoinProject = async (project, e) => {
+    e.stopPropagation();
     setLoading(true);
     if (
       userBuildWeeks[currentBuildWeekURL] &&
@@ -100,6 +101,10 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
     setLoading(false);
   };
 
+  let allowJoin =
+    project.availableRoles[userBuildWeeks[currentBuildWeekURL].projectRole]
+      .names.length >= project[userBuildWeeks[currentBuildWeekURL].projectRole];
+
   return (
     <Card
       key={project.uid}
@@ -145,17 +150,34 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
           }}
         >
           <p className={styles.productType}>{project.productType}</p>
-          <Button
-            // className={styles.joinButton}
-            id={StyleSheetList.joinButton}
-            onClick={() => handleJoinProject(project)}
-          >
-            +Join
-          </Button>
+
+          {allowJoin ? (
+            <Button
+              disabled
+              id={StyleSheetList.joinButton}
+              onClick={e => handleJoinProject(project, e)}
+            >
+              +Join
+            </Button>
+          ) : (
+            <Button
+              positive
+              id={StyleSheetList.joinButton}
+              onClick={e => handleJoinProject(project, e)}
+            >
+              +Join
+            </Button>
+          )}
         </Card.Content>
       )}
       {userBuildWeeks[currentBuildWeekURL].project === project.title && (
-        <Card.Content style={{ backgroundColor: "green", color: "white" }}>
+        <Card.Content
+          style={{
+            backgroundColor: "rgb(32, 185, 68)",
+            color: "white",
+            flexGrow: "0"
+          }}
+        >
           Signed up!
         </Card.Content>
       )}

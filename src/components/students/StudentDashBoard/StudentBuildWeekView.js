@@ -10,7 +10,7 @@ import { UserContext, BuildWeekContext } from "../../../context/allContexts";
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
 import StudentProjectView from "./StudentProjectView/StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
-import "../../globalComponents/ProjectFuzzySearch/ProjectFuzzySearch.module.scss";
+import styles from "../../globalComponents/ProjectFuzzySearch/ProjectFuzzySearch.module.scss";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
 import MapLegend from "../../../components/students/StudentDashBoard/StudentProjectView/MapLegend/MapLegend.js";
 
@@ -97,19 +97,17 @@ const StudentBuildWeekView = props => {
       )}
       <DashBoardHeader />
       <MapLegend />
-      <div className="displayContainer">
-        <div>
-          <LoginAnimation />
-          <Form.Input
-            type="text"
-            onChange={e => handleFuzzySearch(e)}
-            focus
-            size="big"
-            icon="filter"
-            iconPosition="left"
-            placeholder="Search by Project title, type or student name"
-          />
-        </div>
+      <div className={styles.displayContainer}>
+        {/* <LoginAnimation /> */}
+        <Form.Input
+          type="text"
+          onChange={e => handleFuzzySearch(e)}
+          focus
+          size="big"
+          icon="filter"
+          iconPosition="left"
+          placeholder="Search by Project title, type or student name"
+        />
       </div>
       <Card.Group>
         {filteredProjects &&
