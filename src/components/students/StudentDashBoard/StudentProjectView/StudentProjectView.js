@@ -14,7 +14,8 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
     setLoading
   } = useContext(UserContext);
 
-  const handleJoinProject = async project => {
+  const handleJoinProject = async (project, e) => {
+    e.stopPropagation();
     setLoading(true);
     if (
       userBuildWeeks[currentBuildWeekURL] &&
@@ -100,6 +101,10 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
     setLoading(false);
   };
 
+  let allowJoin =
+    project.availableRoles[userBuildWeeks[currentBuildWeekURL].projectRole]
+      .names.length >= project[userBuildWeeks[currentBuildWeekURL].projectRole];
+
   return (
     <Card
       key={project.uid}
@@ -107,12 +112,11 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
       centered={true}
       onClick={() => setProjectModalData(project)}
     >
-      <Card.Content style={{ backgroundColor: "#ba112e", color: "white" }}>
-        <Header
-          as="h3"
-          className={styles.cardHeader}
-          style={{ color: "white" }}
-        >
+      <Card.Content
+        className={styles.cardHeader}
+        style={{ backgroundColor: "#ba112e", color: "white" }}
+      >
+        <Header as="h3" style={{ color: "white" }}>
           {project.title.length > 25
             ? project.title.slice(0, 25) + "..."
             : project.title}
@@ -123,7 +127,7 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
           ? project.pitch.slice(0, 200) + "..."
           : project.pitch}
       </Card.Content>
-      <Card.Content>
+      <Card.Content className={styles.team}>
         Team:
         {Object.keys(project.availableRoles).map(projectRole => {
           return project.availableRoles[projectRole].names.map(student => {
@@ -138,23 +142,42 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
       </Card.Content>
       {userBuildWeeks[currentBuildWeekURL].project !== project.title && (
         <Card.Content
+          extra
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center"
           }}
         >
-          <p>{project.productType}</p>
-          <Button
-            className={styles.joinButton}
-            onClick={() => handleJoinProject(project)}
-          >
-            +Join
-          </Button>
+          <p className={styles.productType}>{project.productType}</p>
+
+          {allowJoin ? (
+            <Button
+              disabled
+              id={StyleSheetList.joinButton}
+              onClick={e => handleJoinProject(project, e)}
+            >
+              +Join
+            </Button>
+          ) : (
+            <Button
+              positive
+              id={StyleSheetList.joinButton}
+              onClick={e => handleJoinProject(project, e)}
+            >
+              +Join
+            </Button>
+          )}
         </Card.Content>
       )}
       {userBuildWeeks[currentBuildWeekURL].project === project.title && (
-        <Card.Content style={{ backgroundColor: "green", color: "white" }}>
+        <Card.Content
+          style={{
+            backgroundColor: "rgb(32, 185, 68)",
+            color: "white",
+            flexGrow: "0"
+          }}
+        >
           Signed up!
         </Card.Content>
       )}
