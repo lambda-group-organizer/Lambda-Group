@@ -137,6 +137,7 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
             return project.availableRoles[projectRole].names.map(student => {
               return (
                 <div
+                  key={student.email}
                   className={styles.teamMemberDiv}
                   style={{
                     backgroundColor: `${
@@ -145,10 +146,6 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
                   }}
                 >
                   <span className={styles.span} key={student.email}>
-                    {console.log(
-                      "Project Role: ",
-                      findProjectRoleOption(projectRole)
-                    )}
                     {/* TODO: Fix to be dots with two initials */}
                     {student.name[0]}
                   </span>

@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Button, Header } from "semantic-ui-react";
+import { Button, Header, Modal } from "semantic-ui-react";
 import { UserContext, BuildWeekContext } from "../../../context/allContexts";
 import { db } from "../../../logic/firebase.js";
 import { withRouter } from "react-router-dom";
 import styles from "./SelectProjectRole.module.scss";
 import possibleRoles from "../../../utils/projectRoleOptions";
+import { toast } from "react-toastify";
 
 const SelectProjectRole = ({ history }) => {
   const {
@@ -20,11 +21,11 @@ const SelectProjectRole = ({ history }) => {
 
   const [roles] = useState(possibleRoles);
 
-  const addProjectRoleToContext = whichRole => {
-    addProjectRoleToFirestore(whichRole);
-  };
+  const [modalOpen, setModalOpen] = useState(false);
+  const [roleChoice, setRoleChoice] = useState("");
 
-  const addProjectRoleToFirestore = async projectRole => {
+  const addProjectRoleToFirestore = async (projectRole, confirm) => {
+    console.log(confirm);
     let data;
 
     // If user is signing into a buildweek that they signed up for a project in previously as a different role,
@@ -39,12 +40,12 @@ const SelectProjectRole = ({ history }) => {
       if (
         userBuildWeeks &&
         userBuildWeeks[currentBuildWeekURL] &&
-        userBuildWeeks[currentBuildWeekURL].projectRole !== "" &&
-        !window.confirm(
-          "Are you sure?  If you signed up as a different role for this build week previously, you will be removed from that project!"
-        )
+        userBuildWeeks[currentBuildWeekURL].projectRole !== ""
       ) {
-        return null;
+        if (confirm === false) {
+          setModalOpen(true);
+          return null;
+        }
       }
 
       // If moving to a different role in the same buildweek
@@ -120,6 +121,29 @@ const SelectProjectRole = ({ history }) => {
 
   return (
     <div>
+      {/* Modal for confirmation if switching roles */}
+      <Modal open={modalOpen} basic>
+        <Modal.Content>
+          <Button
+            negative
+            onClick={() => {
+              setModalOpen(false);
+            }}
+          >
+            Nevermind
+          </Button>
+          <Button
+            positive
+            onClick={() => {
+              addProjectRoleToFirestore(roleChoice, true);
+            }}
+          >
+            Confirm
+          </Button>
+        </Modal.Content>
+      </Modal>
+
+      {/* everything else */}
       <Header style={{ textAlign: "center" }} as="h2">
         Whats Your Role For {currentBuildWeekURL.replace(/_/g, " ")}?
       </Header>
@@ -127,7 +151,10 @@ const SelectProjectRole = ({ history }) => {
         {roles.map(role => {
           return (
             <Button
-              onClick={() => addProjectRoleToContext(role.selection)}
+              onClick={() => {
+                addProjectRoleToFirestore(role.selection, false);
+                setRoleChoice(role.selection);
+              }}
               color="green"
               className={styles.role}
               style={{ backgroundColor: `${role.bgColor}` }}
