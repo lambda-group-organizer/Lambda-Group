@@ -9,7 +9,7 @@ const MapLegend = () => {
       <div className={styles.mapTitle}>Role Legend</div>
       <div className={styles.singleContainer}>
         {legend.map(single => (
-          <div className={styles.single}>
+          <div className={styles.single} key={single.title}>
             <h3 className={styles.role}>{single.title}</h3>
             <div
               className={styles.dot}

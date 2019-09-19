@@ -8,7 +8,7 @@ import ExportCSV from "../BuildWeeksList/ExportCSV.js";
 
 // Components
 import DashBoardHeader from "../../globalComponents/DashBoardHeader";
-import AdminProjectView from "./AdminProjectView";
+import AdminProjectView from "./AdminProjectView/AdminProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import styles from "../../globalComponents/ProjectFuzzySearch/ProjectFuzzySearch.module.scss";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
