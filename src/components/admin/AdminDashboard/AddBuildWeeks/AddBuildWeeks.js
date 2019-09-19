@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Input } from "semantic-ui-react";
 import { db } from "../../../../logic/firebase";
 import CSVReader from "react-csv-reader";
+import { toast } from "react-toastify";
 
 import styles from "./AddBuildWeeks.module.scss";
 
@@ -9,7 +10,6 @@ const AddBuildWeek = props => {
   // ============================== Creating a Build Week ========================= //
 
   const [buildWeekName, SetBuildWeekName] = useState("");
-  const [error, setError] = useState(null);
 
   const handleChange = e => {
     let spaceLessInput = e.target.value.replace(/ /g, "_");
@@ -19,10 +19,10 @@ const AddBuildWeek = props => {
   const addBuildWeek = async e => {
     e.preventDefault();
     if (buildWeekName === undefined || buildWeekName === "") {
-      setError("Must Provide A Name!");
+      toast("Must Provide A Name!");
       return;
     } else if (CSVData.length === 0) {
-      setError("Must Provide A CSV File!");
+      toast("Must Provide A CSV File!");
       return;
     }
     props.setCurrentLoadingBuildWeek(buildWeekName);
@@ -42,16 +42,16 @@ const AddBuildWeek = props => {
           const response = await buildWeek.get();
           response.data();
           SetBuildWeekName("");
-          setError(null);
           // Add projects to database
           convertedProjects();
         })
         .catch(err => {
           console.log(err);
-          setError(err);
+          toast(err);
         });
     } else {
-      setError("That name is Already in the database!");
+      props.setCurrentLoadingBuildWeek(null);
+      toast("That name is Already in the database!");
     }
   };
 
@@ -148,7 +148,6 @@ const AddBuildWeek = props => {
         <Button type="submit" color="green" className={styles.button}>
           Create Build Week
         </Button>
-        {error && <p>{error}</p>}
       </Form>
     </>
   );

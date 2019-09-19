@@ -5,6 +5,7 @@ import { db } from "../../../../logic/firebase";
 import projectRoleOptions, {
   findProjectRoleOption
 } from "../../../../utils/projectRoleOptions";
+import { toast } from "react-toastify";
 
 import styles from "./StudentProjectView.module.scss";
 
@@ -96,8 +97,7 @@ const StudentProjectView = ({ project: { project }, setProjectModalData }) => {
         { merge: true }
       );
     } else {
-      // TODO: Make this alert pretty and not just a system alert
-      alert(
+      toast(
         `Sorry no more ${userBuildWeeks[currentBuildWeekURL].projectRole}s slots left.  Please pick another project.`
       );
     }

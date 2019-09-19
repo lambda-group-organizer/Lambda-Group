@@ -9,6 +9,10 @@ import Register from "../components/Auth/Register.js";
 import OverLoardMainDashboard from "../components/admin/AdminDashboard/OverloardMainDashBoard.js";
 import AdminDashboard from "../components/admin/AdminDashboard/AdminDashboard.js";
 import StudentBuildWeekView from "../components/students/StudentDashBoard/StudentBuildWeekView";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import styles from "./root.module.scss";
 
 const Root = props => {
   const {
@@ -117,6 +121,13 @@ const Root = props => {
 
   return (
     <>
+      <ToastContainer
+        transition={Flip}
+        className={styles.toastContainer}
+        toastClassName={styles.toast}
+        bodyClassName={styles.toastBody}
+        progressClassName={styles.toastProgress}
+      />
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/register" component={Register} />

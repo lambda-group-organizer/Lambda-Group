@@ -15,6 +15,7 @@ import { appName, appIconName } from "../../logic/constants";
 import "./Register.css";
 import { Link } from "react-router-dom";
 import LoginAnimation from "./LoginAnimation";
+import { toast } from "react-toastify";
 
 const Register = ({ history }) => {
   const { setUser } = useContext(UserContext);
@@ -53,7 +54,10 @@ const Register = ({ history }) => {
         });
       })
       // TODO: Show user it didn't work
-      .catch(err => console.log(`error : ${err}`));
+      .catch(err => {
+        toast(err.message);
+        console.log(err);
+      });
   };
 
   const registerStudentView = (
@@ -84,6 +88,7 @@ const Register = ({ history }) => {
           iconPosition="left"
           placeholder="Full Name..."
           onChange={event => setDisplayName(event.target.value)}
+          required
         />
         {!email ? (
           <Label color="red" pointing="below">
@@ -99,6 +104,7 @@ const Register = ({ history }) => {
           iconPosition="left"
           placeholder="E-mail address"
           onChange={event => setEmail(event.target.value)}
+          required
         />
         {!password ? (
           <Label color="red" pointing="below">
@@ -114,6 +120,7 @@ const Register = ({ history }) => {
           placeholder="Password"
           type="password"
           onChange={event => setPassword(event.target.value)}
+          required
         />
         <Button size="large" fluid color="red" type="submit">
           Register Student
