@@ -124,8 +124,16 @@ const SelectProjectRole = ({ history }) => {
       {/* Modal for confirmation if switching roles */}
       <Modal open={modalOpen} basic>
         <Modal.Content>
+          <h3 className={styles.modalHeader}>
+            Are you sure you want to change roles? If you do, you will be
+            removed from the project you are currently signed up for.
+          </h3>
+        </Modal.Content>
+        <Modal.Content className={styles.modalButtonDiv}>
           <Button
             negative
+            size="big"
+            className={styles.nevermind}
             onClick={() => {
               setModalOpen(false);
             }}
@@ -133,12 +141,14 @@ const SelectProjectRole = ({ history }) => {
             Nevermind
           </Button>
           <Button
+            className={styles.confirm}
             positive
+            size="big"
             onClick={() => {
               addProjectRoleToFirestore(roleChoice, true);
             }}
           >
-            Confirm
+            Change roles
           </Button>
         </Modal.Content>
       </Modal>
