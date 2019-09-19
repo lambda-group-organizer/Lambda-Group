@@ -12,7 +12,7 @@ import StudentProjectView from "./StudentProjectView/StudentProjectView";
 import LoginAnimation from "../../Auth/LoginAnimation";
 import styles from "../../globalComponents/ProjectFuzzySearch/ProjectFuzzySearch.module.scss";
 import ProjectViewModal from "../../globalComponents/ProjectViewModal/ProjectViewModal";
-import MapLegend from "../../../components/students/StudentDashBoard/StudentProjectView/MapLegend/MapLegend.js";
+import MapLegend from "../../globalComponents/MapLegend/MapLegend";
 
 const StudentBuildWeekView = props => {
   // state from context

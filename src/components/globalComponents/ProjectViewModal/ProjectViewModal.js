@@ -1,8 +1,12 @@
 import React, { useContext } from "react";
 import { Button, Icon, Modal, Grid, List } from "semantic-ui-react";
-import { UserContext } from "../../../context/allContexts";
+import {
+  UserContext,
+  NotificationsContext
+} from "../../../context/allContexts";
 import { db } from "../../../logic/firebase";
 import { FaPlusSquare, FaMinusSquare } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 import styles from "./ProjectViewModal.module.scss";
 
@@ -89,8 +93,8 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
         { merge: true }
       );
     } else {
-      alert(
-        `SORRY NO MORE ${userBuildWeeks[currentBuildWeekURL].projectRole}S SLOTS LEFT. PICK ANOTHER PROJECT PLEASE!`
+      toast(
+        `Sorry no more ${userBuildWeeks[currentBuildWeekURL].projectRole} slots left. Please pick another project!`
       );
     }
     setLoading(false);
@@ -128,9 +132,9 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
           { merge: true }
         );
     } else if (limit === 0) {
-      alert("Can't subtract any more");
+      toast("Can't subtract any more");
     } else {
-      alert("Please delete a user first");
+      toast("Please delete a user first");
     }
   };
 
@@ -170,6 +174,19 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
       });
     // remove project from student in student database
   };
+  let allowJoin;
+
+  if (
+    projectModalData &&
+    userBuildWeeks &&
+    userBuildWeeks[currentBuildWeekURL]
+  ) {
+    allowJoin =
+      projectModalData.availableRoles[
+        userBuildWeeks[currentBuildWeekURL].projectRole
+      ].names.length <
+      projectModalData[userBuildWeeks[currentBuildWeekURL].projectRole];
+  }
 
   return (
     <Modal
@@ -278,14 +295,21 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
           marginBottom: "15px"
         }}
       >
-        {role !== "overlord" ? (
+        {role !== "overlord" && allowJoin ? (
           <Button
             color="green"
-            onClick={() => handleJoinProject(projectModalData)}
+            onClick={e => handleJoinProject(projectModalData, e)}
           >
-            Sign up
+            +Join
           </Button>
-        ) : null}
+        ) : (
+          <Button
+            disabled
+            onClick={e => handleJoinProject(projectModalData, e)}
+          >
+            +Join
+          </Button>
+        )}
         <Button onClick={() => setProjectModalData(null)} color="red">
           Exit
         </Button>

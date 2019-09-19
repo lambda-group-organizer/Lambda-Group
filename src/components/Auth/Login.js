@@ -14,6 +14,7 @@ import {
 } from "semantic-ui-react";
 import LoginAnimation from "./LoginAnimation";
 import { db } from "../../logic/firebase.js";
+import { toast } from "react-toastify";
 
 const Login = ({ history }) => {
   const {
@@ -39,7 +40,9 @@ const Login = ({ history }) => {
         });
         checkIfAdmin(loggedInuser.user.email);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        toast("Please enter a valid username and password");
+      });
   };
   // CHECK IF USER IS ADMIN
   const checkIfAdmin = async userEmail => {
