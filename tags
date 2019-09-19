@@ -135,6 +135,10 @@ Name	src/components/globalComponents/Spinner/LocalSpinner.js	/^    <div classNam
 Name	src/components/globalComponents/Spinner/Spinner.js	/^      <div className={styles.loader}> <\/div>$/;"	c
 Name	src/components/globalComponents/Spinner/Spinner.js	/^    <div className={styles.loaderContainer}>$/;"	c
 Name	src/components/students/SelectProjectRole/SelectProjectRole.js	/^              className={styles.role}$/;"	c
+Name	src/components/students/SelectProjectRole/SelectProjectRole.js	/^            className={styles.confirm}$/;"	c
+Name	src/components/students/SelectProjectRole/SelectProjectRole.js	/^            className={styles.nevermind}$/;"	c
+Name	src/components/students/SelectProjectRole/SelectProjectRole.js	/^          <h3 className={styles.modalHeader}>$/;"	c
+Name	src/components/students/SelectProjectRole/SelectProjectRole.js	/^        <Modal.Content className={styles.modalButtonDiv}>$/;"	c
 Name	src/components/students/SelectProjectRole/SelectProjectRole.js	/^        className={styles.back}$/;"	c
 Name	src/components/students/SelectProjectRole/SelectProjectRole.js	/^      <div className={styles.selectContainer}>$/;"	c
 Name	src/components/students/StudentDashBoard/BuildWeekSelection/BuildWeekSelection.js	/^                className={styles.buildWeek}$/;"	c

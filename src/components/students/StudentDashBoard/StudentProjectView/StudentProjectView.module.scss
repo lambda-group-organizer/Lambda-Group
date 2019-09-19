@@ -17,6 +17,7 @@
     width: 30px;
     justify-content: center;
     align-items: center;
+    animation-delay: 1s;
     animation: bounceInDown 1.5s;
     .span {
       margin: 0 5px;
@@ -51,7 +52,7 @@
 
   40% {
     opacity: 0;
-    transform: translate3d(0, -90px, 0);
+    transform: translate3d(0, -350px, 0);
   }
 
   60% {
