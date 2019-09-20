@@ -203,7 +203,7 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
       </Modal.Header>
 
       <Modal.Content>
-        <Grid columns={2} relaxed="very">
+        <Grid stackable columns={2} relaxed="very">
           <Grid.Column>
             {/* <div className={styles.modalMainBody}> */}
             <p>{projectModalData.pitch}</p>
