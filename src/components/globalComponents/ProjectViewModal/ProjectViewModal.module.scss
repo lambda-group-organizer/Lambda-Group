@@ -1,16 +1,23 @@
-// .split {
-//   display: flex;
-//   flex-direction: row;
-//   align-items: space-evenly;
-//   flex-wrap: nowrap;
-//   width: 100%;
-// }
+.icon {
+  font-size: 1.25rem;
+  align-self: flex-end;
+}
 
-// .modalMainBody {
-//   max-width: 70%;
-//   margin: 0px;
-// }
-// .modalTeamMembers {
-//   margin: 0px;
-//   max-width: 30%;
-// }
+.icon:nth-child(2) {
+  color: red;
+}
+
+.icon:nth-child(3) {
+  color: green;
+}
+
+.header {
+  flex-grow: 0;
+  width: 100%;
+  display: flex;
+}
+
+.headerText {
+  display: inline-block;
+  margin-right: auto;
+}
