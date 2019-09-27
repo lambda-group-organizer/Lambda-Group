@@ -16,7 +16,9 @@ const AdminProjectView = ({ project: { project }, setProjectModalData }) => {
       centered={true}
       onClick={() => setProjectModalData(project)}
     >
-      <Card.Content style={{ backgroundColor: "#ba112e", color: "white" }}>
+      <Card.Content
+        style={{ flexGrow: "0", backgroundColor: "#ba112e", color: "white" }}
+      >
         <Header
           as="h3"
           className={styles.cardHeader}

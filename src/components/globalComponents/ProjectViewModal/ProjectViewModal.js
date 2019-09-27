@@ -229,8 +229,10 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                             flexWrap: "wrap"
                           }}
                         >
-                          <List.Header>
-                            {allRoles} (max - {projectModalData[allRoles]}){" "}
+                          <List.Header className={styles.header}>
+                            <div>
+                              {allRoles} (max - {projectModalData[allRoles]}){" "}
+                            </div>
                             {role !== "student" ? (
                               <>
                                 <FaMinusSquare
@@ -319,3 +321,7 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
 };
 
 export default ProjectViewModal;
+
+// OAuth 10 best practices
+
+// end to end testing - remmeber
