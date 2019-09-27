@@ -230,7 +230,7 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                           }}
                         >
                           <List.Header className={styles.header}>
-                            <div>
+                            <div className={styles.headerText}>
                               {allRoles} (max - {projectModalData[allRoles]}){" "}
                             </div>
                             {role !== "student" ? (
@@ -249,7 +249,7 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                           {projectModalData.availableRoles[allRoles].names.map(
                             r => {
                               return (
-                                <div key={r.email}>
+                                <List.Item key={r.email}>
                                   {role === "overlord" ? (
                                     <Button
                                       color="red"
@@ -274,7 +274,7 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                                   ) : (
                                     <p>{r.name}</p>
                                   )}
-                                </div>
+                                </List.Item>
                               );
                             }
                           )}
