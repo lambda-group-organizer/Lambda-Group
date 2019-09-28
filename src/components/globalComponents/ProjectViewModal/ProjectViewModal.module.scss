@@ -1,10 +1,10 @@
 .icon {
-  font-size: 1.25rem;
-  align-self: flex-end;
+  font-size: 1.5rem;
 }
 
 .icon:nth-child(2) {
   color: red;
+  margin-right: 5px;
 }
 
 .icon:nth-child(3) {
@@ -12,12 +12,28 @@
 }
 
 .header {
-  flex-grow: 0;
+  font-size: 1.15rem;
+  flex-grow: 0 !important;
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  justify-content: flex-end !important;
+  align-items: center;
   width: 100%;
-  display: flex;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
 
 .headerText {
   display: inline-block;
+  width: max-content;
+  justify-self: flex-start;
   margin-right: auto;
+}
+
+.removeStudentBtn {
+  margin: 2px !important;
+}
+
+.newLine {
+  display: block;
 }

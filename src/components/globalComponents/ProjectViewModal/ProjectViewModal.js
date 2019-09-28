@@ -188,6 +188,14 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
       projectModalData[userBuildWeeks[currentBuildWeekURL].projectRole];
   }
 
+  function fixList(string) {
+    let res = string.replace(/(\d\.)/g, s => {
+      return `\n${s}`;
+    });
+    console.log("TESTING: ", res);
+    return res;
+  }
+
   return (
     <Modal
       // className={styles.modalContainer}
@@ -206,9 +214,10 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
         <Grid stackable columns={2} relaxed="very">
           <Grid.Column>
             {/* <div className={styles.modalMainBody}> */}
-            <p>{projectModalData.pitch}</p>
-            <p>{projectModalData.mvp}</p>
-            <p>{projectModalData.stretch}</p>
+            {/* TODO: Finish fixing this */}
+            <p>{fixList(projectModalData.pitch)}</p>
+            <p>{fixList(projectModalData.mvp)}</p>
+            <p>{fixList(projectModalData.stretch)}</p>
             {/* </div> */}
           </Grid.Column>
           <Grid.Column>
@@ -230,7 +239,7 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                           }}
                         >
                           <List.Header className={styles.header}>
-                            <div>
+                            <div className={styles.headerText}>
                               {allRoles} (max - {projectModalData[allRoles]}){" "}
                             </div>
                             {role !== "student" ? (
@@ -249,11 +258,15 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                           {projectModalData.availableRoles[allRoles].names.map(
                             r => {
                               return (
-                                <div key={r.email}>
+                                <List.Item
+                                  key={r.email}
+                                  className={styles.studentList}
+                                >
                                   {role === "overlord" ? (
                                     <Button
                                       color="red"
                                       animated="vertical"
+                                      className={styles.removeStudentBtn}
                                       onClick={() =>
                                         handleRemoveStudent(
                                           r.email,
@@ -264,17 +277,23 @@ const ProjectViewModal = ({ projectModalData, setProjectModalData }) => {
                                         )
                                       }
                                     >
-                                      <Button.Content visible>
+                                      <Button.Content
+                                        className={styles.removeStudentContent}
+                                        visible
+                                      >
                                         {r.name}
                                       </Button.Content>
-                                      <Button.Content hidden>
+                                      <Button.Content
+                                        className={styles.removeStudentContent}
+                                        hidden
+                                      >
                                         <Icon name="remove user" />
                                       </Button.Content>
                                     </Button>
                                   ) : (
                                     <p>{r.name}</p>
                                   )}
-                                </div>
+                                </List.Item>
                               );
                             }
                           )}
