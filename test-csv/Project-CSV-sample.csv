@@ -1,0 +1,263 @@
+Project Name,Pitch,MVP,Stretch,Design Links / Data Sets,Product Type,ios Developer,Web UI Developer,Frontend Developer,Frontend Framework Developer,Web Backend Developer,UX Designer,Project Lead,Android Developer,Data Engineer,Machine Learning Engineer
+Advice Giver,Keeping track of receipts is a huge pain!  This app is the solution to all of your receipt woes.  Cloudinary is a popular API for uploading images.,"- Onboarding process
+- User can add receipt info that includes: Date, amount spent, category, image of receipt, merchant
+- Use can search their receipts in several ways: By merchant, amount spent, category and date.
+- User can upload, edit and delete receipts.","- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.", ,Web,2,1,1,1,1,1,1,2,2,1
+African Marketplace,"5th wheel Airbnb is a company that connects land owners and 5th wheel / RV owners.  RV parks are often cramped and in many areas are booked months in advance. Collectively, landowners hold vast swaths of unused land that could be earning them revenue.  By using 5th wheel Airbnb, RV Owners get  access to use these previously unknown/unavailable sites, and Landowners get to cash in on otherwise dormant or underutilized land.","1. Users can register/create an account as either an **RV Owner** or a **Landowner** (web, mobile)
+2. **Landowners** and **RV Owners** can login to the the app. (web, mobile)
+3. **Landowners** can create, update and delete listings of their available land. At a minimum, a listing must include the land's location, description, price per day, and a photo. (web, mobile)
+4. **RV Owners** can query/filter available listings by location (at a minimum) and reserve a spot for their RV for a desired date(s) (web, mobile)","1. Use MapKit (iOS) or MapView (Android) to render available sites on a map that **RV Owners** can click on to view the listings. (mobile)
+2. **Landowners** and **RV Owners** can send messages to each other through the app. (web, mobile)
+3. **Landowners** can specify *Available Dates* or *Blackout Dates* for each property listed. (web) 
+	* **RV Owners** are only shown listings that are available on their desired date(s). (mobile)",,Web,2,1,1,1,1,1,1,2,2,1
+Anywhere Fitness,"Today, fitness happens everywhere - a park, an unfinished basement, a garage gym, etc.- not just gyms. Certified fitness instructors need an app that takes the awkwardness out of collecting payments from friends and taking attendance.","1. Onboarding for a new client 
+2. Onboarding for a fitness instructor
+3. Ability for instructor to create punch pass categories for each type of group fitness class they offer (yoga, insanity, RIPPED, HIGH, pilates, etc.).
+4. Ability to easily create / setup a class time
+5. Ability to easily edit / delete a class
+6. Ability to easily search / find a class
+7. Ability for client to create an account and purchase a 10 class punch pass from an instructor. (payment processing not required for MVP)
+8. Punch pass updates for client as it’s used.",Integrate paypal as a payment method. Ability for instructor to add people to a 'class list' and check them in as they arrive.,,Mobile Client,2,1,1,1,1,1,1,2,2,1
+Art Portolio,"We've all seen the ""bucket list family"" and some of us potentially grow green with envy about their mission and excitement for travel. While it may not be feasible for everyone to drop everything and travel the world full time, we all have dreams and aspirations of getting out and experiencing life to the best of our abilities. This is where Bucket List comes in. Bucket list is the app that allows you to draw out your dreams and aspirations for travel or accomplishment. When you check off an item on your list, you have the opportunity to add photos, journal entries and share the experience with friends and family. 
+
+","'- As a user I need register and login to the app
+- As a user I want to log in to my bucket list so I can see the items on my list in a grid format. 
+- As a user I want to be able to create a bucket list item. 
+- As a user I want to be able to share my bucket list with other users (family members) so that they can add items to it as well.
+- As I user I want to be able to click an item so that I can mark it as done, add photos, journal entries.","- Add a system into the user platform such that it would allow a user to create ""family members"" out of users linking users together in a social network. 
+- Add a system that allows users to share their done bucket list items on social media. ",,Web,2,1,1,1,1,1,1,2,2,1
+AtoZ Experiences,"Pitch: A mobile game that presents the player with two columns, a column of faces/names and a column of tweets. The user is to match the person with his/her tweet. Points will be awarded for correct guesses, after set levels of points are reached the user can unlock more people. ","1. A way to extract and store the data taken from the Twitter API. Data science has most of this code already from our Flask sprint. 
+2. At least 3 levels of progression. For simplicity's sake we will focus on a particular group of people for an MVP: 2020 presidential candidates.
+3. A way to play with 2 - 5 friends; whoever gets the most correct matches gets the ""pot"" in a winner take all system for faster level progression.
+4. An account page where the user can see his/her points and how many until the next level, along with general account info","1. 10 levels of progression
+2. Different game types for different groups of Twitter users, movie stars, basketball players, VCs etc.
+3. Larger friend games 5+ ",https://balsamiq.cloud/snv27r3/pnfrzih,Web,2,1,1,1,1,1,1,2,2,1
+Better Professor App,"Pitch: Personal lending inventory. Keeps track of items lent out to different people who also use the app, and vice versa. ",,"- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.",,Web,2,1,1,1,1,1,1,2,2,1
+Bookr,"Pitch: Calculate cutting dimensions for mat boards, which are used when framing artwork or photographs. There is a lot of math calculations to figure out dimensions. If you mess up the calculation and cut wrong size you're throwing away money on mat boards. ($6-$15 per board)
+Framing is visual—the app should show a preview of what the final result would look like with a cropped photo taken from the photo album. For example if you had a 20""x16"" frame, you can prototype what a 2"" cut on all sides looks like, compared to a 3"" on just the bottom to give the photo more weight.",,"1. Use MapKit (iOS) or MapView (Android) to render available sites on a map that **RV Owners** can click on to view the listings. (mobile)
+2. **Landowners** and **RV Owners** can send messages to each other through the app. (web, mobile)
+3. **Landowners** can specify *Available Dates* or *Blackout Dates* for each property listed. (web) 
+	* **RV Owners** are only shown listings that are available on their desired date(s). (mobile)",,Mobile Client,2,1,1,1,1,1,1,2,2,1
+Bucket List,Pitch: Calculate time between new season of one's favorite television show and ,,Integrate paypal as a payment method. Ability for instructor to add people to a 'class list' and check them in as they arrive.,,Mobile Client,2,1,1,1,1,1,1,2,2,1
+Chef portfolio,"Pitch: Filter image taken via core image. Possible features include converting image to emoji, peer connectivity, and layer co-operability. ",,"- Add a system into the user platform such that it would allow a user to create ""family members"" out of users linking users together in a social network. 
+- Add a system that allows users to share their done bucket list items on social media. ",,Web,2,1,1,1,1,1,1,2,2,1
+Clinical Trial Finder,Pitch: Converts video to gif and vice versa. Utilizes Core Image. ,,"1. 10 levels of progression
+2. Different game types for different groups of Twitter users, movie stars, basketball players, VCs etc.
+3. Larger friend games 5+ ",,Web,2,1,1,1,1,1,1,2,2,1
+Conjugator,"Pitch: Apple watch app designed to keep track of snoring. Data is stored via Core Data and sent back and forth between watch and device. 
+",,"- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.",,Web,2,1,1,1,1,1,1,2,2,1
+Coordinator storytelling (Bountiful),"Pitch: App utilizing spaced repetition to help individuals remember new names and faces 
+",,"- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.",,Web,2,1,1,1,1,1,1,2,2,1
+Corporate Event Planner,"As an avid foodie, I love going out to eat.  I hate remembering what I have and haven’t ordered at each place, what I liked and didn’t like, what the wait time was a certain times of day, etc.  Did I like the burrito or enchilada better? The spicy version or normal?
+","1. An on-boarding process for a user.
+2. Ability to easily create and post a menu item review(restaurant name, restaurant type (italian, mexican, fast food, etc.) menu item name, photo of your order, price, food rating (could use 5 star method or other), other comments, your wait time, date of visit). Hitting submit adds item to the homepage.
+ 3. Ability to easily edit / delete a review. Deleting removes from homepage.
+ 4. Homepage to see a grid of all your recent menu item reviews.  Can filter by restaurant, price, food type (mexican, italian, dessert, etc.), date visited and your rating.","1. Use MapKit (iOS) or MapView (Android) to render available sites on a map that **RV Owners** can click on to view the listings. (mobile)
+2. **Landowners** and **RV Owners** can send messages to each other through the app. (web, mobile)
+3. **Landowners** can specify *Available Dates* or *Blackout Dates* for each property listed. (web) 
+	* **RV Owners** are only shown listings that are available on their desired date(s). (mobile)",,Web,2,1,1,1,1,1,1,2,2,1
+Dad jokes,"My spouse is constantly complaining that they have no proper way to get a good look at hair stylist's work today. There is a need to connect clients with hair stylists and beyond. Haircare  is a Web app that sets up portfolios for local hair stylists.
+","1. As a user I can login and see a list of hairstylists in my area so that I can browse their work. 
+2. As I user I want to be able to click on a hair stylist and see their specific posts so that I can see if they're doing hair the way I'd like mine to be done. 
+3. As a stylist I want to be able to create an account so that I can broadcast my work. 
+4. As a stylist I want to be able to create postings so that users can see what I've done with my skills.",Integrate paypal as a payment method. Ability for instructor to add people to a 'class list' and check them in as they arrive.,,Web,2,1,1,1,1,1,1,2,2,1
+Design Your Life- Good Time Journal,"People want to do good and serve others, but it's just so hard to remember to do it. Even if you remember, it's hard to think of a service idea on the spot. Random acts generator solves both problems by reminding you to serve- Randomly choosing a person from your contacts, and giving you suggestions for how to serve them.","1. Onboarding process for a new user
+2. Navigation present on all pages
+3. Ability for user to add in their contacts manually.
+4. Page to view a list of their added contacts, and edit or delete them.
+5. Page with a list of service ideas that comes with the app that can be added to and edited by the user.
+6. Page (with some sort of event listener) to randomize contact and random act to show the user.","- Add a system into the user platform such that it would allow a user to create ""family members"" out of users linking users together in a social network. 
+- Add a system that allows users to share their done bucket list items on social media. ",,Web,2,1,1,1,1,1,1,2,2,1
+DevDesk Queue,"As a parent, it's next to impossible to fly if you have multiple kids.  Holding a baby while trying to carry your own luggage, the baby's luggage, the toddler's luggage, the carseat, the stroller, etc. is physically impossible.  KidsFly alerts airport staff when you arrive to have an airport employee ready at the curb when you arrive.","1. Onboarding process for a user. Include name, contact info, and password.
+2. Onboarding process for an airport admin. Include name, location, contact info, and password.
+3. Ability for user to schedule a new trip including airport name, airline, departure time and number of kids.
+4. User page to view and edit or delete the scheduled trip, with a button at the button to click when they are within 5 minutes of arriving. Clicking arrive adds the trip to the arrivals sections for the airport
+5. Homepage for the airport admin to see both trips that have been marked as arrived (cards in a top block section) and upcoming scheduled trips at their own airport only. Ability to sort by departure times, or airline, or both.","1. 10 levels of progression
+2. Different game types for different groups of Twitter users, movie stars, basketball players, VCs etc.
+3. Larger friend games 5+ ",,Web,2,1,1,1,1,1,1,2,2,1
+Disney Parent,"Pitch: Mad-Libs for developers.  Do you like comic relief in your twitter feed?  This app will allow users complete dev-libs that can be posted to twitter.  Imagine a lib about a famous developer speaking at a conference and it goes terribly wrong, crazy startup ideas, misadventures in the life of a developer, troubles with merge conflicts or failing tests, etc.
+
+Here's a prototype example that is not polished, nor about devs, but gives you the right idea.  https://um-madlibs.netlify.com
+","1: User can add, edit, and delete libs tied to their account.
+2: User can complete libs and read the final result
+3: User can post the completed lib to twitter via a share link (be mindful of the character limit for twitter)
+4: User is able to access libs by category and has access to all of the libs that users have submitted.","- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.",,Web,2,1,1,1,1,1,1,2,2,1
+Domestic Violence Empathy Builder,"Pitch: 
+App that tracks of items needed for home improvement. Take a picture of item--get lead to a youtube page discussing topics surrounding the item. Make it fun for my kids to pitch in on the process of keeping our chores intact.
+","1. As a parent I can add kids to my 'family'
+2. A kid can use this app on a mobile device to see a list of the chores they've been assigned.
+3. As a Kid I can see a list of the chores that have been assigned to me
+4. As a parent I can assign chores to my children
+5. Add a due date as to when the chore needs to be completed.
+6. Kids can use the mobile app to check off whether or not the task has been completed.","1. Use MapKit (iOS) or MapView (Android) to render available sites on a map that **RV Owners** can click on to view the listings. (mobile)
+2. **Landowners** and **RV Owners** can send messages to each other through the app. (web, mobile)
+3. **Landowners** can specify *Available Dates* or *Blackout Dates* for each property listed. (web) 
+	* **RV Owners** are only shown listings that are available on their desired date(s). (mobile)",http://www.freefrom.org/,Web,2,1,1,1,1,1,1,2,2,1
+Expat Journal,Keeping track of receipts is a huge pain!  This app is the solution to all of your receipt woes.  Cloudinary is a popular API for uploading images.,"- Onboarding process
+- User can add receipt info that includes: Date, amount spent, category, image of receipt, merchant
+- Use can search their receipts in several ways: By merchant, amount spent, category and date.
+- User can upload, edit and delete receipts.",Integrate paypal as a payment method. Ability for instructor to add people to a 'class list' and check them in as they arrive.,,Web,2,1,1,1,1,1,1,2,2,1
+FoodieFun,"5th wheel Airbnb is a company that connects land owners and 5th wheel / RV owners.  RV parks are often cramped and in many areas are booked months in advance. Collectively, landowners hold vast swaths of unused land that could be earning them revenue.  By using 5th wheel Airbnb, RV Owners get  access to use these previously unknown/unavailable sites, and Landowners get to cash in on otherwise dormant or underutilized land.","1. Users can register/create an account as either an **RV Owner** or a **Landowner** (web, mobile)
+2. **Landowners** and **RV Owners** can login to the the app. (web, mobile)
+3. **Landowners** can create, update and delete listings of their available land. At a minimum, a listing must include the land's location, description, price per day, and a photo. (web, mobile)
+4. **RV Owners** can query/filter available listings by location (at a minimum) and reserve a spot for their RV for a desired date(s) (web, mobile)","- Add a system into the user platform such that it would allow a user to create ""family members"" out of users linking users together in a social network. 
+- Add a system that allows users to share their done bucket list items on social media. ",Fun free food icons https://www.invisionapp.com/inside-design/design-resources/download-icons-for-free/ ,Mobile Client,2,1,1,1,1,1,1,2,2,1
+Friend Finder,"Today, fitness happens everywhere - a park, an unfinished basement, a garage gym, etc.- not just gyms. Certified fitness instructors need an app that takes the awkwardness out of collecting payments from friends and taking attendance.","1. Onboarding for a new client 
+2. Onboarding for a fitness instructor
+3. Ability for instructor to create punch pass categories for each type of group fitness class they offer (yoga, insanity, RIPPED, HIGH, pilates, etc.).
+4. Ability to easily create / setup a class time
+5. Ability to easily edit / delete a class
+6. Ability to easily search / find a class
+7. Ability for client to create an account and purchase a 10 class punch pass from an instructor. (payment processing not required for MVP)
+8. Punch pass updates for client as it’s used.","1. 10 levels of progression
+2. Different game types for different groups of Twitter users, movie stars, basketball players, VCs etc.
+3. Larger friend games 5+ ",,Web,2,1,1,1,1,1,1,2,2,1
+Gigapet,"We've all seen the ""bucket list family"" and some of us potentially grow green with envy about their mission and excitement for travel. While it may not be feasible for everyone to drop everything and travel the world full time, we all have dreams and aspirations of getting out and experiencing life to the best of our abilities. This is where Bucket List comes in. Bucket list is the app that allows you to draw out your dreams and aspirations for travel or accomplishment. When you check off an item on your list, you have the opportunity to add photos, journal entries and share the experience with friends and family. 
+
+","'- As a user I need register and login to the app
+- As a user I want to log in to my bucket list so I can see the items on my list in a grid format. 
+- As a user I want to be able to create a bucket list item. 
+- As a user I want to be able to share my bucket list with other users (family members) so that they can add items to it as well.
+- As I user I want to be able to click an item so that I can mark it as done, add photos, journal entries.","- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.",,Web,2,1,1,1,1,1,1,2,2,1
+Guidr,"Pitch: A mobile game that presents the player with two columns, a column of faces/names and a column of tweets. The user is to match the person with his/her tweet. Points will be awarded for correct guesses, after set levels of points are reached the user can unlock more people. ","1. A way to extract and store the data taken from the Twitter API. Data science has most of this code already from our Flask sprint. 
+2. At least 3 levels of progression. For simplicity's sake we will focus on a particular group of people for an MVP: 2020 presidential candidates.
+3. A way to play with 2 - 5 friends; whoever gets the most correct matches gets the ""pot"" in a winner take all system for faster level progression.
+4. An account page where the user can see his/her points and how many until the next level, along with general account info","1. Use MapKit (iOS) or MapView (Android) to render available sites on a map that **RV Owners** can click on to view the listings. (mobile)
+2. **Landowners** and **RV Owners** can send messages to each other through the app. (web, mobile)
+3. **Landowners** can specify *Available Dates* or *Blackout Dates* for each property listed. (web) 
+	* **RV Owners** are only shown listings that are available on their desired date(s). (mobile)",,Mobile Client,2,1,1,1,1,1,1,2,2,1
+HairCare,"Pitch: Personal lending inventory. Keeps track of items lent out to different people who also use the app, and vice versa. ",,Integrate paypal as a payment method. Ability for instructor to add people to a 'class list' and check them in as they arrive.,,Web,2,1,1,1,1,1,1,2,2,1
+How-to,"Pitch: Calculate cutting dimensions for mat boards, which are used when framing artwork or photographs. There is a lot of math calculations to figure out dimensions. If you mess up the calculation and cut wrong size you're throwing away money on mat boards. ($6-$15 per board)
+Framing is visual—the app should show a preview of what the final result would look like with a cropped photo taken from the photo album. For example if you had a 20""x16"" frame, you can prototype what a 2"" cut on all sides looks like, compared to a 3"" on just the bottom to give the photo more weight.",,"- Add a system into the user platform such that it would allow a user to create ""family members"" out of users linking users together in a social network. 
+- Add a system that allows users to share their done bucket list items on social media. ",https://projects.invisionapp.com/share/EKRIZH38NJW#/screens,Web,2,1,1,1,1,1,1,2,2,1
+I'll Serve Soup,Pitch: Calculate time between new season of one's favorite television show and ,,"1. 10 levels of progression
+2. Different game types for different groups of Twitter users, movie stars, basketball players, VCs etc.
+3. Larger friend games 5+ ",https://projects.invisionapp.com/share/Z6RLWHYRC2K#/screens,Web,2,1,1,1,1,1,1,2,2,1
+International Rural School Report,"Pitch: Filter image taken via core image. Possible features include converting image to emoji, peer connectivity, and layer co-operability. ",,"- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.",https://balsamiq.cloud/snv27r3/p72trgx,Web,2,1,1,1,1,1,1,2,2,1
+KidsFly,Pitch: Converts video to gif and vice versa. Utilizes Core Image. ,,"1. Use MapKit (iOS) or MapView (Android) to render available sites on a map that **RV Owners** can click on to view the listings. (mobile)
+2. **Landowners** and **RV Owners** can send messages to each other through the app. (web, mobile)
+3. **Landowners** can specify *Available Dates* or *Blackout Dates* for each property listed. (web) 
+	* **RV Owners** are only shown listings that are available on their desired date(s). (mobile)",,Web,2,1,1,1,1,1,1,2,2,1
+LifeGPA,"Pitch: Apple watch app designed to keep track of snoring. Data is stored via Core Data and sent back and forth between watch and device. 
+",,Integrate paypal as a payment method. Ability for instructor to add people to a 'class list' and check them in as they arrive.,"https://www.figma.com/file/K5NaKl98e0gOLYEOVpOprmKE/V01?node-id=0%3A1""",Web,2,1,1,1,1,1,1,2,2,1
+Luncher,"Pitch: App utilizing spaced repetition to help individuals remember new names and faces 
+",,"- Add a system into the user platform such that it would allow a user to create ""family members"" out of users linking users together in a social network. 
+- Add a system that allows users to share their done bucket list items on social media. ",,Web,2,1,1,1,1,1,1,2,2,1
+Master Your Money,"As an avid foodie, I love going out to eat.  I hate remembering what I have and haven’t ordered at each place, what I liked and didn’t like, what the wait time was a certain times of day, etc.  Did I like the burrito or enchilada better? The spicy version or normal?
+","1. An on-boarding process for a user.
+2. Ability to easily create and post a menu item review(restaurant name, restaurant type (italian, mexican, fast food, etc.) menu item name, photo of your order, price, food rating (could use 5 star method or other), other comments, your wait time, date of visit). Hitting submit adds item to the homepage.
+ 3. Ability to easily edit / delete a review. Deleting removes from homepage.
+ 4. Homepage to see a grid of all your recent menu item reviews.  Can filter by restaurant, price, food type (mexican, italian, dessert, etc.), date visited and your rating.","1. 10 levels of progression
+2. Different game types for different groups of Twitter users, movie stars, basketball players, VCs etc.
+3. Larger friend games 5+ ",https://www.bls.gov/cex/tables.htm#MSA,Mobile Client,2,1,1,1,1,1,1,2,2,1
+MentorMe,"My spouse is constantly complaining that they have no proper way to get a good look at hair stylist's work today. There is a need to connect clients with hair stylists and beyond. Haircare  is a Web app that sets up portfolios for local hair stylists.
+","1. As a user I can login and see a list of hairstylists in my area so that I can browse their work. 
+2. As I user I want to be able to click on a hair stylist and see their specific posts so that I can see if they're doing hair the way I'd like mine to be done. 
+3. As a stylist I want to be able to create an account so that I can broadcast my work. 
+4. As a stylist I want to be able to create postings so that users can see what I've done with my skills.","- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.",https://xd.adobe.com/spec/d5d00464-bbfc-4d37-403a-fec60f25c36a-a3e1/ ,Web,2,1,1,1,1,1,1,2,2,1
+My Top Nine,"People want to do good and serve others, but it's just so hard to remember to do it. Even if you remember, it's hard to think of a service idea on the spot. Random acts generator solves both problems by reminding you to serve- Randomly choosing a person from your contacts, and giving you suggestions for how to serve them.","1. Onboarding process for a new user
+2. Navigation present on all pages
+3. Ability for user to add in their contacts manually.
+4. Page to view a list of their added contacts, and edit or delete them.
+5. Page with a list of service ideas that comes with the app that can be added to and edited by the user.
+6. Page (with some sort of event listener) to randomize contact and random act to show the user.","1. Use MapKit (iOS) or MapView (Android) to render available sites on a map that **RV Owners** can click on to view the listings. (mobile)
+2. **Landowners** and **RV Owners** can send messages to each other through the app. (web, mobile)
+3. **Landowners** can specify *Available Dates* or *Blackout Dates* for each property listed. (web) 
+	* **RV Owners** are only shown listings that are available on their desired date(s). (mobile)",,Mobile Client,2,1,1,1,1,1,1,2,2,1
+Pintereach,"As a parent, it's next to impossible to fly if you have multiple kids.  Holding a baby while trying to carry your own luggage, the baby's luggage, the toddler's luggage, the carseat, the stroller, etc. is physically impossible.  KidsFly alerts airport staff when you arrive to have an airport employee ready at the curb when you arrive.","1. Onboarding process for a user. Include name, contact info, and password.
+2. Onboarding process for an airport admin. Include name, location, contact info, and password.
+3. Ability for user to schedule a new trip including airport name, airline, departure time and number of kids.
+4. User page to view and edit or delete the scheduled trip, with a button at the button to click when they are within 5 minutes of arriving. Clicking arrive adds the trip to the arrivals sections for the airport
+5. Homepage for the airport admin to see both trips that have been marked as arrived (cards in a top block section) and upcoming scheduled trips at their own airport only. Ability to sort by departure times, or airline, or both.",Integrate paypal as a payment method. Ability for instructor to add people to a 'class list' and check them in as they arrive.,,Web,2,1,1,1,1,1,1,2,2,1
+Potluck planner,"Pitch: Mad-Libs for developers.  Do you like comic relief in your twitter feed?  This app will allow users complete dev-libs that can be posted to twitter.  Imagine a lib about a famous developer speaking at a conference and it goes terribly wrong, crazy startup ideas, misadventures in the life of a developer, troubles with merge conflicts or failing tests, etc.
+
+Here's a prototype example that is not polished, nor about devs, but gives you the right idea.  https://um-madlibs.netlify.com
+","1: User can add, edit, and delete libs tied to their account.
+2: User can complete libs and read the final result
+3: User can post the completed lib to twitter via a share link (be mindful of the character limit for twitter)
+4: User is able to access libs by category and has access to all of the libs that users have submitted.","- Add a system into the user platform such that it would allow a user to create ""family members"" out of users linking users together in a social network. 
+- Add a system that allows users to share their done bucket list items on social media. ",,Web,2,1,1,1,1,1,1,2,2,1
+Prisoner skills,"Pitch: 
+App that tracks of items needed for home improvement. Take a picture of item--get lead to a youtube page discussing topics surrounding the item. Make it fun for my kids to pitch in on the process of keeping our chores intact.
+","1. As a parent I can add kids to my 'family'
+2. A kid can use this app on a mobile device to see a list of the chores they've been assigned.
+3. As a Kid I can see a list of the chores that have been assigned to me
+4. As a parent I can assign chores to my children
+5. Add a due date as to when the chore needs to be completed.
+6. Kids can use the mobile app to check off whether or not the task has been completed.","1. 10 levels of progression
+2. Different game types for different groups of Twitter users, movie stars, basketball players, VCs etc.
+3. Larger friend games 5+ ",,Web,2,1,1,1,1,1,1,2,2,1
+Random Acts generator,Keeping track of receipts is a huge pain!  This app is the solution to all of your receipt woes.  Cloudinary is a popular API for uploading images.,"- Onboarding process
+- User can add receipt info that includes: Date, amount spent, category, image of receipt, merchant
+- Use can search their receipts in several ways: By merchant, amount spent, category and date.
+- User can upload, edit and delete receipts.","- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.",,Web,2,1,1,1,1,1,1,2,2,1
+Refugee Stories,"5th wheel Airbnb is a company that connects land owners and 5th wheel / RV owners.  RV parks are often cramped and in many areas are booked months in advance. Collectively, landowners hold vast swaths of unused land that could be earning them revenue.  By using 5th wheel Airbnb, RV Owners get  access to use these previously unknown/unavailable sites, and Landowners get to cash in on otherwise dormant or underutilized land.","1. Users can register/create an account as either an **RV Owner** or a **Landowner** (web, mobile)
+2. **Landowners** and **RV Owners** can login to the the app. (web, mobile)
+3. **Landowners** can create, update and delete listings of their available land. At a minimum, a listing must include the land's location, description, price per day, and a photo. (web, mobile)
+4. **RV Owners** can query/filter available listings by location (at a minimum) and reserve a spot for their RV for a desired date(s) (web, mobile)","1. Use MapKit (iOS) or MapView (Android) to render available sites on a map that **RV Owners** can click on to view the listings. (mobile)
+2. **Landowners** and **RV Owners** can send messages to each other through the app. (web, mobile)
+3. **Landowners** can specify *Available Dates* or *Blackout Dates* for each property listed. (web) 
+	* **RV Owners** are only shown listings that are available on their desired date(s). (mobile)",,Web,2,1,1,1,1,1,1,2,2,1
+Replate,"Today, fitness happens everywhere - a park, an unfinished basement, a garage gym, etc.- not just gyms. Certified fitness instructors need an app that takes the awkwardness out of collecting payments from friends and taking attendance.","1. Onboarding for a new client 
+2. Onboarding for a fitness instructor
+3. Ability for instructor to create punch pass categories for each type of group fitness class they offer (yoga, insanity, RIPPED, HIGH, pilates, etc.).
+4. Ability to easily create / setup a class time
+5. Ability to easily edit / delete a class
+6. Ability to easily search / find a class
+7. Ability for client to create an account and purchase a 10 class punch pass from an instructor. (payment processing not required for MVP)
+8. Punch pass updates for client as it’s used.",Integrate paypal as a payment method. Ability for instructor to add people to a 'class list' and check them in as they arrive.,https://balsamiq.cloud/snv27r3/psx8jkn ,Mobile Client,2,1,1,1,1,1,1,2,2,1
+Restaurant Passport,"We've all seen the ""bucket list family"" and some of us potentially grow green with envy about their mission and excitement for travel. While it may not be feasible for everyone to drop everything and travel the world full time, we all have dreams and aspirations of getting out and experiencing life to the best of our abilities. This is where Bucket List comes in. Bucket list is the app that allows you to draw out your dreams and aspirations for travel or accomplishment. When you check off an item on your list, you have the opportunity to add photos, journal entries and share the experience with friends and family. 
+
+","'- As a user I need register and login to the app
+- As a user I want to log in to my bucket list so I can see the items on my list in a grid format. 
+- As a user I want to be able to create a bucket list item. 
+- As a user I want to be able to share my bucket list with other users (family members) so that they can add items to it as well.
+- As I user I want to be able to click an item so that I can mark it as done, add photos, journal entries.","- Add a system into the user platform such that it would allow a user to create ""family members"" out of users linking users together in a social network. 
+- Add a system that allows users to share their done bucket list items on social media. ",,Web,2,1,1,1,1,1,1,2,2,1
+Secret Family Recipes Cookbook,"Pitch: A mobile game that presents the player with two columns, a column of faces/names and a column of tweets. The user is to match the person with his/her tweet. Points will be awarded for correct guesses, after set levels of points are reached the user can unlock more people. ","1. A way to extract and store the data taken from the Twitter API. Data science has most of this code already from our Flask sprint. 
+2. At least 3 levels of progression. For simplicity's sake we will focus on a particular group of people for an MVP: 2020 presidential candidates.
+3. A way to play with 2 - 5 friends; whoever gets the most correct matches gets the ""pot"" in a winner take all system for faster level progression.
+4. An account page where the user can see his/her points and how many until the next level, along with general account info","1. 10 levels of progression
+2. Different game types for different groups of Twitter users, movie stars, basketball players, VCs etc.
+3. Larger friend games 5+ ",,Web,2,1,1,1,1,1,1,2,2,1
+Sleep Tracker,"Pitch: Personal lending inventory. Keeps track of items lent out to different people who also use the app, and vice versa. ",,"- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.",https://balsamiq.cloud/snv27r3/pn7zkux,Web,2,1,1,1,1,1,1,2,2,1
+Tipsease,"Pitch: Calculate cutting dimensions for mat boards, which are used when framing artwork or photographs. There is a lot of math calculations to figure out dimensions. If you mess up the calculation and cut wrong size you're throwing away money on mat boards. ($6-$15 per board)
+Framing is visual—the app should show a preview of what the final result would look like with a cropped photo taken from the photo album. For example if you had a 20""x16"" frame, you can prototype what a 2"" cut on all sides looks like, compared to a 3"" on just the bottom to give the photo more weight.",,"1. Use MapKit (iOS) or MapView (Android) to render available sites on a map that **RV Owners** can click on to view the listings. (mobile)
+2. **Landowners** and **RV Owners** can send messages to each other through the app. (web, mobile)
+3. **Landowners** can specify *Available Dates* or *Blackout Dates* for each property listed. (web) 
+	* **RV Owners** are only shown listings that are available on their desired date(s). (mobile)",,Web,2,1,1,1,1,1,1,2,2,1
+Trip Split,Pitch: Calculate time between new season of one's favorite television show and ,,Integrate paypal as a payment method. Ability for instructor to add people to a 'class list' and check them in as they arrive.,https://balsamiq.cloud/snv27r3/p65xrd9,Web,2,1,1,1,1,1,1,2,2,1
+Use My Tech Stuff,"Pitch: Filter image taken via core image. Possible features include converting image to emoji, peer connectivity, and layer co-operability. ",,"- Add a system into the user platform such that it would allow a user to create ""family members"" out of users linking users together in a social network. 
+- Add a system that allows users to share their done bucket list items on social media. ",,Web,2,1,1,1,1,1,1,2,2,1
+Virtual Reality Funding Platform,Pitch: Converts video to gif and vice versa. Utilizes Core Image. ,,"1. 10 levels of progression
+2. Different game types for different groups of Twitter users, movie stars, basketball players, VCs etc.
+3. Larger friend games 5+ ",,Web,2,1,1,1,1,1,1,2,2,1
+Water my Plants,"Pitch: Apple watch app designed to keep track of snoring. Data is stored via Core Data and sent back and forth between watch and device. 
+",,"- Use data visualization to show what categories, merchants, or time frames when/where the most money was spent.
+- Create a group plan so couples or families can see receipts for the whole group.",,Mobile Client,2,1,1,1,1,1,1,2,2,1
+Wedding Planner Portfolio,"Pitch: App utilizing spaced repetition to help individuals remember new names and faces 
+",,"1. Use MapKit (iOS) or MapView (Android) to render available sites on a map that **RV Owners** can click on to view the listings. (mobile)
+2. **Landowners** and **RV Owners** can send messages to each other through the app. (web, mobile)
+3. **Landowners** can specify *Available Dates* or *Blackout Dates* for each property listed. (web) 
+	* **RV Owners** are only shown listings that are available on their desired date(s). (mobile)",,Web,2,1,1,1,1,1,1,2,2,1
+Weight lifting journal,"As an avid foodie, I love going out to eat.  I hate remembering what I have and haven’t ordered at each place, what I liked and didn’t like, what the wait time was a certain times of day, etc.  Did I like the burrito or enchilada better? The spicy version or normal?
+","1. An on-boarding process for a user.
+2. Ability to easily create and post a menu item review(restaurant name, restaurant type (italian, mexican, fast food, etc.) menu item name, photo of your order, price, food rating (could use 5 star method or other), other comments, your wait time, date of visit). Hitting submit adds item to the homepage.
+ 3. Ability to easily edit / delete a review. Deleting removes from homepage.
+ 4. Homepage to see a grid of all your recent menu item reviews.  Can filter by restaurant, price, food type (mexican, italian, dessert, etc.), date visited and your rating.",Integrate paypal as a payment method. Ability for instructor to add people to a 'class list' and check them in as they arrive.,,Web,2,1,1,1,1,1,1,2,2,1
+Wunderlist 2.0,"My spouse is constantly complaining that they have no proper way to get a good look at hair stylist's work today. There is a need to connect clients with hair stylists and beyond. Haircare  is a Web app that sets up portfolios for local hair stylists.
+","1. As a user I can login and see a list of hairstylists in my area so that I can browse their work. 
+2. As I user I want to be able to click on a hair stylist and see their specific posts so that I can see if they're doing hair the way I'd like mine to be done. 
+3. As a stylist I want to be able to create an account so that I can broadcast my work. 
+4. As a stylist I want to be able to create postings so that users can see what I've done with my skills.","- Add a system into the user platform such that it would allow a user to create ""family members"" out of users linking users together in a social network. 
+- Add a system that allows users to share their done bucket list items on social media. ",,Web,2,1,1,1,1,1,1,2,2,1
