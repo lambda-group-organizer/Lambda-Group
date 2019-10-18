@@ -16,6 +16,13 @@
   .buildWeek {
     padding: 15px;
     margin: 5px;
-    background-color: #ba112e !important;
+    background-color: white !important;
+    color: #ba112e !important;
+    border: 2px solid #ba112e !important;
+    &:hover {
+      background-color: #ba112e !important;
+      color: white !important;
+      border: none;
+    }
   }
 }

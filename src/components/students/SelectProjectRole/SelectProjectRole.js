@@ -165,9 +165,12 @@ const SelectProjectRole = ({ history }) => {
                 addProjectRoleToFirestore(role.selection, false);
                 setRoleChoice(role.selection);
               }}
-              color="green"
+              // color="#ba112e"
               className={styles.role}
-              style={{ backgroundColor: `${role.bgColor}` }}
+              style={{
+                borderLeft: `10px solid ${role.bgColor}`,
+                color: `#323232`
+              }}
               key={role.title}
             >
               {role.title}
